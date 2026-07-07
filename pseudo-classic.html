@@ -90,38 +90,45 @@ h1 {
     margin-bottom: 100px; 
 }
 
-/* 主圖顯示區域 */
+/* 🔥 關鍵修正：限制主圖顯示區域的最大高度 */
 .work-img-wrapper {
     width: 100%;
+    height: 480px;       /* 鎖定固定高度，你可以根據喜好調整這個數值 (例如 450px ~ 550px) */
     margin-bottom: 15px; 
+    display: flex;
+    justify-content: center; /* 讓寬度不滿的圖水平居中 */
+    align-items: center;     /* 讓高度不滿的圖垂直居中 */
+    background-color: #121212; /* 保持跟背景同色，讓穿幫的地方隱形 */
 }
 
+/* 🔥 關鍵修正：讓主圖完美縮放不變形，且高度受到外殼嚴格限制 */
 .work-img-wrapper img {
     width: 100%;
+    height: 100%;
     max-width: 100%;
+    max-height: 100%;
+    object-fit: contain; /* 魔法核心：保持圖片原有比例縮放，絕不壓扁，且完美收納在 480px 的高度內 */
     display: block;
-    height: auto;
 }
 
 /* 局部放大圖（小圖）的水平排列外殼 */
 .thumb-container {
     display: flex;
-    gap: 12px;           /* 小圖之間的間距 */
-    margin-bottom: 25px; /* 與下方灰色文字的距離 */
+    gap: 12px;           
+    margin-bottom: 25px; 
 }
 
 /* 單張小圖的樣式 */
 .thumb-img {
-    width: 80px;         /* 寬度固定 80px */
-    height: 80px;        /* 高度固定 80px，裁切成正方形比較整齊 */
-    object-fit: cover;   /* 確保圖片不變形地填滿正方形 */
+    width: 80px;         
+    height: 80px;        
+    object-fit: cover;   
     cursor: pointer;
     border: 1px solid #333;
-    opacity: 0.5;        /* 預設沒被點擊時半透明 */
+    opacity: 0.5;        
     transition: all 0.2s ease;
 }
 
-/* 當滑鼠移過去，或是該小圖處於「被選中(active)」狀態時 */
 .thumb-img:hover, .thumb-img.active {
     opacity: 1;
     border-color: #888;
@@ -233,58 +240,4 @@ h1 {
         <div class="toggle-content">
             <div class="details-content">
                 <div class="work-text">小時候，每次過年回到阿公阿嬤家，總可以和姐姐、堂姐、表姐一起聊天吃飯玩樂；但是隨著姐姐們長大、工作、結婚，過年的氣氛不再那麼熱鬧。因此我畫了一張七仙女圖，紀念之前這段美好的時光。</div>
-                <div class="work-seal">印章文字：我有一個姐姐、兩個表姐、四個堂姐／家人稱之為七仙女／她們從領紅包變成包紅包的人／在婚禮與喪禮短暫相聚</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="work-card">
-        <div class="work-img-wrapper">
-            <img src="七擒七縱圖_全貌.jpg">
-        </div>
-        <div class="toggle-trigger" onclick="toggleDetails(this)">七擒七縱圖｜2024｜原子筆、牛皮紙｜35 × 54 cm (點擊觀看介紹)</div>
-        <div class="toggle-content">
-            <div class="details-content">
-                <div class="work-text">「七擒七縱」出自《三國志》，描述諸葛亮七次生擒、釋放南夷酋長孟獲，直到其心悅誠服，不再生背叛之心。這張畫作嘗試將古代的歷史故事移至當代的情境中，思考人類面對敵人的時候真的能具備足夠的智慧與耐心嗎？</div>
-                <div class="work-seal">印章文字：小時候讀七擒七縱的故事／發現要收服敵人太辛苦了／如果我遇到敵人／會有那麼多的才智與耐心來應對嗎</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="work-card">
-        <div class="work-img-wrapper">
-            <img src="在路上_全貌.jpg">
-        </div>
-        <div class="toggle-trigger" onclick="toggleDetails(this)">在路上｜2024｜原子筆、牛皮紙｜20 × 40 cm (點擊觀看介紹)</div>
-        <div class="toggle-content">
-            <div class="details-content">
-                <div class="work-text">我偶爾會去參加書展，行李中會裝滿滿的書，十分沈重，但我喜歡把那個沈重感幻想成某種知識的質量。這些書雖然是讓步履艱辛的阻力，卻也是支持我走下去的能量。</div>
-                <div class="work-seal">印章文字：往返書展的路上／我們的行李都裝著滿滿的書／錯覺閱讀的重量</div>
-            </div>
-        </div>
-    </div>
-
-</main>
-
-<script>
-// 控制介紹文字滑動
-function toggleDetails(element) {
-    var content = element.nextElementSibling;
-    content.classList.toggle('open');
-}
-
-// 控制局部大圖切換
-function switchImage(mainImgId, thumbElement) {
-    var mainImg = document.getElementById(mainImgId);
-    mainImg.src = thumbElement.src;
-    
-    var siblings = thumbElement.parentNode.getElementsByClassName('thumb-img');
-    for (var i = 0; i < siblings.length; i++) {
-        siblings[i].classList.remove('active');
-    }
-    thumbElement.classList.add('active');
-}
-</script>
-
-</body>
-</html>
+                <div class="work-seal">印章文字：我有一個姐姐、兩個表姐、四個堂姐／家人稱之為七
