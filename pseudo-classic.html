@@ -90,7 +90,7 @@ h1 {
     margin-bottom: 100px; 
 }
 
-/* 確保一開始直接呈現圖片 */
+/* 圖片樣式 */
 .work-img-wrapper {
     width: 100%;
     margin-bottom: 25px;
@@ -103,12 +103,35 @@ h1 {
     height: auto;
 }
 
-/* 包含作品名稱、媒材年代在內的綜合資訊欄（灰色小字） */
-.work-info {
+/* 核心摺疊區塊設定 */
+details {
+    width: 100%;
+}
+
+/* 點擊觸發區域：把原本的灰色綜合資訊欄變成可以點擊的按鈕 */
+summary {
     font-size: 14px;
     color: #888888;            
-    margin-bottom: 24px; 
     letter-spacing: 1px;
+    cursor: pointer; /* 讓滑鼠移過去時顯示手指符號，提示可以點擊 */
+    list-style: none; /* 隱藏隱藏預生的醜箭頭 (Chrome/Firefox) */
+    outline: none;
+    user-select: none;
+}
+
+/* 隱藏 Safari 瀏覽器的預設小箭頭 */
+summary::-webkit-details-marker {
+    display: none;
+}
+
+/* 滑鼠移到資訊欄時，顏色稍微亮一點點，提示使用者「這裡可以點擊」 */
+summary:hover {
+    color: #bbbbbb;
+}
+
+/* 展開後的文字內容外殼（加上上方間距，點開後會自動跟資訊欄空出一行） */
+.details-content {
+    margin-top: 24px;
 }
 
 .work-text {
@@ -116,7 +139,7 @@ h1 {
     line-height: 1.8;
     color: #888888;            
     white-space: pre-line; 
-    margin-bottom: 24px; 
+    margin-bottom: 24px; /* 與印章文字空出一行 */
 }
 
 .work-seal {
@@ -149,45 +172,70 @@ h1 {
         <div class="work-img-wrapper">
             <img src="長尾山娘巴蕊圖_全貌.jpg">
         </div>
-        <div class="work-info">長尾山娘巴蕊圖｜2024｜原子筆、牛皮紙｜35 × 54 cm</div>
-        <div class="work-text">長尾山娘是台灣藍鵲的別名，牠們是臺灣特有種鳥類，會為了護巢而攻擊人類。這張畫在描繪人們被台灣藍鵲「巴頭」，雖然感到很痛，可是又覺得很榮幸的矛盾心緒。</div>
-        <div class="work-seal">印章文字：當頭上拂過藍的殘影／伴隨拔髮般的刺痛／他嚇得縮起脖子、吐出髒字／直到他發現葉叢間有一條黑白分明的尾羽／才知道這是傳說中的台灣藍鵲空襲／之後提起這件事／他總會說：討厭啦。</div>
+        
+        <details>
+            <summary>長尾山娘巴蕊圖｜2024｜原子筆、牛皮紙｜35 × 54 cm (點擊觀看介紹)</summary>
+            <div class="details-content">
+                <div class="work-text">長尾山娘是台灣藍鵲的別名，牠們是臺灣特有種鳥類，會為了護巢而攻擊人類。這張畫在描繪人們被台灣藍鵲「巴頭」，雖然感到很痛，可是又覺得很榮幸的矛盾心緒。</div>
+                <div class="work-seal">印章文字：當頭上拂過藍的殘影／伴隨拔髮般的刺痛／他嚇得縮起脖子、吐出髒字／直到他發現葉叢間有一條黑白分明的尾羽／才知道這是傳說中的台灣藍鵲空襲／之後提起這件事／他總會說：討厭啦。</div>
+            </div>
+        </details>
     </div>
 
     <div class="work-card">
         <div class="work-img-wrapper">
             <img src="牧書圖_全貌.jpg">
         </div>
-        <div class="work-info">牧書圖｜2024｜原子筆、牛皮紙｜20 × 40 cm</div>
-        <div class="work-text">畫作的靈感來自成語「牛角掛書」，呈現書本掛在牛角上、一邊遊走一邊閱讀的自在氛圍。構圖向臺灣前輩藝術家黃土水的淺浮雕作品《水牛群像》致敬，形式模仿傳統水墨畫卷，並以印章文字作為述說故事的載體。</div>
-        <div class="work-seal">印章文字：沒有所謂的荒島書單／因為當你帶了一本書去荒島／那麼荒島就不是荒島了</div>
+        
+        <details>
+            <summary>牧書圖｜2024｜原子筆、牛皮紙｜20 × 40 cm (點擊觀看介紹)</summary>
+            <div class="details-content">
+                <div class="work-text">畫作的靈感來自成語「牛角掛書」，呈現書本掛在牛角上、一邊遊走一邊閱讀的自在氛圍。構圖向臺灣前輩藝術家黃土水的淺浮雕作品《水牛群像》致敬，形式模仿傳統水墨畫卷，並以印章文字作為述說故事的載體。</div>
+                <div class="work-seal">印章文字：沒有所謂的荒島書單／因為當你帶了一本書去荒島／那麼荒島就不是荒島了</div>
+            </div>
+        </details>
     </div>
         
     <div class="work-card">
         <div class="work-img-wrapper">
             <img src="七仙女圖_全貌.jpg">
         </div>
-        <div class="work-info">七仙女圖｜2024｜原子筆、牛皮紙｜35 × 54 cm</div>
-        <div class="work-text">小時候，每次過年回到阿公阿嬤家，總可以和姐姐、堂姐、表姐一起聊天吃飯玩樂；但是隨著姐姐們長大、工作、結婚，過年的氣氛不再那麼熱鬧。因此我畫了一張七仙女圖，紀念之前這段美好的時光。</div>
-        <div class="work-seal">印章文字：我有一個姐姐、兩個表姐、四個堂姐／家人稱之為七仙女／她們從領紅包變成包紅包的人／在婚禮與喪禮短暫相聚</div>
+        
+        <details>
+            <summary>七仙女圖｜2024｜原子筆、牛皮紙｜35 × 54 cm (點擊觀看介紹)</summary>
+            <div class="details-content">
+                <div class="work-text">小時候，每次過年回到阿公阿嬤家，總可以和姐姐、堂姐、表姐一起聊天吃飯玩樂；但是隨著姐姐們長大、工作、結婚，過年的氣氛不再那麼熱鬧。因此我畫了一張七仙女圖，紀念之前這段美好的時光。</div>
+                <div class="work-seal">印章文字：我有一個姐姐、兩個表姐、四個堂姐／家人稱之為七仙女／她們從領紅包變成包紅包的人／在婚禮與喪禮短暫相聚</div>
+            </div>
+        </details>
     </div>
 
     <div class="work-card">
         <div class="work-img-wrapper">
             <img src="七擒七縱圖_全貌.jpg">
         </div>
-        <div class="work-info">七擒七縱圖｜2024｜原子筆、牛皮紙｜35 × 54 cm</div>
-        <div class="work-text">「七擒七縱」出自《三國志》，描述諸葛亮七次生擒、釋放南夷酋長孟獲，直到其心悅誠服，不再生背叛之心。這張畫作嘗試將古代的歷史故事移至當代的情境中，思考人類面對敵人的時候真的能具備足夠的智慧與耐心嗎？</div>
-        <div class="work-seal">印章文字：小時候讀七擒七縱的故事／發現要收服敵人太辛苦了／如果我遇到敵人／會有那麼多的才智與耐心來應對嗎</div>
+        
+        <details>
+            <summary>七擒七縱圖｜2024｜原子筆、牛皮紙｜35 × 54 cm (點擊觀看介紹)</summary>
+            <div class="details-content">
+                <div class="work-text">「七擒七縱」出自《三國志》，描述諸葛亮七次生擒、釋放南夷酋長孟獲，直到其心悅誠服，不再生背叛之心。這張畫作嘗試將古代的歷史故事移至當代的情境中，思考人類面對敵人的時候真的能具備足夠的智慧與耐心嗎？</div>
+                <div class="work-seal">印章文字：小時候讀七擒七縱的故事／發現要收服敵人太辛苦了／如果我遇到敵人／會有那麼多的才智與耐心來應對嗎</div>
+            </div>
+        </details>
     </div>
 
     <div class="work-card">
         <div class="work-img-wrapper">
             <img src="在路上_全貌.jpg">
         </div>
-        <div class="work-info">在路上｜2024｜原子筆、牛皮紙｜20 × 40 cm</div>
-        <div class="work-text">我偶爾會去參加書展，行李中會裝滿滿的書，十分沈重，但我喜歡把那個沈重感幻想成某種知識的質量。這些書雖然是讓步履艱辛的阻力，卻也是支持我走下去的能量。</div>
-        <div class="work-seal">印章文字：往返書展的路上／我們的行李都裝著滿滿的書／錯覺閱讀的重量</div>
+        
+        <details>
+            <summary>在路上｜2024｜原子筆、牛皮紙｜20 × 40 cm (點擊觀看介紹)</summary>
+            <div class="details-content">
+                <div class="work-text">我偶爾會去參加書展，行李中會裝滿滿的書，十分沈重，但我喜歡把那個沈重感幻想成某種知識的質量。這些書雖然是讓步履艱辛的阻力，卻也是支持我走下去的能量。</div>
+                <div class="work-seal">印章文字：往返書展的路上／我們的行李都裝著滿滿的書／錯覺閱讀的重量</div>
+            </div>
+        </details>
     </div>
 
 </main>
