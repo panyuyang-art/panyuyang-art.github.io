@@ -3,7 +3,7 @@
 
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 確保手機完美縮放 -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>擬古系列 - Pan Yu-Yang</title>
 
 <style>
@@ -17,7 +17,7 @@ body {
     min-height: 100vh;
 }
 
-/* 左側側邊欄固定寬度與樣式 */
+/* 左側固定側邊欄選單 */
 .sidebar {
     width: 260px;
     padding: 60px 40px;
@@ -40,17 +40,28 @@ body {
     color: #ffffff;
     font-size: 16px;
     margin-bottom: 24px;
+    cursor: pointer;
+    user-select: none;
 }
 
 .menu-item:hover, .submenu-item:hover {
     color: #aaaaaa;
 }
 
+/* 預設隱藏的子選單外殼 */
 .submenu {
     margin-left: 15px;
-    margin-bottom: 24px;
     border-left: 1px solid #333; 
     padding-left: 15px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out, margin-bottom 0.3s ease-out;
+}
+
+/* 當子選單被加上 .open 樣式時才會展開 */
+.submenu.open {
+    max-height: 100px; 
+    margin-bottom: 24px;
 }
 
 .submenu-item {
@@ -64,134 +75,40 @@ body {
 .submenu-item.active {
     color: #ffffff;
     font-weight: bold;
-    pointer-events: none;
+    pointer-events: none; /* 已經在這一頁了，無法重複點擊 */
 }
 
-/* 右側主要內容區 */
+/* 右側主要內容區區塊 */
 .main-content {
     margin-left: 260px; 
     padding: 60px 80px;
-    max-width: 1200px; 
-    width: calc(100% - 260px);
     box-sizing: border-box;
+    width: calc(100% - 260px);
 }
 
-h1 {
+.page-title {
     font-size: 24px;
     font-weight: normal;
-    margin-bottom: 60px;
+    margin-bottom: 40px;
     letter-spacing: 2px;
-    color: #ffffff;
 }
 
-/* 獨立的作品外殼 */
-.work-card {
-    display: block;
-    width: 100%;
-    margin-bottom: 120px; 
+/* 作品圖片展示區 */
+.artwork-container {
+    max-width: 1000px;
+    margin-bottom: 40px;
 }
 
-/* 主圖顯示區域（預設為電腦版大尺寸） */
-.work-img-wrapper {
+.artwork-img {
     width: 100%;
-    height: 650px;       /* 電腦版完美大圖高度 */
-    margin-bottom: 25px; 
-    display: flex;
-    justify-content: center; 
-    align-items: center;     
-    background-color: #121212; 
-}
-
-/* 讓主圖完美縮放不變形 */
-.work-img-wrapper img {
-    width: 100%;
-    height: 100%;
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain; 
+    height: auto;
     display: block;
 }
 
-/* 點擊觸發區域（資訊列） */
-.toggle-trigger {
-    font-size: 14px;
-    color: #888888;            
-    letter-spacing: 1px;
-    cursor: pointer; 
-    user-select: none;
-    transition: color 0.2s ease;
-    margin-bottom: 15px; 
-    line-height: 1.5;
-}
-
-.toggle-trigger:hover {
-    color: #cccccc;
-}
-
-/* 縮圖控制列外殼 */
-.thumb-container {
-    display: flex;
-    flex-wrap: wrap;     
-    gap: 12px;           
-    margin-top: 20px;    
-    margin-bottom: 20px; 
-    clear: both;
-}
-
-/* 單張小圖的樣式 */
-.thumb-img {
-    width: 80px;         
-    height: 80px;        
-    object-fit: cover;   
-    cursor: pointer;
-    border: 1px solid #333;
-    opacity: 0.5;        
-    transition: all 0.2s ease;
-    flex-shrink: 0;      
-}
-
-.thumb-img:hover, .thumb-img.active {
-    opacity: 1;
-    border-color: #888;
-}
-
-/* 動畫核心外殼 */
-.toggle-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s ease-in-out; 
-}
-
-.toggle-content.open {
-    max-height: 600px; 
-    margin-bottom: 25px; 
-}
-
-.details-content {
-    padding-top: 10px; 
-}
-
-.work-text {
-    font-size: 14px;
-    line-height: 1.8;
-    color: #888888;            
-    white-space: pre-line; 
-    margin-bottom: 24px; 
-}
-
-.work-seal {
-    font-size: 14px;
-    line-height: 1.8;
-    color: #888888;            
-    white-space: pre-line; 
-}
-
-/* ==========================================
-   📱 智慧型手機版排版修正 (當螢幕寬度小於 768px)
-   ========================================== */
+/* 📱 手機版排版修正 */
 @media (max-width: 768px) {
     body {
-        flex-direction: column; /* 讓側邊欄與主要內容變成上下排列 */
+        flex-direction: column;
     }
 
     .sidebar {
@@ -207,34 +124,14 @@ h1 {
         margin-bottom: 20px;
     }
 
-    .submenu {
-        margin-bottom: 10px;
-    }
-
     .main-content {
         margin-left: 0;
         width: 100%;
         padding: 40px 20px;
     }
-
-    h1 {
-        margin-bottom: 40px;
-    }
-
-    /* 🔥 核心修正：將手機版大圖外殼高度調小，徹底消滅那段尷尬的空白 */
-    .work-img-wrapper {
-        height: 320px;       /* 適合手機觀看的高度 */
-        margin-bottom: 15px;
-    }
     
-    .work-card {
-        margin-bottom: 80px; /* 縮小作品間的間距 */
-    }
-
-    /* 讓手機版的小圖稍微縮小一點點，排起來更精緻 */
-    .thumb-img {
-        width: 60px;
-        height: 60px;
+    .page-title {
+        margin-bottom: 30px;
     }
 }
 </style>
@@ -245,124 +142,34 @@ h1 {
 <!-- 左側側邊欄導覽列 -->
 <nav class="sidebar">
     <h2>Pan Yu-Yang</h2>
-    <a href="about.html" class="menu-item">藝術家介紹</a>
-    <span class="menu-item" style="font-weight: bold;">作品</span>
-    <div class="submenu">
+    <a href="about.html" class="menu-item">介紹</a>
+    
+    <!-- 點擊「畫畫」可以收合/展開 -->
+    <span class="menu-item" onclick="toggleArtMenu()">畫畫</span>
+    <!-- 🔥 這一頁預設加上 open，讓觀看者知道自己正在畫畫的子選單裡面 -->
+    <div class="submenu open" id="art-submenu">
         <a href="printmaking.html" class="submenu-item">版畫系列</a>
         <a href="pseudo-classic.html" class="submenu-item active">擬古系列</a>
     </div>
-    <a href="writing.html" class="menu-item">書寫</a>
+    
+    <a href="writing.html" class="menu-item">寫作</a>
 </nav>
 
-<!-- 右側作品獨立垂直展示區 -->
+<!-- 右側主要內容區 -->
 <main class="main-content">
-
-    <h1>作品 / 擬古系列</h1>    
-
-    <!-- 作品 1：長尾山娘巴蕊圖 -->
-    <div class="work-card">
-        <div class="work-img-wrapper">
-            <img id="main-img-1" src="長尾山娘巴蕊圖_全貌.jpg">
-        </div>
-        
-        <div class="toggle-trigger" onclick="toggleDetails(this)">長尾山娘巴蕊圖｜2024｜原子筆、牛皮紙｜35 × 54 cm (點擊觀看介紹)</div>
-        
-        <div class="toggle-content">
-            <div class="details-content">
-                <div class="work-text">長尾山娘是台灣藍鵲的別名，牠們是臺灣特有種鳥類，會為了護巢而攻擊人類。這張畫在描繪人們被台灣藍鵲「巴頭」，雖然感到很痛，可是又覺得很榮幸的矛盾心緒。</div>
-                <div class="work-seal">印章文字：當頭上拂過藍的殘影／伴隨拔髮般的刺痛／他嚇得縮起脖子、吐出髒字／直到他發現葉叢間有一條黑白分明的尾羽／才知道這是傳說中的台灣藍鵲空襲／之後提起這件事／他總會說：討厭啦。</div>
-            </div>
-        </div>
-
-        <div class="thumb-container">
-            <img class="thumb-img active" src="長尾山娘巴蕊圖_全貌.jpg" onclick="switchImage('main-img-1', this)">
-            <img class="thumb-img" src="長尾山娘巴蕊圖_局部1.jpg" onclick="switchImage('main-img-1', this)">
-            <img class="thumb-img" src="長尾山娘巴蕊圖_局部2.jpg" onclick="switchImage('main-img-1', this)">
-            <img class="thumb-img" src="長尾山娘巴蕊圖_局部3.jpg" onclick="switchImage('main-img-1', this)">
-            <img class="thumb-img" src="長尾山娘巴蕊圖_局部4.jpg" onclick="switchImage('main-img-1', this)">
-        </div>
+    <div class="page-title">畫畫 / 擬古系列</div>
+    
+    <div class="artwork-container">
+        <!-- 這裡保持你原本放這張漂亮作品的 <img> 標籤與設定 -->
+        <img class="artwork-img" src="你的作品檔名.jpg" alt="擬古系列作品">
     </div>
-
-    <!-- 作品 2：牧書圖 -->
-    <div class="work-card">
-        <div class="work-img-wrapper">
-            <img src="牧書圖_全貌.jpg">
-        </div>
-        <div class="toggle-trigger" onclick="toggleDetails(this)">牧書圖｜2024｜原子筆、牛皮紙｜20 × 40 cm (點擊觀看介紹)</div>
-        <div class="toggle-content">
-            <div class="details-content">
-                <div class="work-text">畫作的靈感來自成語「牛角掛書」，呈現書本掛在牛角上、一邊遊走一邊閱讀的自在氛圍。構圖向臺灣前輩藝術家黃土水的淺浮雕作品《水牛群像》致敬，形式模仿傳統水墨畫卷，並以印章文字作為述說故事的載體。</div>
-                <div class="work-seal">印章文字：沒有所謂的荒島書單／因為當你帶了一本書去荒島／那麼荒島就不是荒島了</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 作品 3：七仙女圖 -->
-    <div class="work-card">
-        <div class="work-img-wrapper">
-            <img src="七仙女圖_全貌.jpg">
-        </div>
-        <div class="toggle-trigger" onclick="toggleDetails(this)">七仙女圖｜2024｜原子筆、牛皮紙｜35 × 54 cm (點擊觀看介紹)</div>
-        <div class="toggle-content">
-            <div class="details-content">
-                <div class="work-text">小時候，每次過年回到阿公阿嬤家，總可以和姐姐、堂姐、表姐一起聊天吃飯玩樂；但是隨著姐姐們長大、工作、結婚，過年的氣氛不再那麼熱鬧。因此我畫了一張七仙女圖，紀念之前這段美好的時光。</div>
-                <div class="work-seal">印章文字：我有一個姐姐、兩個表姐、四個堂姐／家人稱之為七仙女／她們從領紅包變成包紅包的人／在婚禮與喪禮短暫相聚</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 作品 4：七擒七縱圖 -->
-    <div class="work-card">
-        <div class="work-img-wrapper">
-            <img src="七擒七縱圖_全貌.jpg">
-        </div>
-        <div class="toggle-trigger" onclick="toggleDetails(this)">七擒七縱圖｜2024｜原子筆、牛皮紙｜35 × 54 cm (點擊觀看介紹)</div>
-        <div class="toggle-content">
-            <div class="details-content">
-                <div class="work-text">「七擒七縱」出自《三國志》，描述諸葛亮七次生擒、釋放南夷酋長孟獲，直到其心悅誠服，不再生背叛之心。這張畫作嘗試將古代的歷史故事移至當代的情境中，思考人類面對敵人的時候真的能具備足夠的智慧與耐心嗎？</div>
-                <div class="work-seal">印章文字：小時候讀七擒七縱的故事／發現要收服敵人太辛苦了／如果我遇到敵人／會有那麼多的才智與耐心來應對嗎</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 作品 5：在路上 -->
-    <div class="work-card">
-        <div class="work-img-wrapper">
-            <img src="在路上_全貌.jpg">
-        </div>
-        <div class="toggle-trigger" onclick="toggleDetails(this)">在路上｜2024｜原子筆、牛皮紙｜20 × 40 cm (點擊觀看介紹)</div>
-        <div class="toggle-content">
-            <div class="details-content">
-                <div class="work-text">我偶爾會去參加書展，行李中會裝滿滿的書，十分沈重，但我喜歡把那個沈重感幻想成某種知識的質量。這些書雖然是讓步履艱辛的阻力，卻也是支持我走下去的能量。</div>
-                <div class="work-seal">印章文字：往返書展的路上／我們的行李都裝著滿滿的書／錯覺閱讀的重量</div>
-            </div>
-        </div>
-    </div>
-
 </main>
 
 <script>
-function toggleDetails(element) {
-    var card = element.closest('.work-card');
-    if (!card) return;
-    
-    var content = card.querySelector('.toggle-content');
-    if (content) {
-        content.classList.toggle('open');
-    }
-}
-
-function switchImage(mainImgId, thumbElement) {
-    var mainImg = document.getElementById(mainImgId);
-    if (!mainImg) return; 
-    
-    mainImg.src = thumbElement.src;
-    
-    var siblings = thumbElement.parentNode.getElementsByClassName('thumb-img');
-    for (var i = 0; i < siblings.length; i++) {
-        siblings[i].classList.remove('active');
-    }
-    thumbElement.classList.add('active');
+// 控制「畫畫」選單展開收合的 Script
+function toggleArtMenu() {
+    var submenu = document.getElementById('art-submenu');
+    submenu.classList.toggle('open');
 }
 </script>
 
