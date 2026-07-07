@@ -3,11 +3,10 @@
 
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 確保手機完美縮放 -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pan Yu-Yang</title>
 
 <style>
-/* 基礎設定：底色改為深灰色 */
 body {
     font-family: Helvetica, Arial, sans-serif;
     margin: 0;
@@ -22,7 +21,7 @@ body {
 .sidebar {
     width: 260px;
     padding: 60px 40px;
-    border-right: 1px solid #252525; /* 配合深灰底色稍微調亮邊框線 */
+    border-right: 1px solid #252525; 
     position: fixed; 
     height: 100vh;
     box-sizing: border-box;
@@ -41,17 +40,28 @@ body {
     color: #ffffff;
     font-size: 16px;
     margin-bottom: 24px;
+    cursor: pointer;
+    user-select: none;
 }
 
 .menu-item:hover, .submenu-item:hover {
     color: #aaaaaa;
 }
 
+/* 🔥 預設隱藏的子選單外殼 */
 .submenu {
     margin-left: 15px;
-    margin-bottom: 24px;
     border-left: 1px solid #333; 
     padding-left: 15px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out, margin-bottom 0.3s ease-out;
+}
+
+/* 🔥 當子選單被加上 .open 樣式時才會展開 */
+.submenu.open {
+    max-height: 100px; 
+    margin-bottom: 24px;
 }
 
 .submenu-item {
@@ -83,12 +93,10 @@ body {
     letter-spacing: 2px;
 }
 
-/* ==========================================
-   📱 首頁手機版排版修正 (當螢幕寬度小於 768px)
-   ========================================== */
+/* 📱 手機版排版修正 */
 @media (max-width: 768px) {
     body {
-        flex-direction: column; /* 讓選單跟內容在手機上垂直排列 */
+        flex-direction: column;
     }
 
     .sidebar {
@@ -104,10 +112,6 @@ body {
         margin-bottom: 20px;
     }
 
-    .submenu {
-        margin-bottom: 10px;
-    }
-
     .main-content {
         margin-left: 0;
         width: 100%;
@@ -119,22 +123,30 @@ body {
 
 <body>
 
-<!-- 左側側邊欄導覽列 -->
 <nav class="sidebar">
     <h2>Pan Yu-Yang</h2>
-    <a href="about.html" class="menu-item">藝術家介紹</a>
-    <span class="menu-item" style="font-weight: bold;">作品</span>
-    <div class="submenu">
+    <a href="about.html" class="menu-item">介紹</a>
+    
+    <span class="menu-item" onclick="toggleArtMenu()">畫畫</span>
+    <div class="submenu" id="art-submenu">
         <a href="printmaking.html" class="submenu-item">版畫系列</a>
         <a href="pseudo-classic.html" class="submenu-item">擬古系列</a>
     </div>
-    <a href="writing.html" class="menu-item">書寫</a>
+    
+    <a href="writing.html" class="menu-item">寫作</a>
 </nav>
 
-<!-- 右側首頁留白區 -->
 <main class="main-content">
-    <div class="welcome-text">請由左側選單瀏覽作品系列。</div>
+    <div class="welcome-text">請由左側選單瀏覽。</div>
 </main>
+
+<script>
+// 控制「畫畫」選單展開收合的 Script
+function toggleArtMenu() {
+    var submenu = document.getElementById('art-submenu');
+    submenu.classList.toggle('open');
+}
+</script>
 
 </body>
 </html>
