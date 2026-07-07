@@ -6,7 +6,6 @@
 <title>擬古系列 - Pan Yu-Yang</title>
 
 <style>
-/* 基礎設定：底色改為深灰色 */
 body {
     font-family: Helvetica, Arial, sans-serif;
     margin: 0;
@@ -91,10 +90,10 @@ h1 {
     margin-bottom: 100px; 
 }
 
-/* 圖片樣式 */
+/* 主圖顯示區域 */
 .work-img-wrapper {
     width: 100%;
-    margin-bottom: 25px;
+    margin-bottom: 15px; 
 }
 
 .work-img-wrapper img {
@@ -104,7 +103,31 @@ h1 {
     height: auto;
 }
 
-/* 點擊觸發區域的樣式 */
+/* 局部放大圖（小圖）的水平排列外殼 */
+.thumb-container {
+    display: flex;
+    gap: 12px;           /* 小圖之間的間距 */
+    margin-bottom: 25px; /* 與下方灰色文字的距離 */
+}
+
+/* 單張小圖的樣式 */
+.thumb-img {
+    width: 80px;         /* 寬度固定 80px */
+    height: 80px;        /* 高度固定 80px，裁切成正方形比較整齊 */
+    object-fit: cover;   /* 確保圖片不變形地填滿正方形 */
+    cursor: pointer;
+    border: 1px solid #333;
+    opacity: 0.5;        /* 預設沒被點擊時半透明 */
+    transition: all 0.2s ease;
+}
+
+/* 當滑鼠移過去，或是該小圖處於「被選中(active)」狀態時 */
+.thumb-img:hover, .thumb-img.active {
+    opacity: 1;
+    border-color: #888;
+}
+
+/* 點擊觸發區域 */
 .toggle-trigger {
     font-size: 14px;
     color: #888888;            
@@ -114,25 +137,21 @@ h1 {
     transition: color 0.2s ease;
 }
 
-/* 滑鼠移到資訊欄時稍微亮一點點 */
 .toggle-trigger:hover {
     color: #cccccc;
 }
 
-/* 動畫核心外殼：預設隱藏且高度為0，利用 max-height 來達到平滑滑動的效果 */
+/* 動畫核心外殼 */
 .toggle-content {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.4s ease-in-out; /* 0.4秒平滑滑動 */
+    transition: max-height 0.4s ease-in-out; 
 }
 
-/* 當動態被加上 .open 類別時，寬度內的所有文字會優雅滑出 */
 .toggle-content.open {
-    /* 給予一個足夠裝下內容的上限高度，動畫就會平滑滑下來 */
     max-height: 500px; 
 }
 
-/* 展開後的文字內容內層（加上上方間距，避免展開時太突兀） */
 .details-content {
     padding-top: 24px;
 }
@@ -156,7 +175,6 @@ h1 {
 
 <body>
 
-<!-- 左側側邊欄導覽列 -->
 <nav class="sidebar">
     <h2>Pan Yu-Yang</h2>
     <a href="about.html" class="menu-item">藝術家介紹</a>
@@ -168,21 +186,24 @@ h1 {
     <a href="writing.html" class="menu-item">書寫</a>
 </nav>
 
-<!-- 右側作品獨立垂直展示區 -->
 <main class="main-content">
 
     <h1>作品 / 擬古系列</h1>    
 
-    <!-- 作品 1：長尾山娘巴蕊圖 -->
     <div class="work-card">
         <div class="work-img-wrapper">
-            <img src="長尾山娘巴蕊圖_全貌.jpg">
+            <img id="main-img-1" src="長尾山娘巴蕊圖_全貌.jpg">
         </div>
         
-        <!-- 點擊這一行會觸發滑動 -->
-        <div class="toggle-trigger" onclick="toggleDetails(this)">長尾山娘巴蕊圖｜2024｜原子筆、牛皮紙｜35 × 54 cm (點擊觀看介紹)</div>
+        <div class="thumb-container">
+            <img class="thumb-img active" src="長尾山娘巴蕊圖_全貌.jpg" onclick="switchImage('main-img-1', this)">
+            <img class="thumb-img" src="長尾山娘巴蕊圖_局部1.jpg" onclick="switchImage('main-img-1', this)">
+            <img class="thumb-img" src="長尾山娘巴蕊圖_局部2.jpg" onclick="switchImage('main-img-1', this)">
+            <img class="thumb-img" src="長尾山娘巴蕊圖_局部3.jpg" onclick="switchImage('main-img-1', this)">
+            <img class="thumb-img" src="長尾山娘巴蕊圖_局部4.jpg" onclick="switchImage('main-img-1', this)">
+        </div>
         
-        <!-- 滑動動畫外殼 -->
+        <div class="toggle-trigger" onclick="toggleDetails(this)">長尾山娘巴蕊圖｜2024｜原子筆、牛皮紙｜35 × 54 cm (點擊觀看介紹)</div>
         <div class="toggle-content">
             <div class="details-content">
                 <div class="work-text">長尾山娘是台灣藍鵲的別名，牠們是臺灣特有種鳥類，會為了護巢而攻擊人類。這張畫在描繪人們被台灣藍鵲「巴頭」，雖然感到很痛，可是又覺得很榮幸的矛盾心緒。</div>
@@ -191,7 +212,6 @@ h1 {
         </div>
     </div>
 
-    <!-- 作品 2：牧書圖 -->
     <div class="work-card">
         <div class="work-img-wrapper">
             <img src="牧書圖_全貌.jpg">
@@ -204,8 +224,7 @@ h1 {
             </div>
         </div>
     </div>
-        
-    <!-- 作品 3：七仙女圖 -->
+
     <div class="work-card">
         <div class="work-img-wrapper">
             <img src="七仙女圖_全貌.jpg">
@@ -219,7 +238,6 @@ h1 {
         </div>
     </div>
 
-    <!-- 作品 4：七擒七縱圖 -->
     <div class="work-card">
         <div class="work-img-wrapper">
             <img src="七擒七縱圖_全貌.jpg">
@@ -233,7 +251,6 @@ h1 {
         </div>
     </div>
 
-    <!-- 作品 5：在路上 -->
     <div class="work-card">
         <div class="work-img-wrapper">
             <img src="在路上_全貌.jpg">
@@ -249,14 +266,23 @@ h1 {
 
 </main>
 
-<!-- 底部控制滑動流暢度的一小段 JavaScript -->
 <script>
+// 控制介紹文字滑動
 function toggleDetails(element) {
-    // 找到點擊按鈕緊接著的下一個節點（也就是內容外殼 .toggle-content）
     var content = element.nextElementSibling;
-    
-    // 切換 .open 類別來觸發 CSS 的滑動動畫
     content.classList.toggle('open');
+}
+
+// 控制局部大圖切換
+function switchImage(mainImgId, thumbElement) {
+    var mainImg = document.getElementById(mainImgId);
+    mainImg.src = thumbElement.src;
+    
+    var siblings = thumbElement.parentNode.getElementsByClassName('thumb-img');
+    for (var i = 0; i < siblings.length; i++) {
+        siblings[i].classList.remove('active');
+    }
+    thumbElement.classList.add('active');
 }
 </script>
 
