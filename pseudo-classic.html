@@ -93,8 +93,8 @@ h1 {
 /* 限制主圖顯示區域的最大高度，並讓內容置中 */
 .work-img-wrapper {
     width: 100%;
-    height: 480px;       /* 鎖定固定高度 */
-    margin-bottom: 15px; 
+    height: 480px;       
+    margin-bottom: 20px; /* 微調間距 */
     display: flex;
     justify-content: center; 
     align-items: center;     
@@ -111,11 +111,26 @@ h1 {
     display: block;
 }
 
+/* 點擊觸發區域（資訊列） */
+.toggle-trigger {
+    font-size: 14px;
+    color: #888888;            
+    letter-spacing: 1px;
+    cursor: pointer; 
+    user-select: none;
+    transition: color 0.2s ease;
+    margin-bottom: 15px; /* 讓資訊列跟下方的小圖或文字保持舒服的距離 */
+}
+
+.toggle-trigger:hover {
+    color: #cccccc;
+}
+
 /* 局部放大圖（小圖）的水平排列外殼 */
 .thumb-container {
     display: flex;
     gap: 12px;           
-    margin-bottom: 25px; 
+    margin-bottom: 0; /* 移除原本底部的間距 */
 }
 
 /* 單張小圖的樣式 */
@@ -134,20 +149,6 @@ h1 {
     border-color: #888;
 }
 
-/* 點擊觸發區域 */
-.toggle-trigger {
-    font-size: 14px;
-    color: #888888;            
-    letter-spacing: 1px;
-    cursor: pointer; 
-    user-select: none;
-    transition: color 0.2s ease;
-}
-
-.toggle-trigger:hover {
-    color: #cccccc;
-}
-
 /* 動畫核心外殼 */
 .toggle-content {
     max-height: 0;
@@ -157,10 +158,11 @@ h1 {
 
 .toggle-content.open {
     max-height: 500px; 
+    margin-bottom: 20px; /* 當內容展開時，與下方小圖推開距離 */
 }
 
 .details-content {
-    padding-top: 24px;
+    padding-top: 10px; /* 微調展開後的上方留白 */
 }
 
 .work-text {
@@ -182,7 +184,6 @@ h1 {
 
 <body>
 
-<!-- 左側側邊欄導覽列 -->
 <nav class="sidebar">
     <h2>Pan Yu-Yang</h2>
     <a href="about.html" class="menu-item">藝術家介紹</a>
@@ -194,17 +195,24 @@ h1 {
     <a href="writing.html" class="menu-item">書寫</a>
 </nav>
 
-<!-- 右側作品獨立垂直展示區 -->
 <main class="main-content">
 
     <h1>作品 / 擬古系列</h1>    
 
-    <!-- 作品 1：長尾山娘巴蕊圖（進行 4 個局部測試） -->
     <div class="work-card">
         <div class="work-img-wrapper">
             <img id="main-img-1" src="長尾山娘巴蕊圖_全貌.jpg">
         </div>
         
+        <div class="toggle-trigger" onclick="toggleDetails(this)">長尾山娘巴蕊圖｜2024｜原子筆、牛皮紙｜35 × 54 cm (點擊觀看介紹)</div>
+        
+        <div class="toggle-content">
+            <div class="details-content">
+                <div class="work-text">長尾山娘是台灣藍鵲的別名，牠們是臺灣特有種鳥類，會為了護巢而攻擊人類。這張畫在描繪人們被台灣藍鵲「巴頭」，雖然感到很痛，可是又覺得很榮幸的矛盾心緒。</div>
+                <div class="work-seal">印章文字：當頭上拂過藍的殘影／伴隨拔髮般的刺痛／他嚇得縮起脖子、吐出髒字／直到他發現葉叢間有一條黑白分明的尾羽／才知道這是傳說中的台灣藍鵲空襲／之後提起這件事／他總會說：討厭啦。</div>
+            </div>
+        </div>
+
         <div class="thumb-container">
             <img class="thumb-img active" src="長尾山娘巴蕊圖_全貌.jpg" onclick="switchImage('main-img-1', this)">
             <img class="thumb-img" src="長尾山娘巴蕊圖_局部1.jpg" onclick="switchImage('main-img-1', this)">
@@ -212,17 +220,8 @@ h1 {
             <img class="thumb-img" src="長尾山娘巴蕊圖_局部3.jpg" onclick="switchImage('main-img-1', this)">
             <img class="thumb-img" src="長尾山娘巴蕊圖_局部4.jpg" onclick="switchImage('main-img-1', this)">
         </div>
-        
-        <div class="toggle-trigger" onclick="toggleDetails(this)">長尾山娘巴蕊圖｜2024｜原子筆、牛皮紙｜35 × 54 cm (點擊觀看介紹)</div>
-        <div class="toggle-content">
-            <div class="details-content">
-                <div class="work-text">長尾山娘是台灣藍鵲的別名，牠們是臺灣特有種鳥類，會為了護巢而攻擊人類。這張畫在描繪人們被台灣藍鵲「巴頭」，雖然感到很痛，可是又覺得很榮幸的矛盾心緒。</div>
-                <div class="work-seal">印章文字：當頭上拂過藍的殘影／伴隨拔髮般的刺痛／他嚇得縮起脖子、吐出髒字／直到他發現葉叢間有一條黑白分明的尾羽／才知道這是傳說中的台灣藍鵲空襲／之後提起這件事／他總會說：討厭啦。</div>
-            </div>
-        </div>
     </div>
 
-    <!-- 作品 2：牧書圖 -->
     <div class="work-card">
         <div class="work-img-wrapper">
             <img src="牧書圖_全貌.jpg">
@@ -236,7 +235,6 @@ h1 {
         </div>
     </div>
 
-    <!-- 作品 3：七仙女圖 -->
     <div class="work-card">
         <div class="work-img-wrapper">
             <img src="七仙女圖_全貌.jpg">
@@ -246,63 +244,3 @@ h1 {
             <div class="details-content">
                 <div class="work-text">小時候，每次過年回到阿公阿嬤家，總可以和姐姐、堂姐、表姐一起聊天吃飯玩樂；但是隨著姐姐們長大、工作、結婚，過年的氣氛不再那麼熱鬧。因此我畫了一張七仙女圖，紀念之前這段美好的時光。</div>
                 <div class="work-seal">印章文字：我有一個姐姐、兩個表姐、四個堂姐／家人稱之為七仙女／她們從領紅包變成包紅包的人／在婚禮與喪禮短暫相聚</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 作品 4：七擒七縱圖 -->
-    <div class="work-card">
-        <div class="work-img-wrapper">
-            <img src="七擒七縱圖_全貌.jpg">
-        </div>
-        <div class="toggle-trigger" onclick="toggleDetails(this)">七擒七縱圖｜2024｜原子筆、牛皮紙｜35 × 54 cm (點擊觀看介紹)</div>
-        <div class="toggle-content">
-            <div class="details-content">
-                <div class="work-text">「七擒七縱」出自《三國志》，描述諸葛亮七次生擒、釋放南夷酋長孟獲，直到其心悅誠服，不再生背叛之心。這張畫作嘗試將古代的歷史故事移至當代的情境中，思考人類面對敵人的時候真的能具備足夠的智慧與耐心嗎？</div>
-                <div class="work-seal">印章文字：小時候讀七擒七縱的故事／發現要收服敵人太辛苦了／如果我遇到敵人／會有那麼多的才智與耐心來應對嗎</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 作品 5：在路上 -->
-    <div class="work-card">
-        <div class="work-img-wrapper">
-            <img src="在路上_全貌.jpg">
-        </div>
-        <div class="toggle-trigger" onclick="toggleDetails(this)">在路上｜2024｜原子筆、牛皮紙｜20 × 40 cm (點興觀看介紹)</div>
-        <div class="toggle-content">
-            <div class="details-content">
-                <div class="work-text">我偶爾會去參加書展，行李中會裝滿滿的書，十分沈重，但我喜歡把那個沈重感幻想成某種知識的質量。這些書雖然是讓步履艱辛的阻力，卻也是支持我走下去的能量。</div>
-                <div class="work-seal">印章文字：往返書展的路上／我們的行李都裝著滿滿的書／錯覺閱讀的重量</div>
-            </div>
-        </div>
-    </div>
-
-</main>
-
-<script>
-// 控制介紹文字滑動
-function toggleDetails(element) {
-    var content = element.nextElementSibling;
-    if (content) {
-        content.classList.toggle('open');
-    }
-}
-
-// 控制局部大圖切換（修正版：加入安全檢查防止瀏覽器卡死）
-function switchImage(mainImgId, thumbElement) {
-    var mainImg = document.getElementById(mainImgId);
-    if (!mainImg) return; // 如果找不到對應的 id 程式會直接跳出，不會再造成網頁癱瘓
-    
-    mainImg.src = thumbElement.src;
-    
-    var siblings = thumbElement.parentNode.getElementsByClassName('thumb-img');
-    for (var i = 0; i < siblings.length; i++) {
-        siblings[i].classList.remove('active');
-    }
-    thumbElement.classList.add('active');
-}
-</script>
-
-</body>
-</html>
