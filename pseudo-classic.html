@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>Pan Yu-Yang</title>
+
+<style>
+
+/* 1. 全域設定與黑底白字 */
+body{
+    font-family: Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #000000; 
+    color: #ffffff;            
+    display: flex; /* 使用 flex 讓選單和內容變為左右排列 */
+    min-height: 100vh;
+}
+
+/* 2. 左側固定側邊欄選單 */
+.sidebar {
+    width: 240px;
+    padding: 60px 30px;
+    border-right: 1px solid #222; /* 隱約的右邊框線 */
+    position: fixed; /* 固定在左邊，滾動時不會消失 */
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+.sidebar h2 {
+    font-size: 22px;
+    font-weight: normal;
+    margin-bottom: 40px;
+    letter-spacing: 2px;
+}
+
+/* 主欄目樣式 */
+.menu-item {
+    display: block;
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.menu-item:hover, .submenu-item:hover {
+    color: #aaaaaa;
+}
+
+.menu-item.active, .submenu-item.active {
+    color: #888888;
+    pointer-events: none;
+}
+
+/* 3. 作品底下的次選單（縮排） */
+.submenu {
+    margin-left: 15px;
+    margin-bottom: 20px;
+    border-left: 1px solid #333; /* 次選單左側裝飾線 */
+    padding-left: 15px;
+}
+
+.submenu-item {
+    display: block;
+    text-decoration: none;
+    color: #cccccc; /* 次選單顏色稍微調暗，區分主次 */
+    font-size: 14px;
+    margin-bottom: 12px;
+}
+
+/* 4. 右側主要內容區塊 */
+.main-content {
+    margin-left: 240px; /* 空出左邊側邊欄的寬度 */
+    padding: 60px 80px;
+    max-width: 900px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+h1 {
+    margin-bottom: 60px;
+    font-weight: normal;
+}
+
+.work {
+    margin-bottom: 100px;
+}
+
+.work-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+img {
+    max-width: 900px;
+    width: 100%;
+    display: block;
+    margin-bottom: 15px;
+}
+
+.work-info {
+    font-size: 14px;
+    color: #aaaaaa;            
+    margin-bottom: 15px;
+}
+
+.work-text {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #e0e0e0;            
+}
+
+</style>
+
+</head>
+
+<body>
+
+<nav class="sidebar">
+    <h2>Pan Yu-Yang</h2>
+    
+    <a href="about.html" class="menu-item">藝術家介紹</a>
+    
+    <span class="menu-item" style="font-weight: bold;">作品</span>
+    
+    <div class="submenu">
+        <a href="index.html" class="submenu-item active">首頁 / 全部作品</a>
+        <a href="printmaking.html" class="submenu-item">版畫系列</a>
+        <a href="pseudo-classic.html" class="submenu-item">擬古系列</a>
+    </div>
+    
+    <a href="writing.html" class="menu-item">書寫</a>
+</nav>
+
+<main class="main-content">
+
+    <h1>My Work</h1>    
+        
+    <div class="work">
+        <div class="work-title">長尾山娘巴蕊圖</div>
+        <img src="長尾山娘巴蕊圖_全貌.jpg">
+        <div class="work-info">2024｜原子筆、牛皮紙｜35 × 54 cm</div>
+        <div class="work-text">
+            長尾山娘是台灣藍鵲的別名，牠們是臺灣特有種鳥類，會為了護巢而攻擊人類。這張畫在描繪人們被台灣藍鵲「巴頭」，雖然感到很痛，可是又覺得很榮幸的矛盾心緒。
+        </div>
+    </div>
+
+    <div class="work">
+        <div class="work-title">牧書圖</div>
+        <img src="牧書圖_全貌.jpg">
+        <div class="work-info">2024｜原子筆、牛皮紙｜20 × 40 cm</div>
+        <div class="work-text">
+            畫作的靈感來自成語「牛角掛書」，呈現書本掛在牛角上、一邊遊走一邊閱讀的自在氛圍。構圖向臺灣前輩藝術家黃土水的淺浮雕作品《水牛群像》致敬，形式模仿傳統水墨畫卷，並以印章文字作為述說故事的載體。
+        </div>
+    </div>
+        
+    <div class="work">
+        <div class="work-title">七仙女圖</div>
+        <img src="七仙女圖_全貌.jpg">
+        <div class="work-info">2024｜原子筆、牛皮紙｜35 × 54 cm</div>
+        <div class="work-text">
+            小時候，每次過年回到阿公阿嬤家，總可以和姐姐、堂姐、表姐一起聊天吃飯玩樂；但是隨著姐姐們長大、工作、結婚，過年的氣氛不再那麼熱鬧。因此我畫了一張七仙女圖，紀念之前這段美好的時光。
+        </div>
+    </div>
+
+    <div class="work">
+        <div class="work-title">七擒七縱圖</div>
+        <img src="七擒七縱圖_全貌.jpg">
+        <div class="work-info">2024｜原子筆、牛皮紙｜35 × 54 cm</div>
+        <div class="work-text">
+            「七擒七縱」出自《三國志》，描述諸葛亮七次生擒、釋放南夷酋長孟獲，直到其心悅誠服，不再生背叛之心。這張畫作嘗試將古代的歷史故事移至當代的情境中，思考人類面對敵人的時候真的能具備足夠的智慧與耐心嗎？
+        </div>
+    </div>
+
+    <div class="work">
+        <div class="work-title">在路上</div>
+        <img src="在路上_全貌.jpg">
+        <div class="work-info">2024｜原子筆、牛皮紙｜20 × 40 cm</div>
+        <div class="work-text">
+            我偶爾會去參加書展，行李中會裝滿滿的書，十分沈重，但我喜歡把那個沈重感幻想成某種知識的質量。這些書雖然是讓步履艱辛的阻力，卻也是支持我走下去的能量。
+        </div>
+    </div>
+
+</main>
+
+</body>
+
+</html>
