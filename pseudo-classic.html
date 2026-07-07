@@ -126,11 +126,14 @@ h1 {
     color: #cccccc;
 }
 
-/* 局部放大圖（小圖）的水平排列外殼 */
+/* 🔥 修正：縮圖控制列外殼，確保 5 張圖絕對不被擠壓或消失 */
 .thumb-container {
     display: flex;
-    gap: 12px;           
-    margin-bottom: 0; 
+    flex-wrap: wrap;     /* 關鍵：如果寬度不夠，會自動換行，絕不隱藏 */
+    gap: 12px;           /* 圖與圖之間的固定間距 */
+    margin-top: 20px;    /* 與上方元素的距離 */
+    margin-bottom: 20px; 
+    clear: both;
 }
 
 /* 單張小圖的樣式 */
@@ -142,6 +145,7 @@ h1 {
     border: 1px solid #333;
     opacity: 0.5;        
     transition: all 0.2s ease;
+    flex-shrink: 0;      /* 防止圖片被瀏覽器強制壓扁 */
 }
 
 .thumb-img:hover, .thumb-img.active {
@@ -184,7 +188,6 @@ h1 {
 
 <body>
 
-<!-- 左側側邊欄導覽列 -->
 <nav class="sidebar">
     <h2>Pan Yu-Yang</h2>
     <a href="about.html" class="menu-item">藝術家介紹</a>
@@ -196,12 +199,10 @@ h1 {
     <a href="writing.html" class="menu-item">書寫</a>
 </nav>
 
-<!-- 右側作品獨立垂直展示區 -->
 <main class="main-content">
 
     <h1>作品 / 擬古系列</h1>    
 
-    <!-- 作品 1：長尾山娘巴蕊圖 -->
     <div class="work-card">
         <div class="work-img-wrapper">
             <img id="main-img-1" src="長尾山娘巴蕊圖_全貌.jpg">
@@ -225,7 +226,6 @@ h1 {
         </div>
     </div>
 
-    <!-- 作品 2：牧書圖 -->
     <div class="work-card">
         <div class="work-img-wrapper">
             <img src="牧書圖_全貌.jpg">
@@ -239,7 +239,6 @@ h1 {
         </div>
     </div>
 
-    <!-- 作品 3：七仙女圖 -->
     <div class="work-card">
         <div class="work-img-wrapper">
             <img src="七仙女圖_全貌.jpg">
@@ -253,7 +252,6 @@ h1 {
         </div>
     </div>
 
-    <!-- 作品 4：七擒七縱圖 -->
     <div class="work-card">
         <div class="work-img-wrapper">
             <img src="七擒七縱圖_全貌.jpg">
@@ -267,7 +265,6 @@ h1 {
         </div>
     </div>
 
-    <!-- 作品 5：在路上 -->
     <div class="work-card">
         <div class="work-img-wrapper">
             <img src="在路上_全貌.jpg">
@@ -284,13 +281,10 @@ h1 {
 </main>
 
 <script>
-// 🔥 金剛不壞版控制腳本：防錯並精準定位
 function toggleDetails(element) {
-    // 先向上找到目前點擊的作品外殼 (.work-card)
     var card = element.closest('.work-card');
     if (!card) return;
     
-    // 再從這個外殼往下精準尋找內部的 .toggle-content
     var content = card.querySelector('.toggle-content');
     if (content) {
         content.classList.toggle('open');
