@@ -3,6 +3,7 @@
 
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 確保手機完美縮放 -->
 <title>擬古系列 - Pan Yu-Yang</title>
 
 <style>
@@ -90,10 +91,10 @@ h1 {
     margin-bottom: 120px; 
 }
 
-/* 主圖顯示區域 */
+/* 主圖顯示區域（預設為電腦版大尺寸） */
 .work-img-wrapper {
     width: 100%;
-    height: 650px;       
+    height: 650px;       /* 電腦版完美大圖高度 */
     margin-bottom: 25px; 
     display: flex;
     justify-content: center; 
@@ -120,18 +121,19 @@ h1 {
     user-select: none;
     transition: color 0.2s ease;
     margin-bottom: 15px; 
+    line-height: 1.5;
 }
 
 .toggle-trigger:hover {
     color: #cccccc;
 }
 
-/* 🔥 修正：縮圖控制列外殼，確保 5 張圖絕對不被擠壓或消失 */
+/* 縮圖控制列外殼 */
 .thumb-container {
     display: flex;
-    flex-wrap: wrap;     /* 關鍵：如果寬度不夠，會自動換行，絕不隱藏 */
-    gap: 12px;           /* 圖與圖之間的固定間距 */
-    margin-top: 20px;    /* 與上方元素的距離 */
+    flex-wrap: wrap;     
+    gap: 12px;           
+    margin-top: 20px;    
     margin-bottom: 20px; 
     clear: both;
 }
@@ -145,7 +147,7 @@ h1 {
     border: 1px solid #333;
     opacity: 0.5;        
     transition: all 0.2s ease;
-    flex-shrink: 0;      /* 防止圖片被瀏覽器強制壓扁 */
+    flex-shrink: 0;      
 }
 
 .thumb-img:hover, .thumb-img.active {
@@ -183,11 +185,64 @@ h1 {
     color: #888888;            
     white-space: pre-line; 
 }
+
+/* ==========================================
+   📱 智慧型手機版排版修正 (當螢幕寬度小於 768px)
+   ========================================== */
+@media (max-width: 768px) {
+    body {
+        flex-direction: column; /* 讓側邊欄與主要內容變成上下排列 */
+    }
+
+    .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+        padding: 30px 20px;
+        border-right: none;
+        border-bottom: 1px solid #252525;
+    }
+
+    .sidebar h2 {
+        margin-bottom: 20px;
+    }
+
+    .submenu {
+        margin-bottom: 10px;
+    }
+
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+        padding: 40px 20px;
+    }
+
+    h1 {
+        margin-bottom: 40px;
+    }
+
+    /* 🔥 核心修正：將手機版大圖外殼高度調小，徹底消滅那段尷尬的空白 */
+    .work-img-wrapper {
+        height: 320px;       /* 適合手機觀看的高度 */
+        margin-bottom: 15px;
+    }
+    
+    .work-card {
+        margin-bottom: 80px; /* 縮小作品間的間距 */
+    }
+
+    /* 讓手機版的小圖稍微縮小一點點，排起來更精緻 */
+    .thumb-img {
+        width: 60px;
+        height: 60px;
+    }
+}
 </style>
 </head>
 
 <body>
 
+<!-- 左側側邊欄導覽列 -->
 <nav class="sidebar">
     <h2>Pan Yu-Yang</h2>
     <a href="about.html" class="menu-item">藝術家介紹</a>
@@ -199,10 +254,12 @@ h1 {
     <a href="writing.html" class="menu-item">書寫</a>
 </nav>
 
+<!-- 右側作品獨立垂直展示區 -->
 <main class="main-content">
 
     <h1>作品 / 擬古系列</h1>    
 
+    <!-- 作品 1：長尾山娘巴蕊圖 -->
     <div class="work-card">
         <div class="work-img-wrapper">
             <img id="main-img-1" src="長尾山娘巴蕊圖_全貌.jpg">
@@ -226,6 +283,7 @@ h1 {
         </div>
     </div>
 
+    <!-- 作品 2：牧書圖 -->
     <div class="work-card">
         <div class="work-img-wrapper">
             <img src="牧書圖_全貌.jpg">
@@ -239,6 +297,7 @@ h1 {
         </div>
     </div>
 
+    <!-- 作品 3：七仙女圖 -->
     <div class="work-card">
         <div class="work-img-wrapper">
             <img src="七仙女圖_全貌.jpg">
@@ -252,6 +311,7 @@ h1 {
         </div>
     </div>
 
+    <!-- 作品 4：七擒七縱圖 -->
     <div class="work-card">
         <div class="work-img-wrapper">
             <img src="七擒七縱圖_全貌.jpg">
@@ -265,6 +325,7 @@ h1 {
         </div>
     </div>
 
+    <!-- 作品 5：在路上 -->
     <div class="work-card">
         <div class="work-img-wrapper">
             <img src="在路上_全貌.jpg">
