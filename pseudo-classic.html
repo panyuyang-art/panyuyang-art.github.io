@@ -70,7 +70,7 @@ body {
 .main-content {
     margin-left: 260px; 
     padding: 60px 80px;
-    max-width: 800px; 
+    max-width: 1200px; 
     width: calc(100% - 260px);
     box-sizing: border-box;
 }
@@ -87,14 +87,14 @@ h1 {
 .work-card {
     display: block;
     width: 100%;
-    margin-bottom: 100px; 
+    margin-bottom: 120px; 
 }
 
-/* 限制主圖顯示區域的最大高度，並讓內容置中 */
+/* 主圖顯示區域 */
 .work-img-wrapper {
     width: 100%;
-    height: 480px;       
-    margin-bottom: 20px; /* 微調間距 */
+    height: 650px;       
+    margin-bottom: 25px; 
     display: flex;
     justify-content: center; 
     align-items: center;     
@@ -119,7 +119,7 @@ h1 {
     cursor: pointer; 
     user-select: none;
     transition: color 0.2s ease;
-    margin-bottom: 15px; /* 讓資訊列跟下方的小圖或文字保持舒服的距離 */
+    margin-bottom: 15px; 
 }
 
 .toggle-trigger:hover {
@@ -130,7 +130,7 @@ h1 {
 .thumb-container {
     display: flex;
     gap: 12px;           
-    margin-bottom: 0; /* 移除原本底部的間距 */
+    margin-bottom: 0; 
 }
 
 /* 單張小圖的樣式 */
@@ -157,12 +157,12 @@ h1 {
 }
 
 .toggle-content.open {
-    max-height: 500px; 
-    margin-bottom: 20px; /* 當內容展開時，與下方小圖推開距離 */
+    max-height: 600px; 
+    margin-bottom: 25px; 
 }
 
 .details-content {
-    padding-top: 10px; /* 微調展開後的上方留白 */
+    padding-top: 10px; 
 }
 
 .work-text {
@@ -184,6 +184,7 @@ h1 {
 
 <body>
 
+<!-- 左側側邊欄導覽列 -->
 <nav class="sidebar">
     <h2>Pan Yu-Yang</h2>
     <a href="about.html" class="menu-item">藝術家介紹</a>
@@ -195,10 +196,12 @@ h1 {
     <a href="writing.html" class="menu-item">書寫</a>
 </nav>
 
+<!-- 右側作品獨立垂直展示區 -->
 <main class="main-content">
 
     <h1>作品 / 擬古系列</h1>    
 
+    <!-- 作品 1：長尾山娘巴蕊圖 -->
     <div class="work-card">
         <div class="work-img-wrapper">
             <img id="main-img-1" src="長尾山娘巴蕊圖_全貌.jpg">
@@ -222,6 +225,7 @@ h1 {
         </div>
     </div>
 
+    <!-- 作品 2：牧書圖 -->
     <div class="work-card">
         <div class="work-img-wrapper">
             <img src="牧書圖_全貌.jpg">
@@ -235,6 +239,7 @@ h1 {
         </div>
     </div>
 
+    <!-- 作品 3：七仙女圖 -->
     <div class="work-card">
         <div class="work-img-wrapper">
             <img src="七仙女圖_全貌.jpg">
@@ -244,3 +249,67 @@ h1 {
             <div class="details-content">
                 <div class="work-text">小時候，每次過年回到阿公阿嬤家，總可以和姐姐、堂姐、表姐一起聊天吃飯玩樂；但是隨著姐姐們長大、工作、結婚，過年的氣氛不再那麼熱鬧。因此我畫了一張七仙女圖，紀念之前這段美好的時光。</div>
                 <div class="work-seal">印章文字：我有一個姐姐、兩個表姐、四個堂姐／家人稱之為七仙女／她們從領紅包變成包紅包的人／在婚禮與喪禮短暫相聚</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 作品 4：七擒七縱圖 -->
+    <div class="work-card">
+        <div class="work-img-wrapper">
+            <img src="七擒七縱圖_全貌.jpg">
+        </div>
+        <div class="toggle-trigger" onclick="toggleDetails(this)">七擒七縱圖｜2024｜原子筆、牛皮紙｜35 × 54 cm (點擊觀看介紹)</div>
+        <div class="toggle-content">
+            <div class="details-content">
+                <div class="work-text">「七擒七縱」出自《三國志》，描述諸葛亮七次生擒、釋放南夷酋長孟獲，直到其心悅誠服，不再生背叛之心。這張畫作嘗試將古代的歷史故事移至當代的情境中，思考人類面對敵人的時候真的能具備足夠的智慧與耐心嗎？</div>
+                <div class="work-seal">印章文字：小時候讀七擒七縱的故事／發現要收服敵人太辛苦了／如果我遇到敵人／會有那麼多的才智與耐心來應對嗎</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 作品 5：在路上 -->
+    <div class="work-card">
+        <div class="work-img-wrapper">
+            <img src="在路上_全貌.jpg">
+        </div>
+        <div class="toggle-trigger" onclick="toggleDetails(this)">在路上｜2024｜原子筆、牛皮紙｜20 × 40 cm (點擊觀看介紹)</div>
+        <div class="toggle-content">
+            <div class="details-content">
+                <div class="work-text">我偶爾會去參加書展，行李中會裝滿滿的書，十分沈重，但我喜歡把那個沈重感幻想成某種知識的質量。這些書雖然是讓步履艱辛的阻力，卻也是支持我走下去的能量。</div>
+                <div class="work-seal">印章文字：往返書展的路上／我們的行李都裝著滿滿的書／錯覺閱讀的重量</div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<script>
+// 🔥 金剛不壞版控制腳本：防錯並精準定位
+function toggleDetails(element) {
+    // 先向上找到目前點擊的作品外殼 (.work-card)
+    var card = element.closest('.work-card');
+    if (!card) return;
+    
+    // 再從這個外殼往下精準尋找內部的 .toggle-content
+    var content = card.querySelector('.toggle-content');
+    if (content) {
+        content.classList.toggle('open');
+    }
+}
+
+function switchImage(mainImgId, thumbElement) {
+    var mainImg = document.getElementById(mainImgId);
+    if (!mainImg) return; 
+    
+    mainImg.src = thumbElement.src;
+    
+    var siblings = thumbElement.parentNode.getElementsByClassName('thumb-img');
+    for (var i = 0; i < siblings.length; i++) {
+        siblings[i].classList.remove('active');
+    }
+    thumbElement.classList.add('active');
+}
+</script>
+
+</body>
+</html>
