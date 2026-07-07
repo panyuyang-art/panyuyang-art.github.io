@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>擬古系列 - Pan Yu-Yang</title>
+<title>Pan Yu-Yang</title>
 
 <style>
 body {
@@ -48,7 +48,7 @@ body {
     color: #aaaaaa;
 }
 
-/* 預設隱藏的子選單外殼 */
+/* 🔥 預設隱藏的子選單外殼 */
 .submenu {
     margin-left: 15px;
     border-left: 1px solid #333; 
@@ -58,7 +58,7 @@ body {
     transition: max-height 0.3s ease-out, margin-bottom 0.3s ease-out;
 }
 
-/* 當子選單被加上 .open 樣式時才會展開 */
+/* 🔥 當子選單被加上 .open 樣式時才會展開 */
 .submenu.open {
     max-height: 100px; 
     margin-bottom: 24px;
@@ -75,34 +75,22 @@ body {
 .submenu-item.active {
     color: #ffffff;
     font-weight: bold;
-    pointer-events: none; /* 已經在這一頁了，無法重複點擊 */
+    pointer-events: none;
 }
 
 /* 右側主要內容區區塊 */
 .main-content {
     margin-left: 260px; 
-    padding: 60px 80px;
+    padding: 100px 80px;
     box-sizing: border-box;
-    width: calc(100% - 260px);
+    display: flex;
+    align-items: center;
 }
 
-.page-title {
-    font-size: 24px;
-    font-weight: normal;
-    margin-bottom: 40px;
+.welcome-text {
+    font-size: 14px;
+    color: #555555;
     letter-spacing: 2px;
-}
-
-/* 作品圖片展示區 */
-.artwork-container {
-    max-width: 1000px;
-    margin-bottom: 40px;
-}
-
-.artwork-img {
-    width: 100%;
-    height: auto;
-    display: block;
 }
 
 /* 📱 手機版排版修正 */
@@ -129,40 +117,27 @@ body {
         width: 100%;
         padding: 40px 20px;
     }
-    
-    .page-title {
-        margin-bottom: 30px;
-    }
 }
 </style>
 </head>
 
 <body>
 
-<!-- 左側側邊欄導覽列 -->
 <nav class="sidebar">
     <h2>Pan Yu-Yang</h2>
     <a href="about.html" class="menu-item">介紹</a>
     
-    <!-- 點擊「畫畫」可以收合/展開 -->
     <span class="menu-item" onclick="toggleArtMenu()">畫畫</span>
-    <!-- 🔥 這一頁預設加上 open，讓觀看者知道自己正在畫畫的子選單裡面 -->
-    <div class="submenu open" id="art-submenu">
+    <div class="submenu" id="art-submenu">
         <a href="printmaking.html" class="submenu-item">版畫系列</a>
-        <a href="pseudo-classic.html" class="submenu-item active">擬古系列</a>
+        <a href="pseudo-classic.html" class="submenu-item">擬古系列</a>
     </div>
     
     <a href="writing.html" class="menu-item">寫作</a>
 </nav>
 
-<!-- 右側主要內容區 -->
 <main class="main-content">
-    <div class="page-title">畫畫 / 擬古系列</div>
-    
-    <div class="artwork-container">
-        <!-- 這裡保持你原本放這張漂亮作品的 <img> 標籤與設定 -->
-        <img class="artwork-img" src="你的作品檔名.jpg" alt="擬古系列作品">
-    </div>
+    <div class="welcome-text">請由左側選單瀏覽。</div>
 </main>
 
 <script>
