@@ -3,6 +3,7 @@
 
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 確保手機完美縮放 -->
 <title>Pan Yu-Yang</title>
 
 <style>
@@ -80,6 +81,38 @@ body {
     font-size: 14px;
     color: #555555;
     letter-spacing: 2px;
+}
+
+/* ==========================================
+   📱 首頁手機版排版修正 (當螢幕寬度小於 768px)
+   ========================================== */
+@media (max-width: 768px) {
+    body {
+        flex-direction: column; /* 讓選單跟內容在手機上垂直排列 */
+    }
+
+    .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+        padding: 30px 20px;
+        border-right: none;
+        border-bottom: 1px solid #252525;
+    }
+
+    .sidebar h2 {
+        margin-bottom: 20px;
+    }
+
+    .submenu {
+        margin-bottom: 10px;
+    }
+
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+        padding: 40px 20px;
+    }
 }
 </style>
 </head>
