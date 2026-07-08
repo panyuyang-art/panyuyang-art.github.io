@@ -47,7 +47,7 @@ body {
     color: #aaaaaa;
 }
 
-/* 🎨 新版選單：預設隱藏的子選單外殼 */
+/* 新版選單：預設隱藏的子選單外殼 */
 .submenu {
     margin-left: 15px;
     border-left: 1px solid #333; 
@@ -57,7 +57,7 @@ body {
     transition: max-height 0.3s ease-out, margin-bottom 0.3s ease-out;
 }
 
-/* 🎨 新版選單：進入這一頁時直接保持展開狀態 */
+/* 新版選單：進入這一頁時直接保持展開狀態 */
 .submenu.open {
     max-height: 100px; 
     margin-bottom: 24px;
@@ -122,20 +122,30 @@ h1 {
     display: block;
 }
 
-/* 點擊觸發區域（資訊列） */
+/* 🛠️ 修改點擊觸發區域：使其成為精緻的小下拉按鈕 */
 .toggle-trigger {
-    font-size: 14px;
-    color: #888888;            
+    font-size: 13px;
+    color: #666666;            
     letter-spacing: 1px;
     cursor: pointer; 
     user-select: none;
     transition: color 0.2s ease;
     margin-bottom: 15px; 
     line-height: 1.5;
+    display: inline-flex;
+    align-items: center;
 }
 
 .toggle-trigger:hover {
-    color: #cccccc;
+    color: #aaaaaa;
+}
+
+/* 旋轉小箭頭的樣式 */
+.toggle-trigger .arrow {
+    display: inline-block;
+    margin-left: 6px;
+    font-size: 10px;
+    transition: transform 0.3s ease;
 }
 
 /* 縮圖控制列外殼 */
@@ -179,6 +189,15 @@ h1 {
 
 .details-content {
     padding-top: 10px; 
+}
+
+/* 🛠️ 用於收納原本放在外面的作品名與基本資訊 */
+.work-meta {
+    font-size: 14px;
+    font-weight: bold;
+    color: #cccccc;
+    margin-bottom: 12px;
+    letter-spacing: 1px;
 }
 
 .work-text {
@@ -265,15 +284,19 @@ h1 {
 
     <h1>畫過 / 擬古系列</h1>    
 
+    <!-- 作品 1：長尾山娘巴蕊圖 -->
     <div class="work-card">
         <div class="work-img-wrapper">
             <img id="main-img-1" src="長尾山娘巴蕊圖_全貌.jpg">
         </div>
         
-        <div class="toggle-trigger" onclick="toggleDetails(this)">長尾山娘巴蕊圖｜2024｜原子筆、牛皮紙｜35 × 54 cm (點擊觀看介紹)</div>
+        <div class="toggle-trigger" onclick="toggleDetails(this)">
+            ＋ 作品資訊 <span class="arrow">▼</span>
+        </div>
         
         <div class="toggle-content">
             <div class="details-content">
+                <div class="work-meta">長尾山娘巴蕊圖｜2024｜原子筆、牛皮紙｜35 × 54 cm</div>
                 <div class="work-seal">印章文字：當頭上拂過藍的殘影／伴隨拔髮般的刺痛／他嚇得縮起脖子、吐出髒字／直到他發現葉叢間有一條黑白分明的尾羽／才知道這是傳說中的台灣藍鵲空襲／之後提起這件事／他總會說：討厭啦。</div>
             </div>
         </div>
@@ -287,15 +310,19 @@ h1 {
         </div>
     </div>
 
+    <!-- 作品 2：牧書圖 -->
     <div class="work-card">
         <div class="work-img-wrapper">
             <img id="main-img-2" src="牧書圖_全貌.jpg">
         </div>
         
-        <div class="toggle-trigger" onclick="toggleDetails(this)">牧書圖｜2024｜原子筆、牛皮紙｜20 × 40 cm (點擊觀看介紹)</div>
+        <div class="toggle-trigger" onclick="toggleDetails(this)">
+            ＋ 作品資訊 <span class="arrow">▼</span>
+        </div>
         
         <div class="toggle-content">
             <div class="details-content">
+                <div class="work-meta">牧書圖｜2024｜原子筆、牛皮紙｜20 × 40 cm</div>
                 <div class="work-seal">印章文字：沒有所謂的荒島書單／因為當你帶了一本書去荒島／那麼荒島就不是荒島了</div>
             </div>
         </div>
@@ -309,13 +336,17 @@ h1 {
         </div>
     </div>
 
+    <!-- 作品 3：七仙女圖 -->
     <div class="work-card">
         <div class="work-img-wrapper">
             <img id="main-img-3" src="七仙女圖_全貌.jpg">
         </div>
-        <div class="toggle-trigger" onclick="toggleDetails(this)">七仙女圖｜2024｜原子筆、牛皮紙｜35 × 54 cm (點擊觀看介紹)</div>
+        <div class="toggle-trigger" onclick="toggleDetails(this)">
+            ＋ 作品資訊 <span class="arrow">▼</span>
+        </div>
         <div class="toggle-content">
             <div class="details-content">
+                <div class="work-meta">七仙女圖｜2024｜原子筆、牛皮紙｜35 × 54 cm</div>
                 <div class="work-seal">印章文字：我有一個姐姐、兩個表姐、四個堂姐／家人稱之為七仙女／她們從領紅包變成包紅包的人／在婚禮與喪禮短暫相聚</div>
             </div>
         </div>
@@ -329,13 +360,17 @@ h1 {
         </div>
     </div>
 
+    <!-- 作品 4：七擒七縱圖 -->
     <div class="work-card">
         <div class="work-img-wrapper">
             <img id="main-img-4" src="七擒七縱圖_全貌.jpg">
         </div>
-        <div class="toggle-trigger" onclick="toggleDetails(this)">七擒七縱圖｜2024｜原子筆、牛皮紙｜35 × 54 cm (點擊觀看介紹)</div>
+        <div class="toggle-trigger" onclick="toggleDetails(this)">
+            ＋ 作品資訊 <span class="arrow">▼</span>
+        </div>
         <div class="toggle-content">
             <div class="details-content">
+                <div class="work-meta">七擒七縱圖｜2024｜原子筆、牛皮紙｜35 × 54 cm</div>
                 <div class="work-seal">印章文字：小時候讀七擒七縱的故事／發現要收服敵人太辛苦了／如果我遇到敵人／會有那麼多的才智與耐心來應對嗎</div>
             </div>
         </div>
@@ -349,13 +384,17 @@ h1 {
         </div>
     </div>
 
+    <!-- 作品 5：在路上 -->
     <div class="work-card">
         <div class="work-img-wrapper">
             <img id="main-img-5" src="在路上_全貌.jpg">
         </div>
-        <div class="toggle-trigger" onclick="toggleDetails(this)">在路上｜2024｜原子筆、牛皮紙｜20 × 40 cm (點擊觀看介紹)</div>
+        <div class="toggle-trigger" onclick="toggleDetails(this)">
+            ＋ 作品資訊 <span class="arrow">▼</span>
+        </div>
         <div class="toggle-content">
             <div class="details-content">
+                <div class="work-meta">在路上｜2024｜原子筆、牛皮紙｜20 × 40 cm</div>
                 <div class="work-seal">印章文字：往返書展的路上／我們的行李都裝著滿滿的書／錯錯覺閱讀的重量</div>
             </div>
         </div>
@@ -369,13 +408,17 @@ h1 {
         </div>
     </div>
 
+    <!-- 作品 6：活兩次圖 -->
     <div class="work-card">
         <div class="work-img-wrapper">
             <img id="main-img-6" src="活兩次圖_全貌.jpg">
         </div>
-        <div class="toggle-trigger" onclick="toggleDetails(this)">活兩次圖｜2025｜原子筆、牛皮紙｜20 × 40 cm (點擊觀看介紹)</div>
+        <div class="toggle-trigger" onclick="toggleDetails(this)">
+            ＋ 作品資訊 <span class="arrow">▼</span>
+        </div>
         <div class="toggle-content">
             <div class="details-content">
+                <div class="work-meta">活兩次圖｜2025｜原子筆、牛皮紙｜20 × 40 cm</div>
                 <div class="work-seal">印章文字：當天外傳來一句對你的超譯／你也許就不再是自己形象的主人了（陰刻）可怕的是／你所不存在的時空中／會有另一個你在和陌生人打交道（陽刻）</div>
             </div>
         </div>
@@ -389,13 +432,17 @@ h1 {
         </div>
     </div>
 
+    <!-- 作品 7：無鬼知曉的中元午後圖 -->
     <div class="work-card">
         <div class="work-img-wrapper">
             <img id="main-img-7" src="無鬼知曉的中元午後圖_全貌.jpg">
         </div>
-        <div class="toggle-trigger" onclick="toggleDetails(this)">無鬼知曉的中元午後圖｜2025｜原子筆、牛皮紙｜35 × 54 cm (點擊觀看介紹)</div>
+        <div class="toggle-trigger" onclick="toggleDetails(this)">
+            ＋ 作品資訊 <span class="arrow">▼</span>
+        </div>
         <div class="toggle-content">
             <div class="details-content">
+                <div class="work-meta">無鬼知曉的中元午後圖｜2025｜原子筆、牛皮紙｜35 × 54 cm</div>
                 <div class="work-seal">印章文字：去年中元節／老家沒有張羅普渡／異常安靜／因為親人隱隱相信阿祖的亡靈還沒離開／不宜干擾</div>
             </div>
         </div>
@@ -409,13 +456,17 @@ h1 {
         </div>
     </div>
 
+    <!-- 作品 8：麵線失蹤圖 -->
     <div class="work-card">
         <div class="work-img-wrapper">
             <img id="main-img-8" src="麵線失蹤圖_全貌.jpg">
         </div>
-        <div class="toggle-trigger" onclick="toggleDetails(this)">麵線失蹤圖｜2025｜原子筆、牛皮紙｜35 × 54 cm (點擊觀看介紹)</div>
+        <div class="toggle-trigger" onclick="toggleDetails(this)">
+            ＋ 作品資訊 <span class="arrow">▼</span>
+        </div>
         <div class="toggle-content">
             <div class="details-content">
+                <div class="work-meta">麵線失蹤圖｜2025｜原子筆、牛皮紙｜35 × 54 cm</div>
                 <div class="work-seal">印章文字：巷口那家麵線攤失蹤了／傳說老闆欠債跑路（陽刻）成為吃不到卻永遠好吃的記憶（陰刻）</div>
             </div>
         </div>
@@ -429,13 +480,17 @@ h1 {
         </div>
     </div>
 
+    <!-- 作品 9：鴨頭走味圖 -->
     <div class="work-card">
         <div class="work-img-wrapper">
             <img id="main-img-9" src="鴨頭走味圖_全貌.jpg">
         </div>
-        <div class="toggle-trigger" onclick="toggleDetails(this)">鴨頭走味圖｜2025｜原子筆、牛皮紙｜35 × 54 cm (點擊觀看介紹)</div>
+        <div class="toggle-trigger" onclick="toggleDetails(this)">
+            ＋ 作品資訊 <span class="arrow">▼</span>
+        </div>
         <div class="toggle-content">
             <div class="details-content">
+                <div class="work-meta">鴨頭走味圖｜2025｜原子筆、牛皮紙｜35 × 54 cm</div>
                 <div class="work-seal">印章文字：巷口那家東山鴨頭從小攤變小店／感覺以前的比較好吃（陽刻）不知是二代目退步了／還是自己嘴刁了（陰刻）</div>
             </div>
         </div>
@@ -457,8 +512,17 @@ function toggleDetails(element) {
     if (!card) return;
     
     var content = card.querySelector('.toggle-content');
+    var arrow = element.querySelector('.arrow');
+    
     if (content) {
         content.classList.toggle('open');
+        
+        // 讓小箭頭隨開合旋轉 (▼ 變成 ▲)
+        if (content.classList.contains('open')) {
+            arrow.style.transform = 'rotate(180deg)';
+        } else {
+            arrow.style.transform = 'rotate(0deg)';
+        }
     }
 }
 
