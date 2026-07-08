@@ -1,1 +1,343 @@
+<!DOCTYPE html>
+<html>
 
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>族譜系列 - Pan Yu-Yang</title>
+
+<style>
+body {
+    font-family: Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #268785; /* 🎨 已改成圖檔中顯示的青碧藍綠色 */
+    color: #ffffff;            
+    display: flex; 
+    min-height: 100vh;
+}
+
+/* 左側側邊欄固定寬度與樣式 */
+.sidebar {
+    width: 260px;
+    padding: 60px 40px;
+    border-right: 1px solid #1d6664; /* 配合青碧底色微調邊線 */
+    position: fixed; 
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+.sidebar h2 {
+    font-size: 22px;
+    font-weight: normal;
+    margin-bottom: 40px;
+    letter-spacing: 2px;
+}
+
+.menu-item {
+    display: block;
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 16px;
+    margin-bottom: 24px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.menu-item:hover, .submenu-item:hover {
+    color: #e0e0e0;
+}
+
+/* 新版選單：預設隱藏的子選單外殼 */
+.submenu {
+    margin-left: 15px;
+    border-left: 1px solid #1d6664; 
+    padding-left: 15px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out, margin-bottom 0.3s ease-out;
+}
+
+/* 新版選單：進入這一頁時直接保持展開狀態 */
+.submenu.open {
+    max-height: 100px; 
+    margin-bottom: 24px;
+}
+
+.submenu-item {
+    display: block;
+    text-decoration: none;
+    color: #b2dbda; /* 調整未選中子選單顏色使其在青碧色背景上清晰可讀 */
+    font-size: 14px;
+    margin-bottom: 12px;
+}
+
+.submenu-item.active {
+    color: #ffffff;
+    font-weight: bold;
+    pointer-events: none;
+}
+
+/* 右側主要內容區 */
+.main-content {
+    margin-left: 260px; 
+    padding: 60px 80px;
+    max-width: 1200px; 
+    width: calc(100% - 260px);
+    box-sizing: border-box;
+}
+
+h1 {
+    font-size: 24px;
+    font-weight: normal;
+    margin-bottom: 60px;
+    letter-spacing: 2px;
+    color: #ffffff;
+}
+
+/* 獨立的作品外殼 */
+.work-card {
+    display: block;
+    width: 100%;
+    margin-bottom: 120px; 
+}
+
+/* 主圖顯示區域 */
+.work-img-wrapper {
+    width: 100%;
+    height: 650px;       
+    margin-bottom: 25px; 
+    display: flex;
+    justify-content: center; 
+    align-items: center;     
+    background-color: #268785; 
+}
+
+/* 讓主圖完美縮放不變形 */
+.work-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain; 
+    display: block;
+}
+
+/* 點擊觸發區域：純文字搭配小箭頭 */
+.toggle-trigger {
+    font-size: 13px;
+    color: #e0f2f1;           
+    letter-spacing: 1px;
+    cursor: pointer; 
+    user-select: none;
+    transition: color 0.2s ease;
+    margin-bottom: 15px; 
+    line-height: 1.5;
+    display: inline-flex;
+    align-items: center;
+}
+
+.toggle-trigger:hover {
+    color: #ffffff;
+}
+
+/* 旋轉小箭頭的樣式 */
+.toggle-trigger .arrow {
+    display: inline-block;
+    margin-left: 6px;
+    font-size: 10px;
+    transition: transform 0.3s ease;
+}
+
+/* 縮圖控制列外殼 */
+.thumb-container {
+    display: flex;
+    flex-wrap: wrap;     
+    gap: 12px;           
+    margin-top: 20px;    
+    margin-bottom: 20px; 
+    clear: both;
+}
+
+/* 單張小圖的樣式 */
+.thumb-img {
+    width: 80px;         
+    height: 80px;        
+    object-fit: cover;   
+    cursor: pointer;
+    border: 1px solid #1d6664;
+    opacity: 0.6;        
+    transition: all 0.2s ease;
+    flex-shrink: 0;      
+}
+
+.thumb-img:hover, .thumb-img.active {
+    opacity: 1;
+    border-color: #ffffff;
+}
+
+/* 動畫核心外殼 */
+.toggle-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-in-out; 
+}
+
+.toggle-content.open {
+    max-height: 600px; 
+    margin-bottom: 25px; 
+}
+
+.details-content {
+    padding-top: 10px; 
+}
+
+/* 用於收納作品名與基本資訊 */
+.work-meta {
+    font-size: 14px;
+    font-weight: bold;
+    color: #ffffff;
+    margin-bottom: 12px;
+    letter-spacing: 1px;
+}
+
+.work-seal {
+    font-size: 14px;
+    line-height: 1.8;
+    color: #e0f2f1;            
+    white-space: pre-line; 
+}
+
+/* ==========================================
+   📱 智慧型手機版排版修正 (當螢幕寬度小於 768px)
+   ========================================== */
+@media (max-width: 768px) {
+    body {
+        flex-direction: column; 
+    }
+
+    .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+        padding: 30px 20px;
+        border-right: none;
+        border-bottom: 1px solid #1d6664;
+    }
+
+    .sidebar h2 {
+        margin-bottom: 20px;
+    }
+
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+        padding: 40px 20px;
+    }
+
+    h1 {
+        margin-bottom: 40px;
+    }
+
+    .work-img-wrapper {
+        height: 320px;       
+        margin-bottom: 15px;
+    }
+    
+    .work-card {
+        margin-bottom: 80px; 
+    }
+
+    .thumb-img {
+        width: 60px;
+        height: 60px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<nav class="sidebar">
+    <h2>Pan Yu-Yang</h2>
+    <a href="about.html" class="menu-item">走過</a>
+    
+    <span class="menu-item" onclick="toggleArtMenu()">畫過</span>
+    <div class="submenu open" id="art-submenu">
+        <a href="printmaking.html" class="submenu-item active">族譜系列</a>
+        <a href="pseudo-classic.html" class="submenu-item">擬古系列</a>
+    </div>
+    
+    <a href="writing.html" class="menu-item">寫過</a>
+</nav>
+
+<main class="main-content">
+
+    <h1>畫過 / 族譜系列</h1>    
+
+    <div class="work-card">
+        <div class="work-img-wrapper">
+            <img id="main-img-1" src="阿公的發財車_全貌.jpg">
+        </div>
+        
+        <div class="toggle-trigger" onclick="toggleDetails(this)">
+            作品資訊 <span class="arrow">▼</span>
+        </div>
+        
+        <div class="toggle-content">
+            <div class="details-content">
+                <div class="work-meta">阿公的發財車｜2025｜原子筆、牛皮紙｜35 × 54 cm (點擊觀看介紹)</div>
+                <div class="work-seal">我很帥</div>
+            </div>
+        </div>
+
+        <div class="thumb-container">
+            <img class="thumb-img active" src="阿公的發財車_全貌.jpg" onclick="switchImage('main-img-1', this)">
+            <img class="thumb-img" src="阿公的發財車_局部1.jpg" onclick="switchImage('main-img-1', this)">
+            <img class="thumb-img" src="阿公的發財車_局部2.jpg" onclick="switchImage('main-img-1', this)">
+            <img class="thumb-img" src="阿公的發財車_局部3.jpg" onclick="switchImage('main-img-1', this)">
+            <img class="thumb-img" src="阿公的發財車_局部4.jpg" onclick="switchImage('main-img-1', this)">
+        </div>
+    </div>
+
+</main>
+
+<script>
+function toggleDetails(element) {
+    var card = element.closest('.work-card');
+    if (!card) return;
+    
+    var content = card.querySelector('.toggle-content');
+    var arrow = element.querySelector('.arrow');
+    
+    if (content) {
+        content.classList.toggle('open');
+        
+        if (content.classList.contains('open')) {
+            arrow.style.transform = 'rotate(180deg)';
+        } else {
+            arrow.style.transform = 'rotate(0deg)';
+        }
+    }
+}
+
+function switchImage(mainImgId, thumbElement) {
+    var mainImg = document.getElementById(mainImgId);
+    if (!mainImg) return; 
+    
+    mainImg.src = thumbElement.src;
+    
+    var siblings = thumbElement.parentNode.getElementsByClassName('thumb-img');
+    for (var i = 0; i < siblings.length; i++) {
+        siblings[i].classList.remove('active');
+    }
+    thumbElement.classList.add('active');
+}
+
+function toggleArtMenu() {
+    var submenu = document.getElementById('art-submenu');
+    submenu.classList.toggle('open');
+}
+</script>
+
+</body>
+</html>
