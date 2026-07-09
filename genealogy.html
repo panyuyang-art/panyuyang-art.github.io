@@ -3,86 +3,227 @@
 
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>族譜系列 - Pan Yu-Yang</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+<title>族譜系列 - Pan Yu-Yang</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
 body {
     font-family: Helvetica, Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #268785; /* 🎨 已改成圖檔中顯示的青碧藍綠色 */
+    background-color: #268785; /* 🎨 青碧藍綠色底色 */
     color: #ffffff;            
-    display: flex; 
     min-height: 100vh;
+    overflow-x: hidden;
 }
 
-/* 左側側邊欄固定寬度與樣式 */
-.sidebar {
-    width: 260px;
-    padding: 60px 40px;
-    border-right: 1px solid #1d6664; /* 配合青碧底色微調邊線 */
-    position: fixed; 
-    height: 100vh;
+/* ==========================================
+   頂部導覽列 (位置絕對固定，包含左漢堡、右搜尋)
+   ========================================== */
+.top-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 30px 40px;
     box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
 }
 
-.sidebar h2 {
+.menu-toggle-btn {
+    font-size: 24px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    color: #ffffff;
+}
+.menu-toggle-btn:hover { opacity: 0.7; }
+
+.search-toggle-btn {
     font-size: 22px;
-    font-weight: normal;
-    margin-bottom: 40px;
-    letter-spacing: 2px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    color: #ffffff;
+}
+.search-toggle-btn:hover { opacity: 0.7; }
+
+/* ==========================================
+   📐 浮空下拉式小側欄 panel（白底綠字，比照首頁）
+   ========================================== */
+.nav-panel {
+    position: fixed;
+    top: 70px;         
+    left: 40px;        
+    width: 150px;      
+    background-color: #ffffff; 
+    z-index: 90;
+    box-sizing: border-box;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); 
+    border-radius: 6px;
+    
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    padding: 0 20px;   
+    transition: max-height 0.35s ease-in-out, opacity 0.25s ease-in-out, padding 0.35s ease-in-out;
+}
+
+.nav-panel.open {
+    max-height: 400px; 
+    opacity: 1;
+    padding: 15px 20px; 
 }
 
 .menu-item {
     display: block;
     text-decoration: none;
-    color: #ffffff;
-    font-size: 16px;
-    margin-bottom: 24px;
+    color: #268785; /* 改為與此網頁呼應的藍綠色 */
+    font-size: 15px;       
+    padding: 10px 0;
     cursor: pointer;
-    user-select: none;
+    letter-spacing: 3px;
+    border-bottom: none;   
 }
+.menu-item:hover { opacity: 0.7; }
 
-.menu-item:hover, .submenu-item:hover {
-    color: #e0e0e0;
-}
-
-/* 新版選單：預設隱藏的子選單外殼 */
 .submenu {
-    margin-left: 15px;
-    border-left: 1px solid #1d6664; 
-    padding-left: 15px;
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.3s ease-out, margin-bottom 0.3s ease-out;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-left: 10px;
+    margin-left: 2px;
+    border-left: 1px solid rgba(38, 135, 133, 0.3); 
+    transition: max-height 0.3s ease-in-out, margin-top 0.3s ease-in-out;
 }
-
-/* 新版選單：進入這一頁時直接保持展開狀態 */
+/* 在這一頁，側欄點開時子選單直接保持展開狀態 */
 .submenu.open {
-    max-height: 100px; 
-    margin-bottom: 24px;
+    max-height: 100px;
+    margin-top: 8px;
+    margin-bottom: 8px;
 }
-
 .submenu-item {
     display: block;
     text-decoration: none;
-    color: #b2dbda; /* 調整未選中子選單顏色使其在青碧色背景上清晰可讀 */
-    font-size: 14px;
-    margin-bottom: 12px;
+    color: rgba(38, 135, 133, 0.7); 
+    font-size: 13px;       
+    letter-spacing: 2px;
+    margin-bottom: 0; /* 清除舊樣式的 margin */
 }
+.submenu-item:hover { color: #268785; } 
 
 .submenu-item.active {
-    color: #ffffff;
+    color: #268785;
     font-weight: bold;
     pointer-events: none;
 }
 
-/* 右側主要內容區 */
+/* ==========================================
+   🔍 升級版：全螢幕可點擊導向的搜尋功能視窗
+   ========================================== */
+.search-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.88); 
+    z-index: 300;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; 
+    align-items: center;
+    padding-top: 15vh; 
+    box-sizing: border-box;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+.search-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+}
+.close-search-btn {
+    position: absolute;
+    top: 30px;
+    right: 40px;
+    font-size: 26px;
+    cursor: pointer;
+    color: #fff;
+}
+.search-box {
+    width: 80%;
+    max-width: 500px;
+    text-align: center;
+}
+.search-input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid #ffffff;
+    padding: 10px;
+    color: #ffffff;
+    font-size: 22px;
+    outline: none;
+    letter-spacing: 2px;
+    text-align: center;
+}
+
+/* 🎨 搜尋結果清單樣式 */
+.search-results {
+    width: 80%;
+    max-width: 500px;
+    margin-top: 30px;
+    max-height: 50vh;
+    overflow-y: auto;
+    text-align: left;
+}
+.result-item {
+    display: block;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 15px 20px;
+    margin-bottom: 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #ffffff;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+.result-item:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px); 
+}
+.result-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #b2dbda; /* 精緻的淺青色標題，適配深色遮罩 */
+}
+.result-desc {
+    font-size: 13px;
+    color: #cccccc;
+    letter-spacing: 1px;
+}
+.no-result {
+    text-align: center;
+    color: #aaaaaa;
+    font-size: 14px;
+    margin-top: 20px;
+}
+
+/* ==========================================
+   🖼️ 右側主要內容區（已移除原本常駐 sidebar 的邊界限制）
+   ========================================== */
 .main-content {
-    margin-left: 260px; 
-    padding: 60px 80px;
-    max-width: 1200px; 
-    width: calc(100% - 260px);
+    margin-left: auto;
+    margin-right: auto;
+    padding: 120px 40px 60px 40px; /* 上方空出位置給 fixed 導覽列 */
+    max-width: 900px;  /* 稍微收束，讓單頁式作品瀏覽線條更優雅 */
+    width: 100%;
     box-sizing: border-box;
 }
 
@@ -208,30 +349,15 @@ h1 {
 }
 
 /* ==========================================
-   📱 智慧型手機版排版修正 (當螢幕寬度小於 768px)
+   📱 手機版適應調整
    ========================================== */
 @media (max-width: 768px) {
-    body {
-        flex-direction: column; 
-    }
-
-    .sidebar {
-        position: relative;
-        width: 100%;
-        height: auto;
-        padding: 30px 20px;
-        border-right: none;
-        border-bottom: 1px solid #1d6664;
-    }
-
-    .sidebar h2 {
-        margin-bottom: 20px;
-    }
+    .top-navbar { padding: 25px 25px; }
+    .nav-panel { left: 25px; top: 65px; } 
+    .close-search-btn { right: 25px; top: 25px; }
 
     .main-content {
-        margin-left: 0;
-        width: 100%;
-        padding: 40px 20px;
+        padding: 100px 20px 40px 20px;
     }
 
     h1 {
@@ -257,18 +383,36 @@ h1 {
 
 <body>
 
-<nav class="sidebar">
-    <h2>Pan Yu-Yang</h2>
+<header class="top-navbar">
+    <div class="menu-toggle-btn" onclick="toggleMenu()">
+        <i class="fas fa-bars"></i>
+    </div>
+    <div class="search-toggle-btn" onclick="openSearch()">
+        <i class="fas fa-search"></i>
+    </div>
+</header>
+
+<nav class="nav-panel" id="navPanel">
     <a href="about.html" class="menu-item">走過</a>
     
-    <span class="menu-item" onclick="toggleArtMenu()">畫過</span>
+    <span class="menu-item" onclick="toggleArtMenu(event)">畫過</span>
     <div class="submenu open" id="art-submenu">
-        <a href="printmaking.html" class="submenu-item active">族譜系列</a>
+        <a href="genealogy.html" class="submenu-item active">族譜系列</a>
         <a href="pseudo-classic.html" class="submenu-item">擬古系列</a>
     </div>
     
     <a href="writing.html" class="menu-item">寫過</a>
 </nav>
+
+<div class="search-overlay" id="searchOverlay">
+    <div class="close-search-btn" onclick="closeSearch()">
+        <i class="fas fa-times"></i>
+    </div>
+    <div class="search-box">
+        <input type="text" class="search-input" id="searchInput" placeholder="輸入關鍵字搜尋作品資訊..." oninput="performSearch()">
+    </div>
+    <div class="search-results" id="searchResults"></div>
+</div>
 
 <main class="main-content">
 
@@ -377,6 +521,107 @@ h1 {
 </main>
 
 <script>
+// ==========================================
+// 📦 網站的內建資料庫清單 (比照首頁)
+// ==========================================
+const websiteData = [
+    { title: "關於我 (走過)", desc: "潘羽鍚的個人簡介、藝術理念與生命經歷。", url: "about.html" },
+    { title: "族譜系列", desc: "當代水墨與藝術創作——探索家族、血緣符號與記憶重組的作品單元。", url: "genealogy.html" },
+    { title: "擬古系列", desc: "傳統水墨美學的現代轉譯與模擬經典之筆墨實驗作品。", url: "pseudo-classic.html" },
+    { title: "文字創作 (寫過)", desc: "收錄潘羽鍚撰寫的藝術評論、散文、隨筆與文學創作。", url: "writing.html" }
+];
+
+let autoCloseTimer = null;
+
+// 🟢 智慧重置計時器：重新倒數 5 秒
+function resetAutoCloseTimer() {
+    clearAutoCloseTimer(); 
+    autoCloseTimer = setTimeout(function() {
+        var panel = document.getElementById('navPanel');
+        if (panel.classList.contains('open')) {
+            panel.classList.remove('open');
+        }
+    }, 5000); 
+}
+
+// 🟢 清除計時器
+function clearAutoCloseTimer() {
+    if (autoCloseTimer) {
+        clearTimeout(autoCloseTimer);
+        autoCloseTimer = null;
+    }
+}
+
+// 🟢 點擊漢堡選單：切換開關，並於打開時啟動 5 秒倒數
+function toggleMenu() {
+    var panel = document.getElementById('navPanel');
+    panel.classList.toggle('open');
+    
+    if (panel.classList.contains('open')) {
+        resetAutoCloseTimer();
+    } else {
+        clearAutoCloseTimer();
+    }
+}
+
+// 🟢 點擊「畫過」次選單：展開/縮起次選單，並智慧重新倒數 5 秒
+function toggleArtMenu(event) {
+    if (event) event.stopPropagation(); 
+    var submenu = document.getElementById('art-submenu');
+    submenu.classList.toggle('open');
+    
+    resetAutoCloseTimer();
+}
+
+// ==========================================
+// 🔍 搜尋視窗開關與即時比對
+// ==========================================
+function openSearch() {
+    document.getElementById('searchOverlay').classList.add('open');
+    document.getElementById('searchInput').value = ""; 
+    document.getElementById('searchResults').innerHTML = ""; 
+    setTimeout(() => {
+        document.getElementById('searchInput').focus();
+    }, 100);
+}
+
+function closeSearch() {
+    document.getElementById('searchOverlay').classList.remove('open');
+}
+
+function performSearch() {
+    const query = document.getElementById('searchInput').value.trim().toLowerCase();
+    const resultsContainer = document.getElementById('searchResults');
+    
+    if (query === "") {
+        resultsContainer.innerHTML = "";
+        return;
+    }
+    
+    const filteredData = websiteData.filter(item => 
+        item.title.toLowerCase().includes(query) || 
+        item.desc.toLowerCase().includes(query)
+    );
+    
+    if (filteredData.length > 0) {
+        let htmlContent = "";
+        filteredData.forEach(item => {
+            htmlContent += `
+                <a href="${item.url}" class="result-item">
+                    <div class="result-title">${item.title}</div>
+                    <div class="result-desc">${item.desc}</div>
+                </a>
+            `;
+        });
+        resultsContainer.innerHTML = htmlContent;
+    } else {
+        resultsContainer.innerHTML = `<div class="no-result">找不到與「${query}」相符的作品或資訊</div>`;
+    }
+}
+
+// ==========================================
+// 🎨 原本的作品圖片切換與資訊展開折疊邏輯
+// ==========================================
 function toggleDetails(element) {
     var card = element.closest('.work-card');
     if (!card) return;
@@ -408,10 +653,26 @@ function switchImage(mainImgId, thumbElement) {
     thumbElement.classList.add('active');
 }
 
-function toggleArtMenu() {
-    var submenu = document.getElementById('art-submenu');
-    submenu.classList.toggle('open');
-}
+// ==========================================
+// 🖱️ 智慧監聽：點擊空白處關閉，或點擊側欄內重新計時
+// ==========================================
+
+// 🟢 點擊網頁任意空白處：直接關閉側欄並清除計時
+document.addEventListener('click', function(event) {
+    var panel = document.getElementById('navPanel');
+    var toggleBtn = document.querySelector('.menu-toggle-btn');
+    if (panel.classList.contains('open') && !panel.contains(event.target) && !toggleBtn.contains(event.target)) {
+        panel.classList.remove('open');
+        clearAutoCloseTimer();
+    }
+});
+
+// 🟢 點擊側欄內部任何地方：重新計算 5 秒，避免點到一半突然滑回消失
+document.getElementById('navPanel').addEventListener('click', function() {
+    if (this.classList.contains('open')) {
+        resetAutoCloseTimer();
+    }
+});
 </script>
 
 </body>
