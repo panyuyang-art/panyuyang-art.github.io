@@ -13,11 +13,16 @@ body {
     font-family: Helvetica, Arial, sans-serif; margin: 0; padding: 0; background-color: #268785; color: #ffffff; min-height: 100vh; overflow-x: hidden;
 }
 
-/* 導覽列與側欄 */
-.top-navbar { position: fixed; top: 0; left: 0; width: 100%; padding: 30px 40px; box-sizing: border-box; display: flex; justify-content: space-between; align-items: center; z-index: 100; }
-.menu-toggle-btn, .search-toggle-btn { font-size: 24px; cursor: pointer; color: #ffffff; transition: opacity 0.2s; }
+/* 頂部導覽列 */
+.top-navbar { 
+    position: fixed; top: 0; left: 0; width: 100%; padding: 30px 40px; box-sizing: border-box; 
+    display: flex; justify-content: space-between; align-items: center; z-index: 100; 
+}
+.menu-toggle-btn { font-size: 24px; cursor: pointer; transition: opacity 0.2s; color: #ffffff; }
+.search-toggle-btn { font-size: 22px; cursor: pointer; transition: opacity 0.2s; color: #ffffff; }
 .menu-toggle-btn:hover, .search-toggle-btn:hover { opacity: 0.7; }
 
+/* 側欄 */
 .nav-panel { 
     position: fixed; top: 70px; left: 40px; width: 150px; background-color: #ffffff; 
     z-index: 90; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); border-radius: 6px; 
@@ -26,7 +31,7 @@ body {
 }
 .nav-panel.open { max-height: 470px; opacity: 1; padding: 15px 20px; }
 
-/* 🏠 修正後的房子符號樣式 (18px) */
+/* 房子符號 */
 .home-icon-btn {
     display: flex; justify-content: flex-start; align-items: center;
     color: #268785; font-size: 18px; padding: 12px 0 12px 0; text-decoration: none;
@@ -46,7 +51,14 @@ h1 { font-size: 24px; text-align: center; margin-bottom: 60px; letter-spacing: 2
 .work-card { margin-bottom: 140px; position: relative; }
 .work-img-wrapper { height: 650px; display: flex; justify-content: center; align-items: center; background-color: #268785; }
 .work-img-wrapper img { max-width: 100%; max-height: 100%; object-fit: contain; }
-.circle-toggle-trigger { position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%); width: 44px; height: 44px; background-color: rgba(0,0,0,0.25); border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 10; }
+
+/* 圓形按鈕 */
+.circle-toggle-trigger { 
+    position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); 
+    width: 44px; height: 44px; background-color: rgba(0,0,0,0.25); border-radius: 50%; 
+    display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 10; 
+}
+
 .toggle-content { max-height: 0; overflow: hidden; transition: all 0.45s ease-in-out; opacity: 0; }
 .toggle-content.open { max-height: 900px; opacity: 1; padding-top: 25px; }
 .work-meta { font-size: 15px; font-weight: bold; margin-bottom: 14px; }
@@ -54,8 +66,15 @@ h1 { font-size: 24px; text-align: center; margin-bottom: 60px; letter-spacing: 2
 .thumb-img { width: 80px; height: 80px; object-fit: cover; cursor: pointer; border: 1px solid #1d6664; opacity: 0.5; margin: 5px; }
 .thumb-img.active { opacity: 1; border-color: #ffffff; }
 
+/* 搜尋視窗 */
+.search-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background-color: rgba(0, 0, 0, 0.88); z-index: 300; display: flex; flex-direction: column; align-items: center; padding-top: 15vh; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+.search-overlay.open { opacity: 1; pointer-events: auto; }
+
+/* 📱 手機版調整 */
 @media (max-width: 768px) {
-    .main-content { padding: 100px 20px 40px; }
+    .top-navbar { padding: 25px 25px; }
+    .nav-panel { left: 25px; top: 65px; }
+    .main-content { padding: 100px 25px 40px 25px; }
     .work-img-wrapper { height: 320px; }
     .thumb-img { width: 60px; height: 60px; }
 }
@@ -91,10 +110,6 @@ h1 { font-size: 24px; text-align: center; margin-bottom: 60px; letter-spacing: 2
             <div class="work-seal">我的阿公是個農夫，他有一台發財車，載著他種的水果、蔬菜、米糧來來往往。我為這台車加上許多新功能，像是做爆米香、釀小米酒、製作米粉等等，這樣阿公就不用那麼辛苦下田了。</div>
             <div class="thumb-container">
                 <img class="thumb-img active" src="阿公的發財車_全貌.jpg" onclick="switchImage('main-img-1', this)">
-                <img class="thumb-img" src="阿公的發財車_局部1.jpg" onclick="switchImage('main-img-1', this)">
-                <img class="thumb-img" src="阿公的發財車_局部2.jpg" onclick="switchImage('main-img-1', this)">
-                <img class="thumb-img" src="阿公的發財車_局部3.jpg" onclick="switchImage('main-img-1', this)">
-                <img class="thumb-img" src="阿公的發財車_局部4.jpg" onclick="switchImage('main-img-1', this)">
             </div>
         </div>
     </div>
@@ -107,10 +122,6 @@ h1 { font-size: 24px; text-align: center; margin-bottom: 60px; letter-spacing: 2
             <div class="work-seal">我的阿嬤是個農婦，這幅畫描繪她的日常起居，比方做龍眼乾、曬米、網土芒果。多年前創作時，對鄉村十分嚮往，時常有意將其浪漫化、美化，想像阿嬤的生活是多麼幸福靜好。</div>
             <div class="thumb-container">
                 <img class="thumb-img active" src="阿嬤是偉大的田莊人_全貌.jpg" onclick="switchImage('main-img-2', this)">
-                <img class="thumb-img" src="阿嬤是偉大的田莊人_局部1.jpg" onclick="switchImage('main-img-2', this)">
-                <img class="thumb-img" src="阿嬤是偉大的田莊人_局部2.jpg" onclick="switchImage('main-img-2', this)">
-                <img class="thumb-img" src="阿嬤是偉大的田莊人_局部3.jpg" onclick="switchImage('main-img-2', this)">
-                <img class="thumb-img" src="阿嬤是偉大的田莊人_局部4.jpg" onclick="switchImage('main-img-2', this)">
             </div>
         </div>
     </div>
@@ -123,10 +134,6 @@ h1 { font-size: 24px; text-align: center; margin-bottom: 60px; letter-spacing: 2
             <div class="work-seal">我的姐姐與兩個堂姐是好麻吉，她們仨小時候曾經夢想建造一個樹屋，可以久久住在一起，快樂地過日子。</div>
             <div class="thumb-container">
                 <img class="thumb-img active" src="姐妹花_全貌.jpg" onclick="switchImage('main-img-3', this)">
-                <img class="thumb-img" src="姐妹花_局部1.jpg" onclick="switchImage('main-img-3', this)">
-                <img class="thumb-img" src="姐妹花_局部2.jpg" onclick="switchImage('main-img-3', this)">
-                <img class="thumb-img" src="姐妹花_局部3.jpg" onclick="switchImage('main-img-3', this)">
-                <img class="thumb-img" src="姐妹花_局部4.jpg" onclick="switchImage('main-img-3', this)">
             </div>
         </div>
     </div>
@@ -139,10 +146,6 @@ h1 { font-size: 24px; text-align: center; margin-bottom: 60px; letter-spacing: 2
             <div class="work-seal">阿祖年輕時曾推著車子賣剉冰，老年失智後，依然記得如何手製粉圓、粉粿等配料。原本想要像《阿公的發財車》那樣、將賣冰的推車加上許多奇特功能的機器；但在進行到20%時，阿祖便過世了，於意我改變原本的構想，換成一幢冰菓室紙紮屋。</div>
             <div class="thumb-container">
                 <img class="thumb-img active" src="阿祖冰菓室_全貌.jpg" onclick="switchImage('main-img-4', this)">
-                <img class="thumb-img" src="阿祖冰菓室_局部1.jpg" onclick="switchImage('main-img-4', this)">
-                <img class="thumb-img" src="阿祖冰菓室_局部2.jpg" onclick="switchImage('main-img-4', this)">
-                <img class="thumb-img" src="阿祖冰菓室_局部3.jpg" onclick="switchImage('main-img-4', this)">
-                <img class="thumb-img" src="阿祖冰菓室_局部4.jpg" onclick="switchImage('main-img-4', this)">
             </div>
         </div>
     </div>
