@@ -13,7 +13,7 @@ body {
     font-family: Helvetica, Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #86c166; /* 草綠色背景 */
+    background-color: #86c166; /* 苗色 #86c166 */
     color: #ffffff;            
     min-height: 100vh;
     overflow-x: hidden;
@@ -113,7 +113,7 @@ body {
 .submenu-item:hover { color: #86c166; } 
 
 /* ==========================================
-   🔍 搜尋功能彈出視窗與結果顯示
+   🔍 升級版：真正可點擊導向的搜尋功能視窗
    ========================================== */
 .search-overlay {
     position: fixed;
@@ -121,13 +121,13 @@ body {
     left: 0;
     width: 100%;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.9); 
+    background-color: rgba(0, 0, 0, 0.88); /* 優雅的暗色遮罩 */
     z-index: 300;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start; /* 改為從頂部排列，方便留空間給結果 */
+    justify-content: flex-start; 
     align-items: center;
-    padding-top: 15vh;
+    padding-top: 15vh; /* 留出空間給結果清單 */
     box-sizing: border-box;
     opacity: 0;
     pointer-events: none;
@@ -157,13 +157,13 @@ body {
     border-bottom: 2px solid #ffffff;
     padding: 10px;
     color: #ffffff;
-    font-size: 20px;
+    font-size: 22px;
     outline: none;
     letter-spacing: 2px;
     text-align: center;
 }
 
-/* 🎨 搜尋結果列表樣式 */
+/* 🎨 搜尋結果清單樣式 */
 .search-results {
     width: 80%;
     max-width: 500px;
@@ -172,28 +172,31 @@ body {
     overflow-y: auto;
     text-align: left;
 }
+/* 搜尋結果的小卡片，點擊可直接連結 */
 .result-item {
     display: block;
     background-color: rgba(255, 255, 255, 0.1);
-    padding: 15px;
-    margin-bottom: 10px;
-    border-radius: 4px;
+    padding: 15px 20px;
+    margin-bottom: 12px;
+    border-radius: 6px;
     text-decoration: none;
     color: #ffffff;
-    transition: background-color 0.2s;
+    transition: background-color 0.2s ease, transform 0.2s ease;
 }
 .result-item:hover {
     background-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px); /* 輕微懸浮感 */
 }
 .result-title {
     font-size: 16px;
     font-weight: bold;
     margin-bottom: 5px;
-    color: #86c166; /* 讓結果標題帶有你的招牌綠色 */
+    color: #86c166; /* 招牌草綠色標題 */
 }
 .result-desc {
     font-size: 13px;
     color: #cccccc;
+    letter-spacing: 1px;
 }
 .no-result {
     text-align: center;
@@ -334,16 +337,14 @@ body {
 
 <script>
 // ==========================================
-// 📦 網站作品與頁面的「靜態資料庫」
-// 未来如果你增加了新作品或新網頁，可以在此處依照格式自行增減！
+// 📦 網站的內建資料庫清單
+// 當你在搜尋框打字時，系統會自動比對這裡的 title 和 desc 
 // ==========================================
 const websiteData = [
-    { title: "關於我 (走過)", desc: "潘羽鍚的個人簡介與生命經歷。", url: "about.html" },
-    { title: "族譜系列", desc: "「畫過」單元中的當代藝術創作——族譜系列作品。", url: "genealogy.html" },
-    { title: "擬古系列", desc: "「畫過」單元中嘗試傳統美學轉譯的擬古系列創作。", url: "pseudo-classic.html" },
-    { title: "文字創作 (寫過)", desc: "收錄潘羽鍚撰寫過的文章、評論與文學隨筆。", url: "writing.html" },
-    // 💡 你可以在下方繼續擴充真實的作品，例如：
-    // { title: "族譜系列一號作品", desc: "探討血緣與符號重組的水墨設色原作。", url: "genealogy.html#work1" }
+    { title: "關於我 (走過)", desc: "潘羽鍚的個人簡介、藝術理念與生命經歷。", url: "about.html" },
+    { title: "族譜系列", desc: "當代水墨與藝術創作——探索家族、血緣符號與記憶重組的作品單元。", url: "genealogy.html" },
+    { title: "擬古系列", desc: "傳統水墨美學的現代轉譯與模擬經典之筆墨實驗作品。", url: "pseudo-classic.html" },
+    { title: "文字創作 (寫過)", desc: "收錄潘羽鍚撰寫的藝術評論、散文、隨筆與文學創作。", url: "writing.html" }
 ];
 
 function toggleMenu() {
@@ -359,9 +360,8 @@ function toggleArtMenu(event) {
 
 function openSearch() {
     document.getElementById('searchOverlay').classList.add('open');
-    // 清空上一次的搜尋紀錄
-    document.getElementById('searchInput').value = "";
-    document.getElementById('searchResults').innerHTML = "";
+    document.getElementById('searchInput').value = ""; // 清空舊文字
+    document.getElementById('searchResults').innerHTML = ""; // 清空舊結果
     setTimeout(() => {
         document.getElementById('searchInput').focus();
     }, 100);
@@ -372,25 +372,25 @@ function closeSearch() {
 }
 
 // ==========================================
-// 🔍 核心：搜尋比對與渲染邏輯
+// 🔍 核心：即時搜尋與點擊跳轉邏輯
 // ==========================================
 function performSearch() {
     const query = document.getElementById('searchInput').value.trim().toLowerCase();
     const resultsContainer = document.getElementById('searchResults');
     
-    // 如果輸入框是空的，不顯示任何結果
+    // 如果輸入框空空如也，不顯示任何東西
     if (query === "") {
         resultsContainer.innerHTML = "";
         return;
     }
     
-    // 全文檢索比對標題 (title) 或描述 (desc)
+    // 比對資料庫中是否有包含輸入內容
     const filteredData = websiteData.filter(item => 
         item.title.toLowerCase().includes(query) || 
         item.desc.toLowerCase().includes(query)
     );
     
-    // 渲染搜尋結果
+    // 如果有找到對應項目，就渲染出可點擊的 <a> 連結
     if (filteredData.length > 0) {
         let htmlContent = "";
         filteredData.forEach(item => {
@@ -403,6 +403,7 @@ function performSearch() {
         });
         resultsContainer.innerHTML = htmlContent;
     } else {
+        // 找不到時的精緻提示
         resultsContainer.innerHTML = `<div class="no-result">找不到與「${query}」相符的作品或資訊</div>`;
     }
 }
