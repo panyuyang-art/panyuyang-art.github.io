@@ -73,9 +73,9 @@ body {
 }
 
 .nav-panel.open {
-    max-height: 470px; /* 調整高度上限，確保選單展開時不被切掉 */
+    max-height: 470px; 
     opacity: 1;
-    padding: 24px 20px 20px 20px; /* 微調頂部內距 */
+    padding: 24px 20px 20px 20px; 
 }
 
 /* 側欄選單項目樣式 */
@@ -87,17 +87,17 @@ body {
     padding: 10px 0;
     cursor: pointer;
     letter-spacing: 3px;
-    text-align: left; /* 確保所有連結文字與圖標靠左 */
+    text-align: left; 
 }
 .menu-item:hover { opacity: 0.7; }
 
-/* 🏠 修改處：拉開「家的符號」與下方「走過」之間的距離 */
+/* 🏠 「家的符號」與下方「走過」之間的距離 */
 .home-link-item {
-    padding-top: 4px;      /* 讓家的符號與小方塊頂部保持舒適呼吸感 */
-    padding-bottom: 12px;  /* 🛠️ 關鍵調整：拉大下邊距，讓家的符號與「走過」隔開精準距離 */
+    padding-top: 4px;      
+    padding-bottom: 12px;  
 }
 .home-link-item .fa-home {
-    font-size: 20px;      /* 保持精緻適當的放大圖標尺寸 */
+    font-size: 20px;      
     color: #268785;
 }
 
@@ -236,12 +236,14 @@ body {
     box-sizing: border-box;
 }
 
+/* 🛠️ 修改處：將大標題「族譜系列」改為置中對齊 */
 h1 {
     font-size: 24px;
     font-weight: normal;
     margin-bottom: 60px;
     letter-spacing: 2px;
     color: #ffffff;
+    text-align: center; /* 讓文字在頁面最上方置中 */
 }
 
 /* 獨立的作品外殼 */
@@ -279,7 +281,7 @@ h1 {
 }
 
 /* ==========================================
-   🔘 半透明圓形資訊控制符號
+   🔘 🛠️ 修改處：微調半透明圓形資訊控制符號的透明度
    ========================================== */
 .circle-toggle-trigger {
     position: absolute;
@@ -288,7 +290,7 @@ h1 {
     transform: translateX(-50%);
     width: 44px;
     height: 44px;
-    background-color: rgba(0, 0, 0, 0.5); 
+    background-color: rgba(0, 0, 0, 0.25); /* 🛠️ 將本來的 0.5 調淡成 0.25，使其呈現更淡的半透明狀態 */
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -297,11 +299,12 @@ h1 {
     user-select: none;
     z-index: 10;
     transition: background-color 0.2s ease, bottom 0.3s ease;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
+/* 滑鼠移上去時，可以稍微加深或保持淡雅 */
 .circle-toggle-trigger:hover {
-    background-color: rgba(0, 0, 0, 0.75); 
+    background-color: rgba(0, 0, 0, 0.5); /* 懸停時略微顯現（可依喜好改為 0.3 或 0.4） */
 }
 
 /* 內部箭頭符號 */
