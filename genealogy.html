@@ -46,11 +46,10 @@ body {
 
 /* 內容區 */
 .main-content { margin: 0 auto; padding: 120px 40px 60px 40px; max-width: 900px; }
-
-/* 標題設定：已加入 font-weight: normal 取消粗體 */
 h1 { font-size: 24px; text-align: center; margin-bottom: 60px; letter-spacing: 2px; color: #ffffff; font-weight: normal; }
 
 .work-card { margin-bottom: 140px; }
+/* 固定高度確保切換圖片不跳動 */
 .work-img-wrapper { height: 650px; display: flex; justify-content: center; align-items: center; background-color: #268785; }
 .work-img-wrapper img { max-width: 100%; max-height: 100%; object-fit: contain; }
 
@@ -65,8 +64,9 @@ h1 { font-size: 24px; text-align: center; margin-bottom: 60px; letter-spacing: 2
 .toggle-content.open { max-height: 900px; opacity: 1; padding-top: 25px; }
 .work-meta { font-size: 15px; font-weight: bold; margin-bottom: 14px; }
 .work-seal { font-size: 14px; line-height: 1.8; color: #e0f2f1; white-space: pre-line; margin-bottom: 25px; }
-.thumb-img { width: 80px; height: 80px; object-fit: cover; cursor: pointer; border: 1px solid #1d6664; opacity: 0.5; margin: 5px; }
-.thumb-img.active { opacity: 1; border-color: #ffffff; }
+.thumb-container { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 15px; }
+.thumb-img { width: 80px; height: 80px; object-fit: cover; cursor: pointer; border: 1px solid #1d6664; opacity: 0.5; margin: 5px; transition: all 0.2s; }
+.thumb-img:hover, .thumb-img.active { opacity: 1; border-color: #ffffff; }
 
 /* 📱 手機版調整 */
 @media (max-width: 768px) {
@@ -100,53 +100,34 @@ h1 { font-size: 24px; text-align: center; margin-bottom: 60px; letter-spacing: 2
 <main class="main-content">
     <h1>族譜系列</h1>
     
-    <div class="work-card">
-        <div class="work-img-wrapper"><img id="main-img-1" src="阿公的發財車_全貌.jpg"></div>
-        <div class="circle-toggle-trigger" onclick="toggleWorkContent(this)"><i class="fas fa-chevron-down"></i></div>
-        <div class="toggle-content">
-            <div class="work-meta">阿公的發財車｜2019｜原子筆、黃素描紙｜39.4 × 54.6 cm</div>
-            <div class="work-seal">我的阿公是個農夫，他有一台發財車，載著他種的水果、蔬菜、米糧來來往往。我為這台車加上許多新功能，像是做爆米香、釀小米酒、製作米粉等等，這樣阿公就不用那麼辛苦下田了。</div>
-            <div class="thumb-container">
-                <img class="thumb-img active" src="阿公的發財車_全貌.jpg" onclick="switchImage('main-img-1', this)">
-            </div>
-        </div>
-    </div>
+    <script>
+        const works = [
+            { id: 1, name: "阿公的發財車", info: "2019｜原子筆、黃素描紙｜39.4 × 54.6 cm", seal: "我的阿公是個農夫，他有一台發財車，載著他種的水果、蔬菜、米糧來來往往。我為這台車加上許多新功能，像是做爆米香、釀小米酒、製作米粉等等，這樣阿公就不用那麼辛苦下田了。" },
+            { id: 2, name: "阿嬤是偉大的田莊人", info: "2020｜原子筆、黃素描紙｜39.4 × 54.6 cm", seal: "我的阿嬤是個農婦，這幅畫描繪她的日常起居，比方做龍眼乾、曬米、網土芒果。多年前創作時，對鄉村十分嚮往，時常有意將其浪漫化、美化，想像阿嬤的生活是多麼幸福靜好。" },
+            { id: 3, name: "姐妹花", info: "2021｜原子筆、黃素描紙｜39.4 × 54.6 cm", seal: "我的姐姐與兩個堂姐是好麻吉，她們仨小時候曾經夢想建造一個樹屋，可以久久住在一起，快樂地過日子。" },
+            { id: 4, name: "阿祖冰菓室", info: "2024｜原子筆、黃素描紙｜39.4 × 54.6 cm", seal: "阿祖年輕時曾推著車子賣剉冰，老年失智後，依然記得如何手製粉圓、粉粿等配料。原本想要像《阿公的發財車》那樣、將賣冰的推車加上許多奇特功能的機器；但在進行到20%時，阿祖便過世了，於意我改變原本的構想，換成一幢冰菓室紙紮屋。" }
+        ];
 
-    <div class="work-card">
-        <div class="work-img-wrapper"><img id="main-img-2" src="阿嬤是偉大的田莊人_全貌.jpg"></div>
-        <div class="circle-toggle-trigger" onclick="toggleWorkContent(this)"><i class="fas fa-chevron-down"></i></div>
-        <div class="toggle-content">
-            <div class="work-meta">阿嬤是偉大的田莊人｜2020｜原子筆、黃素描紙｜39.4 × 54.6 cm</div>
-            <div class="work-seal">我的阿嬤是個農婦，這幅畫描繪她的日常起居，比方做龍眼乾、曬米、網土芒果。多年前創作時，對鄉村十分嚮往，時常有意將其浪漫化、美化，想像阿嬤的生活是多麼幸福靜好。</div>
-            <div class="thumb-container">
-                <img class="thumb-img active" src="阿嬤是偉大的田莊人_全貌.jpg" onclick="switchImage('main-img-2', this)">
-            </div>
-        </div>
-    </div>
-
-    <div class="work-card">
-        <div class="work-img-wrapper"><img id="main-img-3" src="姐妹花_全貌.jpg"></div>
-        <div class="circle-toggle-trigger" onclick="toggleWorkContent(this)"><i class="fas fa-chevron-down"></i></div>
-        <div class="toggle-content">
-            <div class="work-meta">姐妹花｜2021｜原子筆、黃素描紙｜39.4 × 54.6 cm</div>
-            <div class="work-seal">我的姐姐與兩個堂姐是好麻吉，她們仨小時候曾經夢想建造一個樹屋，可以久久住在一起，快樂地過日子。</div>
-            <div class="thumb-container">
-                <img class="thumb-img active" src="姐妹花_全貌.jpg" onclick="switchImage('main-img-3', this)">
-            </div>
-        </div>
-    </div>
-
-    <div class="work-card">
-        <div class="work-img-wrapper"><img id="main-img-4" src="阿祖冰菓室_全貌.jpg"></div>
-        <div class="circle-toggle-trigger" onclick="toggleWorkContent(this)"><i class="fas fa-chevron-down"></i></div>
-        <div class="toggle-content">
-            <div class="work-meta">阿祖冰菓室｜2024｜原子筆、黃素描紙｜39.4 × 54.6 cm</div>
-            <div class="work-seal">阿祖年輕時曾推著車子賣剉冰，老年失智後，依然記得如何手製粉圓、粉粿等配料。原本想要像《阿公的發財車》那樣、將賣冰的推車加上許多奇特功能的機器；但在進行到20%時，阿祖便過世了，於意我改變原本的構想，換成一幢冰菓室紙紮屋。</div>
-            <div class="thumb-container">
-                <img class="thumb-img active" src="阿祖冰菓室_全貌.jpg" onclick="switchImage('main-img-4', this)">
-            </div>
-        </div>
-    </div>
+        works.forEach(work => {
+            document.write(`
+                <div class="work-card">
+                    <div class="work-img-wrapper"><img id="main-img-${work.id}" src="${work.name}_全貌.jpg"></div>
+                    <div class="circle-toggle-trigger" onclick="toggleWorkContent(this)"><i class="fas fa-chevron-down"></i></div>
+                    <div class="toggle-content">
+                        <div class="work-meta">${work.name}｜${work.info}</div>
+                        <div class="work-seal">${work.seal}</div>
+                        <div class="thumb-container">
+                            <img class="thumb-img active" src="${work.name}_全貌.jpg" onclick="switchImage('main-img-${work.id}', this)">
+                            <img class="thumb-img" src="${work.name}_局部1.jpg" onclick="switchImage('main-img-${work.id}', this)">
+                            <img class="thumb-img" src="${work.name}_局部2.jpg" onclick="switchImage('main-img-${work.id}', this)">
+                            <img class="thumb-img" src="${work.name}_局部3.jpg" onclick="switchImage('main-img-${work.id}', this)">
+                            <img class="thumb-img" src="${work.name}_局部4.jpg" onclick="switchImage('main-img-${work.id}', this)">
+                        </div>
+                    </div>
+                </div>
+            `);
+        });
+    </script>
 </main>
 
 <script>
