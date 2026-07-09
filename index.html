@@ -53,52 +53,45 @@ body {
 .search-toggle-btn:hover { opacity: 0.7; }
 
 /* ==========================================
-   全螢幕選單 (Overlay)
+   📐 浮空下拉式小側欄 (Dropdown Menu Panel)
    ========================================== */
-.nav-overlay {
+.nav-panel {
     position: fixed;
-    top: 0;
-    left: -100%; 
-    width: 100%;
-    height: 100vh;
-    background-color: rgba(134, 193, 102, 0.98); 
-    z-index: 200;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    transition: left 0.4s ease;
+    top: 75px;        /* 剛好在漢堡按鈕的下方 */
+    left: 40px;       /* 與漢堡按鈕對齊 */
+    width: 160px;     /* 給予精巧的固定寬度 */
+    background-color: rgba(134, 193, 102, 0.95); /* 帶有微透明度的同款草綠色 */
+    z-index: 90;
+    box-sizing: border-box;
+    
+    /* 核心：從左上方滑動與隱藏的動態設定 */
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.35s ease-in-out, opacity 0.25s ease-in-out;
 }
 
-/* 當加上 .open 時滑出選單 */
-.nav-overlay.open {
-    left: 0;
+/* 當小側欄被加上 .open 時往下滑出 */
+.nav-panel.open {
+    max-height: 300px; /* 給予足夠容納所有選單的高度 */
+    opacity: 1;
 }
 
-/* 選單內的關閉按鈕 */
-.close-menu-btn {
-    position: absolute;
-    top: 30px;
-    left: 40px;
-    font-size: 26px;
-    cursor: pointer;
-}
-
-/* 選單項目排版 */
-.overlay-menu {
-    text-align: center;
+/* 選單項目排版與秀氣字體調校 */
+.panel-menu {
+    padding: 10px 0;
 }
 
 .menu-item {
     display: block;
     text-decoration: none;
     color: #ffffff;
-    font-size: 24px;
-    margin: 30px 0;
+    font-size: 16px;       /* ✨ 字體縮小，顯得更精緻優雅 */
+    margin: 15px 0;
     cursor: pointer;
-    letter-spacing: 4px;
+    letter-spacing: 2px;
 }
-.menu-item:hover { opacity: 0.6; }
+.menu-item:hover { opacity: 0.7; }
 
 /* 畫過底下的子選單 */
 .submenu {
@@ -107,23 +100,26 @@ body {
     transition: max-height 0.3s ease-out;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 10px;
+    padding-left: 12px;    /* 子選單稍微往右內縮，呈現層次感 */
+    border-left: 1px solid rgba(255, 255, 255, 0.3); /* 秀氣的左邊提示線 */
+    margin-left: 2px;
 }
 .submenu.open {
-    max-height: 120px;
-    margin-top: -10px;
-    margin-bottom: 20px;
+    max-height: 80px;
+    margin-top: -5px;
+    margin-bottom: 10px;
 }
 .submenu-item {
     text-decoration: none;
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 16px;
-    letter-spacing: 2px;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 14px;       /* 子選單字體再小一點點 */
+    letter-spacing: 1px;
 }
 .submenu-item:hover { color: #ffffff; }
 
 /* ==========================================
-   搜尋功能彈出視窗 (Modal)
+   🔍 搜尋功能彈出視窗 (Modal)
    ========================================== */
 .search-overlay {
     position: fixed;
@@ -174,7 +170,7 @@ body {
 }
 
 /* ==========================================
-   🖼️ 中央主要內容區
+   🖼️ 中央主要內容區 (完全不受側欄影響)
    ========================================== */
 .main-content {
     padding: 120px 20px 60px 20px;
@@ -184,6 +180,8 @@ body {
     align-items: center;    
     justify-content: center; 
     min-height: 100vh;
+    position: relative;
+    z-index: 10; /* 低於選單的 z-index，保證不會互相干擾 */
 }
 
 /* 姓名樣式 */
@@ -204,7 +202,7 @@ body {
 /* 個人照顯示容器 */
 .profile-img-wrapper {
     width: 100%;
-    max-width: 200px;       /* ✨ 電腦版照片微調縮小為 200px，比例更精緻精美 */
+    max-width: 200px;       /* 電腦版精緻縮小尺寸 */
     margin-bottom: 45px;
     display: flex;
     justify-content: center;
@@ -243,14 +241,14 @@ body {
     transform: scale(1.05);     
 }
 
-/* 手機版適應 */
+/* 手機版適應調整 */
 @media (max-width: 768px) {
     .top-navbar { padding: 25px 25px; }
-    .close-menu-btn { left: 25px; top: 25px; }
+    .nav-panel { left: 25px; top: 65px; } /* 手機版同步對齊左上角漢堡 */
     .close-search-btn { right: 25px; top: 25px; }
     .profile-name-en { font-size: 24px; }
     .profile-name-zh { font-size: 18px; }
-    .profile-img-wrapper { max-width: 180px; } /* 📱 手機版維持原本的 180px 不變 */
+    .profile-img-wrapper { max-width: 180px; } /* 手機版照片尺寸 */
 }
 </style>
 </head>
@@ -258,7 +256,7 @@ body {
 <body>
 
 <header class="top-navbar">
-    <div class="menu-toggle-btn" onclick="openMenu()">
+    <div class="menu-toggle-btn" onclick="toggleMenu()">
         <i class="fas fa-bars"></i>
     </div>
     <div class="search-toggle-btn" onclick="openSearch()">
@@ -266,14 +264,11 @@ body {
     </div>
 </header>
 
-<nav class="nav-overlay" id="navOverlay">
-    <div class="close-menu-btn" onclick="closeMenu()">
-        <i class="fas fa-times"></i> 
-    </div>
-    <div class="overlay-menu">
+<nav class="nav-panel" id="navPanel">
+    <div class="panel-menu">
         <a href="about.html" class="menu-item">走過</a>
         
-        <span class="menu-item" onclick="toggleArtMenu(event)">畫過 ▼</span>
+        <span class="menu-item" onclick="toggleArtMenu(event)">畫過</span>
         <div class="submenu" id="art-submenu">
             <a href="genealogy.html" class="submenu-item">族譜系列</a>
             <a href="pseudo-classic.html" class="submenu-item">擬古系列</a>
@@ -313,17 +308,13 @@ body {
 </main>
 
 <script>
-// 控制全螢幕選單的開關
-function openMenu() {
-    document.getElementById('navOverlay').classList.add('open');
-}
-// 關閉選單時順便收合子選單
-function closeMenu() {
-    document.getElementById('navOverlay').classList.remove('open');
-    document.getElementById('art-submenu').classList.remove('open'); 
+// ✨ 切換下拉小側欄的開與關（再次點擊同一個漢堡鈕即可縮回）
+function toggleMenu() {
+    var panel = document.getElementById('navPanel');
+    panel.classList.toggle('open');
 }
 
-// 控制畫過子選單的展開
+// 控制「畫過」子選單的滑出與縮回
 function toggleArtMenu(event) {
     event.stopPropagation();
     var submenu = document.getElementById('art-submenu');
@@ -341,10 +332,10 @@ function closeSearch() {
     document.getElementById('searchOverlay').classList.remove('open');
 }
 
-// 模擬搜尋按下 Enter 的反應
+// 模擬搜尋邏輯
 function handleSearch(event) {
     if (event.key === 'Enter') {
-        alert('正在搜尋：' + event.target.value + ' ...（此處未來可擴充作品搜尋邏輯）');
+        alert('正在搜尋：' + event.target.value + ' ...');
     }
 }
 </script>
