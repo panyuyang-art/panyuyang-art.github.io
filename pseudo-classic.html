@@ -49,10 +49,11 @@ h1 { font-size: 24px; font-weight: normal; margin-bottom: 60px; letter-spacing: 
 
 .work-card { margin-bottom: 140px; }
 
+/* 圖片容器與間距設定 */
 .work-img-wrapper { width: 100%; display: flex; justify-content: center; align-items: center; background-color: #574C57; height: 650px; }
 .work-img-wrapper img { max-width: 100%; max-height: 100%; object-fit: contain; }
 
-.trigger-container { display: flex; justify-content: center; padding-top: 10px; margin-bottom: 25px; }
+.trigger-container { display: flex; justify-content: center; margin-top: 10px; margin-bottom: 25px; }
 .circle-toggle-trigger { width: 44px; height: 44px; background-color: rgba(0,0,0,0.25); border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: all 0.2s; }
 .circle-toggle-trigger:hover { background-color: rgba(0,0,0,0.5); }
 .circle-toggle-trigger.open .arrow-icon { transform: rotate(180deg); }
@@ -65,7 +66,7 @@ h1 { font-size: 24px; font-weight: normal; margin-bottom: 60px; letter-spacing: 
 .thumb-img { width: 80px; height: 80px; object-fit: cover; cursor: pointer; border: 1px solid #3d363d; opacity: 0.5; transition: all 0.2s; }
 .thumb-img:hover, .thumb-img.active { opacity: 1; border-color: #ffffff; }
 
-/* 📱 手機版適應調整：已同步與「走過」介面一致 */
+/* 手機版適應調整 */
 @media (max-width: 768px) {
     .top-navbar { padding: 25px 25px; }
     .nav-panel { left: 25px; top: 65px; }
