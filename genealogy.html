@@ -73,9 +73,9 @@ body {
 }
 
 .nav-panel.open {
-    max-height: 450px; /* 增加最大高度以舒適容納所有分行按鈕 */
+    max-height: 470px; /* 調整高度上限，確保選單展開時不被切掉 */
     opacity: 1;
-    padding: 20px 20px; 
+    padding: 24px 20px 20px 20px; /* 微調頂部內距 */
 }
 
 /* 側欄選單項目樣式 */
@@ -91,12 +91,13 @@ body {
 }
 .menu-item:hover { opacity: 0.7; }
 
-/* 🏠 新增：獨立「家的符號」專屬按鈕樣式 */
+/* 🏠 修改處：拉開「家的符號」與下方「走過」之間的距離 */
 .home-link-item {
-    padding-bottom: 2px;  /* 讓家與底下的「走過」保持適當的行距微距 */
+    padding-top: 4px;      /* 讓家的符號與小方塊頂部保持舒適呼吸感 */
+    padding-bottom: 12px;  /* 🛠️ 關鍵調整：拉大下邊距，讓家的符號與「走過」隔開精準距離 */
 }
 .home-link-item .fa-home {
-    font-size: 20px;      /* 讓首頁圖標稍微放大，更清晰精緻 */
+    font-size: 20px;      /* 保持精緻適當的放大圖標尺寸 */
     color: #268785;
 }
 
@@ -558,7 +559,7 @@ h1 {
         <div class="toggle-content">
             <div class="details-content">
                 <div class="work-meta">阿祖冰菓室｜2024｜原子筆、黃素描紙｜39.4 × 54.6 cm</div>
-                <div class="work-seal">阿祖年輕時曾推著車子賣剉冰，老年失智後，依然記得如何手製粉圓、粉粿等配料。原本想要像《阿公的發財車》那樣、將賣冰的推車加上許多奇特功能的機器；但在進行到20%時，阿祖便過世了，於是我改變原本的構想，換成一幢冰菓室紙紮屋。</div>
+                <div class="work-seal">阿祖年輕時曾推著車子賣剉冰，老年失智後，依然記得如何手製粉圓、粉粿等配料。原本想要像《阿公的發財車》那樣、將賣冰的推車加上許多奇特功能的機器；但在進行到20%時，阿祖便過世了，於意我改變原本的構想，換成一幢冰菓室紙紮屋。</div>
             </div>
 
             <div class="thumb-container">
