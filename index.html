@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>走過 - Pan Yu-Yang</title>
+<title>Pan Yu-Yang</title>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -13,7 +13,7 @@ body {
     font-family: Helvetica, Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: rgb(235, 122, 119); /* 🎨 甚三紅 R:235, G:122, B:119 */
+    background-color: #86c166; /* 苗色 #86c166 */
     color: #ffffff;            
     min-height: 100vh;
     overflow-x: hidden;
@@ -50,7 +50,7 @@ body {
 .search-toggle-btn:hover { opacity: 0.7; }
 
 /* ==========================================
-   📐 浮空下拉式小側欄 panel（白底粉紅字）
+   📐 浮空下拉式小側欄 panel（白底綠字）
    ========================================== */
 .nav-panel {
     position: fixed;
@@ -71,50 +71,22 @@ body {
 }
 
 .nav-panel.open {
-    max-height: 450px; 
+    max-height: 400px; 
     opacity: 1;
     padding: 15px 20px; 
 }
 
-/* 🏠 最上方的「家」幾何符號樣式 */
-.home-icon-btn {
-    display: flex;            
-    justify-content: flex-start; 
-    align-items: center;
-    color: rgb(235, 122, 119); 
-    font-size: 18px;
-    padding: 12px 0 6px 0;    
-    text-decoration: none;
-    transition: opacity 0.2s;
-    width: 100%;
-    border-bottom: none;      
-    
-    /* 💡 修正：拉大房子與下方選單項目的留白距離 */
-    margin-bottom: 15px;      
-}
-.home-icon-btn i {
-    text-align: left;         
-    margin-left: 0;
-}
-.home-icon-btn:hover { opacity: 0.7; }
-
 .menu-item {
     display: block;
     text-decoration: none;
-    color: rgb(235, 122, 119); 
+    color: #86c166;        
     font-size: 15px;       
     padding: 10px 0;
     cursor: pointer;
     letter-spacing: 3px;
     border-bottom: none;   
-    text-align: left;         
 }
 .menu-item:hover { opacity: 0.7; }
-
-/* 目前身處的選單項目稍微加粗 */
-.menu-item.active {
-    font-weight: bold;
-}
 
 .submenu {
     max-height: 0;
@@ -124,7 +96,7 @@ body {
     gap: 12px;
     padding-left: 10px;
     margin-left: 2px;
-    border-left: 1px solid rgba(235, 122, 119, 0.3); 
+    border-left: 1px solid rgba(134, 193, 102, 0.3); 
     transition: max-height 0.3s ease-in-out, margin-top 0.3s ease-in-out;
 }
 .submenu.open {
@@ -134,15 +106,14 @@ body {
 }
 .submenu-item {
     text-decoration: none;
-    color: rgba(235, 122, 119, 0.7); 
+    color: rgba(134, 193, 102, 0.7); 
     font-size: 13px;       
     letter-spacing: 2px;
-    text-align: left;
 }
-.submenu-item:hover { color: rgb(235, 122, 119); } 
+.submenu-item:hover { color: #86c166; } 
 
 /* ==========================================
-   🔍 搜尋功能彈出視窗與結果顯示
+   🔍 升級版：真正可點擊導向的搜尋功能視窗
    ========================================== */
 .search-overlay {
     position: fixed;
@@ -150,13 +121,13 @@ body {
     left: 0;
     width: 100%;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.88); 
+    background-color: rgba(0, 0, 0, 0.88); /* 優雅的暗色遮罩 */
     z-index: 300;
     display: flex;
     flex-direction: column;
     justify-content: flex-start; 
     align-items: center;
-    padding-top: 15vh;
+    padding-top: 15vh; /* 留出空間給結果清單 */
     box-sizing: border-box;
     opacity: 0;
     pointer-events: none;
@@ -191,6 +162,8 @@ body {
     letter-spacing: 2px;
     text-align: center;
 }
+
+/* 🎨 搜尋結果清單樣式 */
 .search-results {
     width: 80%;
     max-width: 500px;
@@ -199,6 +172,7 @@ body {
     overflow-y: auto;
     text-align: left;
 }
+/* 搜尋結果的小卡片，點擊可直接連結 */
 .result-item {
     display: block;
     background-color: rgba(255, 255, 255, 0.1);
@@ -211,13 +185,13 @@ body {
 }
 .result-item:hover {
     background-color: rgba(255, 255, 255, 0.2);
-    transform: translateY(-2px);
+    transform: translateY(-2px); /* 輕微懸浮感 */
 }
 .result-title {
     font-size: 16px;
     font-weight: bold;
     margin-bottom: 5px;
-    color: rgb(235, 122, 119); 
+    color: #86c166; /* 招牌草綠色標題 */
 }
 .result-desc {
     font-size: 13px;
@@ -232,82 +206,80 @@ body {
 }
 
 /* ==========================================
-   📄 中央履歷主要內容區
+   🖼️ 中央主要內容區
    ========================================== */
 .main-content {
-    padding: 140px 40px 80px 40px;
+    padding: 120px 20px 60px 20px;
     box-sizing: border-box;
-    max-width: 800px; 
-    margin: 0 auto; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;    
+    justify-content: center; 
+    min-height: 100vh;
     position: relative;
     z-index: 10; 
 }
 
-h1 {
-    font-size: 32px;
-    font-weight: 300;
-    margin-bottom: 50px;
-    letter-spacing: 4px;
-    color: #ffffff; 
-    text-align: left;
-}
-
-.resume-section {
-    margin-bottom: 50px;
-}
-
-.section-title {
-    font-size: 18px;
-    font-weight: normal;
-    color: #ffffff; 
-    border-bottom: 1px solid rgba(255, 255, 255, 0.4); 
-    padding-bottom: 10px;
-    margin-bottom: 25px;
+.profile-name-en {
+    font-size: 28px;        
     letter-spacing: 2px;
+    margin-bottom: 10px;
+    font-weight: 300;
 }
 
-.sub-section-title {
-    font-size: 15px;
-    font-weight: bold;
-    color: #ffffff; 
-    margin: 30px 0 12px 0;
-    letter-spacing: 1px;
+.profile-name-zh {
+    font-size: 20px;
+    letter-spacing: 6px;
+    margin-bottom: 40px;    
+    font-weight: 400;
 }
 
-.info-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+.profile-img-wrapper {
+    width: 100%;
+    max-width: 200px;       
+    margin-bottom: 45px;
+    display: flex;
+    justify-content: center;
 }
 
-.info-item {
-    font-size: 14px;
-    line-height: 1.8;
-    color: rgba(255, 255, 255, 0.9); 
-    margin-bottom: 12px;
-    display: flex; 
+.profile-img-wrapper img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    display: block;
 }
 
-.info-year {
-    width: 90px;
-    flex-shrink: 0;
-    color: #ffffff; 
-    font-weight: bold;
+.social-buttons {
+    display: flex;
+    gap: 24px;              
 }
 
-.info-text {
-    flex-grow: 1;
+.circle-btn {
+    width: 40px;            
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.2); 
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 18px;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+.circle-btn:hover {
+    background-color: rgba(255, 255, 255, 0.4); 
+    transform: scale(1.05);     
 }
 
-/* 📱 手機版適應調整 */
+/* 手機版適應調整 */
 @media (max-width: 768px) {
     .top-navbar { padding: 25px 25px; }
     .nav-panel { left: 25px; top: 65px; } 
     .close-search-btn { right: 25px; top: 25px; }
-    .main-content { padding: 120px 25px 60px 25px; }
-    h1 { font-size: 28px; margin-bottom: 40px; }
-    .info-item { flex-direction: column; margin-bottom: 16px; }
-    .info-year { margin-bottom: 2px; }
+    .profile-name-en { font-size: 24px; }
+    .profile-name-zh { font-size: 18px; }
+    .profile-img-wrapper { max-width: 180px; } 
 }
 </style>
 </head>
@@ -324,10 +296,7 @@ h1 {
 </header>
 
 <nav class="nav-panel" id="navPanel">
-    <a href="index.html" class="home-icon-btn" title="回首頁">
-        <i class="fas fa-home"></i>
-    </a>
-    <a href="about.html" class="menu-item active">走過</a>
+    <a href="about.html" class="menu-item">走過</a>
     
     <span class="menu-item" onclick="toggleArtMenu(event)">畫過</span>
     <div class="submenu" id="art-submenu">
@@ -349,125 +318,36 @@ h1 {
 </div>
 
 <main class="main-content">
+    <div class="profile-name-en">Pan Yu Yang</div>
+    <div class="profile-name-zh">潘羽鍚</div>
 
-    <h1>CV</h1>    
+    <div class="profile-img-wrapper">
+        <img src="個人照_彩色.jpg" alt="潘羽鍚 Pan Yu Yang">
+    </div>
 
-    <section class="resume-section">
-        <div class="section-title">學歷</div>
-        <ul class="info-list">
-            <li class="info-item"><span class="info-year">2021~2026</span><span class="info-text">中文系雙主修藝設系創作組，清華大學，臺灣。</span></li>
-            <li class="info-item"><span class="info-year">2022~2025</span><span class="info-text">記者、編輯、副總編輯，清檸新聞小組，臺灣。</span></li>
-            <li class="info-item"><span class="info-year">2018~2021</span><span class="info-text">美術班，師大附中，臺灣。</span></li>
-            <li class="info-item"><span class="info-year">2015~2018</span><span class="info-text">美術班，金華國中，臺灣。</span></li>
-            <li class="info-item"><span class="info-year">2013~2015</span><span class="info-text">美術班，民族國小，臺灣。</span></li>
-        </ul>
-    </section>
-
-    <section class="resume-section">
-        <div class="section-title">出版</div>
-        <ul class="info-list">
-            <li class="info-item"><span class="info-year">2026</span><span class="info-text">《失眠斷片腹稿》第四集，台北市：個人出版。（獲文化部繪本及圖文書創作及出版行銷獎勵）</span></li>
-            <li class="info-item"><span class="info-year">2025</span><span class="info-text">《壹圓》，台北市：個人出版。</span></li>
-            <li class="info-item"><span class="info-year">2024</span><span class="info-text">《失眠斷片腹稿》第三集，台北市：個人出版。</span></li>
-            <li class="info-item"><span class="info-year"></span><span class="info-text">《新竹藝術家叢書：謝鴻均》，新竹市：新竹市政府文化局。</span></li>
-            <li class="info-item"><span class="info-year">2023</span><span class="info-text">《失眠斷片腹稿》第二集，台北市：個人出版。</span></li>
-            <li class="info-item"><span class="info-year"></span><span class="info-text">《失眠斷片腹稿》第一集，台北市：個人出版。</span></li>
-            <li class="info-item"><span class="info-year">2018</span><span class="info-text">《煩惱交換平台》（繪圖），台北市：臺北市政府教育局。</span></li>
-        </ul>
-    </section>
-
-    <section class="resume-section">
-        <div class="section-title">得獎</div>
-        <ul class="info-list">
-            <li class="info-item"><span class="info-year">2025</span><span class="info-text">國立清華大學學士班畢業學業表現優等獎，新竹，臺灣。</span></li>
-            <li class="info-item"><span class="info-year">2024</span><span class="info-text">《上邪》，春之清華藝術卓越獎，創作類，銅獎，新竹，臺灣。</span></li>
-            <li class="info-item"><span class="info-year"></span><span class="info-text">112學年度第二學期專業科目審查成績優秀獎，清華大學藝術與設計學系創作組，新竹，臺灣。</span></li>
-            <li class="info-item"><span class="info-year">2023</span><span class="info-text">《失控的進步》，春之清華藝術卓越獎，創作類，佳作，新竹，臺灣。</span></li>
-            <li class="info-item"><span class="info-year"></span><span class="info-text">《壹元》，第35屆信誼幼兒文學獎，圖畫書文字創作獎，入選，臺北，臺灣。</span></li>
-            <li class="info-item"><span class="info-year"></span><span class="info-text">《天邊一朵雲》，新竹美展，西方媒材類，佳作，新竹，臺灣。</span></li>
-            <li class="info-item"><span class="info-year"></span><span class="info-text">書卷獎，清華大學人文社會學院中國文學系，新竹，臺灣。</span></li>
-            <li class="info-item"><span class="info-year"></span><span class="info-text">111學年度第二學期專業科目審查成績優秀獎，清華大學藝術與設計學系創作組，新竹，臺灣。</span></li>
-            <li class="info-item"><span class="info-year">2022</span><span class="info-text">《焉知非福？》，紙上躍躍然・典美插畫大賞，入選，臺北，臺灣。</span></li>
-            <li class="info-item"><span class="info-year"></span><span class="info-text">《姐妹花》，春之清華藝術卓越獎，創作類，優選，新竹，臺灣。</span></li>
-            <li class="info-item"><span class="info-year"></span><span class="info-text">書卷獎，清華大學清華學院學士班，新竹，臺灣。</span></li>
-            <li class="info-item"><span class="info-year">2020</span><span class="info-text">《阿嬤是偉大的田莊人》，108學年度全國學生美術比賽，高中職美術科組漫畫類，特優，臺灣。</span></li>
-            <li class="info-item"><span class="info-year">2019</span><span class="info-text">《阿公的發財車》，107學年度全國學生美術比賽，高中職美術科組漫畫類，特優，臺灣。</span></li>
-        </ul>
-    </section>
-
-    <section class="resume-section">
-        <div class="section-title">展覽</div>
-        
-        <div class="sub-section-title">個展</div>
-        <ul class="info-list">
-            <li class="info-item"><span class="info-year">2025</span><span class="info-text">溫開水日常，清華大學竹師藝術空間二館，新竹，臺灣。</span></li>
-            <li class="info-item"><span class="info-year">2024</span><span class="info-text">失眠斷片腹稿，清華大學澤空間，新竹，臺灣。</span></li>
-        </ul>
-
-        <div class="sub-section-title">聯展、書展</div>
-        <ul class="info-list">
-            <li class="info-item"><span class="info-year">2026</span><span class="info-text">少年行：折若木以拂日兮，Bluerider ART，臺北，臺灣。</span></li>
-            <li class="info-item"><span class="info-year"></span><span class="info-text">zine・zip，承風書店，高雄，臺灣。</span></li>
-            <li class="info-item"><span class="info-year"></span><span class="info-text">臺北國際書展，世貿一館，臺北，臺灣。</span></li>
-            <li class="info-item"><span class="info-year">2025</span><span class="info-text">南漫節獨漫祭，西竹圍之丘文創園區浮生圖像所，臺南，臺灣。</span></li>
-            <li class="info-item"><span class="info-year"></span><span class="info-text">高雄漾藝術博覽會，駁二藝術特區大勇區P3倉庫，高雄，台灣。</span></li>
-            <li class="info-item"><span class="info-year"></span><span class="info-text">春之清華，竹師藝術空間，新竹，臺灣。</span></li>
-            <li class="info-item"><span class="info-year"></span><span class="info-text">臺南藝術印刷品市集，吳園公會堂，臺南，臺灣。</span></li>
-            <li class="info-item"><span class="info-year"></span><span class="info-text">臺中藝術博覽會，日月千禧酒店，臺中，臺灣。</span></li>
-            <li class="info-item"><span class="info-year"></span><span class="info-text">青春嶺聯展，科元藝術，臺中，臺灣。</span></li>
-            <li class="info-item"><span class="info-year"></span><span class="info-text">MEWE島，竹師藝術空間、竹師藝術空間二館，新竹，臺灣。</span></li>
-            <li class="info-item"><span class="info-year"></span><span class="info-text">大阪藝術書展，Seaside Studio CASO，大阪，日本。</span></li>
-            <li class="info-item"><span class="info-year"></span><span class="info-text">藝術新聲，大墩藝廊，臺中，臺灣。</span></li>
-            <li class="info-item"><span class="info-year"></span><span class="info-text">ME WE EW，Woolloomooloo Xhibit，臺北，臺灣。</span></li>
-            <li class="info-item"><span class="info-year"></span><span class="info-text">當代藝術中的生活與情境，清華大學澤空間，新竹，臺灣。</span></li>
-            <li class="info-item"><span class="info-year"></span><span class="info-text">臺北國際書展，世貿一館，臺北，臺灣。</span></li>
-            <li class="info-item"><span class="info-year">2024</span><span class="info-text">臺中藝術書展，R04願景館，臺中，臺灣。</span></li>
-            <li class="info-item"><span class="info-year"></span><span class="info-text">春之清華，竹師藝術空間，新竹，臺灣.</span></li>
-            <li class="info-item"><span class="info-year"></span><span class="info-text">放牧瀏覽小誌徵件展，毛刺空間，臺中，臺灣。</span></li>
-            <li class="info-item"><span class="info-year"></span><span class="info-text">臺北國際書展，世貿一館，臺北，臺灣。</span></li>
-            <li class="info-item"><span class="info-year"></span><span class="info-text">曼谷藝術博覽會，corner house，曼谷，泰國。</span></li>
-            <li class="info-item"><span class="info-year"></span><span class="info-text">清大藝設系期末共評優秀聯展，清華大學澤空間，新竹，臺灣。</span></li>
-            <li class="info-item"><span class="info-year">2023</span><span class="info-text">傻瓜書日，臺灣當代文化實驗場圖書館展演空間，臺北，臺灣。</span></li>
-            <li class="info-item"><span class="info-year"></span><span class="info-text">漫類集會，西竹圍之丘文創園區浮生圖像所，臺南，臺灣。</span></li>
-            <li class="info-item"><span class="info-year"></span><span class="info-text">春之清華，竹師藝術空間，新竹，臺灣。</span></li>
-            <li class="info-item"><span class="info-year"></span><span class="info-text">新竹美展，新竹縣政府文化局美術館，新竹，臺灣。</span></li>
-            <li class="info-item"><span class="info-year"></span><span class="info-text">清大藝設系期末共評優秀聯展，清華大學澤空間，新竹，臺灣.</span></li>
-            <li class="info-item"><span class="info-year">2022</span><span class="info-text">希望的所在，典美藝文空間，臺北，臺灣。</span></li>
-            <li class="info-item"><span class="info-year"></span><span class="info-text">春之清華，竹師藝術空間，新竹，臺灣。</span></li>
-            <li class="info-item"><span class="info-year">2021</span><span class="info-text">OMEGAVISION，師大附中新北樓地塹，臺北，臺灣。</span></li>
-            <li class="info-item"><span class="info-year">2020</span><span class="info-text">入木三分熟，師大附中新北樓地塹，臺北，臺灣。</span></li>
-            <li class="info-item"><span class="info-year"></span><span class="info-text">秋菊男孩俱樂部，師大附中新北樓地塹，臺北，臺灣。</span></li>
-            <li class="info-item"><span class="info-year">2019</span><span class="info-text">半生不熟，師大附中新北樓地塹，臺北，臺灣。</span></li>
-        </ul>
-    </section>
-
+    <div class="social-buttons">
+        <a href="https://www.instagram.com/bennypan920717/" target="_blank" class="circle-btn" title="Instagram">
+            <i class="fab fa-instagram"></i>
+        </a>
+        <a href="mailto:benny920717@gmail.com" class="circle-btn" title="Email">
+            <i class="far fa-envelope"></i>
+        </a>
+    </div>
 </main>
 
 <script>
 // ==========================================
-// 📦 網站搜尋資料庫
+// 📦 網站的內建資料庫清單
+// 當你在搜尋框打字時，系統會自動比對這裡的 title 和 desc 
 // ==========================================
 const websiteData = [
-    { title: "關於我 (CV)", desc: "潘羽鍚的個人簡介、藝術理念與生命經歷。", url: "about.html" },
+    { title: "關於我 (走過)", desc: "潘羽鍚的個人簡介、藝術理念與生命經歷。", url: "about.html" },
     { title: "族譜系列", desc: "當代水墨與藝術創作——探索家族、血緣符號與記憶重組的作品單元。", url: "genealogy.html" },
     { title: "擬古系列", desc: "傳統水墨美學的現代轉譯與模擬經典之筆墨實驗作品。", url: "pseudo-classic.html" },
-    { title: "文字創作 (寫過)", desc: "收錄潘羽鍚撰寫的藝術評論、散文、隨筆與文學創作。", url: "writing.html" },
-    { title: "七仙女圖", desc: "族譜系列作品。探討當代語境下的符號重組與水墨設色創作。", url: "genealogy.html" }
+    { title: "文字創作 (寫過)", desc: "收錄潘羽鍚撰寫的藝術評論、散文、隨筆與文學創作。", url: "writing.html" }
 ];
 
 let autoCloseTimer = null;
-
-// 🟢 點擊漢堡選單：切換開關，並於打開時啟動倒數
-function toggleMenu() {
-    var panel = document.getElementById('navPanel');
-    panel.classList.toggle('open');
-    
-    if (panel.classList.contains('open')) {
-        resetAutoCloseTimer();
-    } else {
-        clearAutoCloseTimer();
-    }
-}
 
 // 🟢 智慧重置計時器：重新倒數 5 秒
 function resetAutoCloseTimer() {
@@ -488,7 +368,19 @@ function clearAutoCloseTimer() {
     }
 }
 
-// 🟢 點擊「畫過」次選單：保持開啟並重新計算 5 秒
+// 🟢 點擊漢堡選單：切換開關，並於打開時啟動 5 秒倒數
+function toggleMenu() {
+    var panel = document.getElementById('navPanel');
+    panel.classList.toggle('open');
+    
+    if (panel.classList.contains('open')) {
+        resetAutoCloseTimer();
+    } else {
+        clearAutoCloseTimer();
+    }
+}
+
+// 🟢 點擊「畫過」次選單：展開次選單並智慧重新倒數 5 秒
 function toggleArtMenu(event) {
     event.stopPropagation(); 
     var submenu = document.getElementById('art-submenu');
@@ -497,13 +389,10 @@ function toggleArtMenu(event) {
     resetAutoCloseTimer();
 }
 
-// ==========================================
-// 🔍 搜尋互動邏輯
-// ==========================================
 function openSearch() {
     document.getElementById('searchOverlay').classList.add('open');
-    document.getElementById('searchInput').value = ""; 
-    document.getElementById('searchResults').innerHTML = ""; 
+    document.getElementById('searchInput').value = ""; // 清空舊文字
+    document.getElementById('searchResults').innerHTML = ""; // 清空舊結果
     setTimeout(() => {
         document.getElementById('searchInput').focus();
     }, 100);
@@ -513,46 +402,20 @@ function closeSearch() {
     document.getElementById('searchOverlay').classList.remove('open');
 }
 
+// ==========================================
+// 🔍 核心：即時搜尋與點擊跳轉邏輯
+// ==========================================
 function performSearch() {
     const query = document.getElementById('searchInput').value.trim().toLowerCase();
     const resultsContainer = document.getElementById('searchResults');
     
+    // 如果輸入框空空如也，不顯示任何東西
     if (query === "") {
         resultsContainer.innerHTML = "";
         return;
     }
     
+    // 比對資料庫中是否有包含輸入內容
     const filteredData = websiteData.filter(item => 
         item.title.toLowerCase().includes(query) || 
-        item.desc.toLowerCase().includes(query)
-    );
-    
-    if (filteredData.length > 0) {
-        let htmlContent = "";
-        filteredData.forEach(item => {
-            htmlContent += `
-                <a href="${item.url}" class="result-item">
-                    <div class="result-title">${item.title}</div>
-                    <div class="result-desc">${item.desc}</div>
-                </a>
-            `;
-        });
-        resultsContainer.innerHTML = htmlContent;
-    } else {
-        resultsContainer.innerHTML = `<div class="no-result">找不到與「${query}」相符的作品或資訊</div>`;
-    }
-}
-
-// 🟢 點擊網頁任意空白處：智慧縮回側欄
-document.addEventListener('click', function(event) {
-    var panel = document.getElementById('navPanel');
-    var toggleBtn = document.querySelector('.menu-toggle-btn');
-    if (panel.classList.contains('open') && !panel.contains(event.target) && !toggleBtn.contains(event.target)) {
-        panel.classList.remove('open');
-        clearAutoCloseTimer();
-    }
-});
-</script>
-
-</body>
-</html>
+        item.
