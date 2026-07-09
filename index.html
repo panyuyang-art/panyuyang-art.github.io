@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pan Yu-Yang</title>
 
-<!-- 引入圖標庫，讓底部的圓形按鈕內顯示漂亮的 IG 和 信箱圖示 -->
+<!-- 引入圖標庫（包含搜尋符號、IG、信箱、關閉等小圖示） -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
@@ -14,93 +14,182 @@ body {
     font-family: Helvetica, Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #121212; 
+    /* 💡 使用你指定的草綠色作為背景，文字改為白色（或可改深灰，白色目前最具極簡感） */
+    background-color: #86c166; 
     color: #ffffff;            
-    display: flex; 
     min-height: 100vh;
+    overflow-x: hidden;
 }
 
-/* 左側固定側邊欄選單 */
-.sidebar {
-    width: 260px;
-    padding: 60px 40px;
-    border-right: 1px solid #252525; 
-    position: fixed; 
-    height: 100vh;
+/* ==========================================
+   頂部導覽列 (左上角漢堡、右上角搜尋)
+   ========================================== */
+.top-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 30px 40px;
     box-sizing: border-box;
-    z-index: 10;
-    background-color: #121212;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
 }
 
-.sidebar h2 {
+/* 左上角三條橫杠（漢堡選單鈕） */
+.menu-toggle-btn {
+    font-size: 24px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+.menu-toggle-btn:hover { opacity: 0.7; }
+
+/* 右上角搜尋符號 */
+.search-toggle-btn {
     font-size: 22px;
-    font-weight: normal;
-    margin-bottom: 40px;
-    letter-spacing: 2px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+.search-toggle-btn:hover { opacity: 0.7; }
+
+/* ==========================================
+   🍔 點開後才會顯示的全螢幕選單 (Overlay)
+   ========================================== */
+.nav-overlay {
+    position: fixed;
+    top: 0;
+    left: -100%; /* 預設藏在左邊外面 */
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(134, 193, 102, 0.98); /* 覆蓋半透明的同款綠色 */
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: left 0.4s ease;
+}
+
+/* 當加上 .open 時滑出選單 */
+.nav-overlay.open {
+    left: 0;
+}
+
+/* 選單內的關閉按鈕 */
+.close-menu-btn {
+    position: absolute;
+    top: 30px;
+    left: 40px;
+    font-size: 26px;
+    cursor: pointer;
+}
+
+/* 選單項目排版 */
+.overlay-menu {
+    text-align: center;
 }
 
 .menu-item {
     display: block;
     text-decoration: none;
     color: #ffffff;
-    font-size: 16px;
-    margin-bottom: 24px;
+    font-size: 24px;
+    margin: 30px 0;
     cursor: pointer;
-    user-select: none;
+    letter-spacing: 4px;
 }
+.menu-item:hover { opacity: 0.6; }
 
-.menu-item:hover, .submenu-item:hover {
-    color: #aaaaaa;
-}
-
-/* 預設隱藏的子選單外殼 */
+/* 畫過底下的子選單 */
 .submenu {
-    margin-left: 15px;
-    border-left: 1px solid #333; 
-    padding-left: 15px;
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.3s ease-out, margin-bottom 0.3s ease-out;
+    transition: max-height 0.3s ease-out;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
-
-/* 當子選單被加上 .open 樣式時才會展開 */
 .submenu.open {
-    max-height: 100px; 
-    margin-bottom: 24px;
+    max-height: 120px;
+    margin-top: -10px;
+    margin-bottom: 20px;
 }
-
 .submenu-item {
-    display: block;
     text-decoration: none;
-    color: #888888; 
-    font-size: 14px;
-    margin-bottom: 12px;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 16px;
+    letter-spacing: 2px;
 }
+.submenu-item:hover { color: #ffffff; }
 
-.submenu-item.active {
-    color: #ffffff;
-    font-weight: bold;
+/* ==========================================
+   🔍 搜尋功能彈出視窗 (Modal)
+   ========================================== */
+.search-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.85); /* 搜尋時背景變暗，焦點集中 */
+    z-index: 300;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
     pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+.search-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+}
+.close-search-btn {
+    position: absolute;
+    top: 30px;
+    right: 40px;
+    font-size: 26px;
+    cursor: pointer;
+    color: #fff;
+}
+.search-box {
+    width: 80%;
+    max-width: 500px;
+    text-align: center;
+}
+.search-input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid #ffffff;
+    padding: 10px;
+    color: #ffffff;
+    font-size: 20px;
+    outline: none;
+    letter-spacing: 2px;
+}
+.search-input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
 }
 
 /* ==========================================
-   🎨 修改後的右側主要內容區（改造成更具留白美感的比例）
+   🖼️ 中央主要內容區 (無側欄、完全置中)
    ========================================== */
 .main-content {
-    margin-left: 260px; 
-    padding: 60px 40px;
-    width: calc(100% - 260px);
+    padding: 120px 20px 60px 20px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    align-items: center;    /* 讓內容水平居中 */
-    justify-content: center; /* 讓內容垂直居中 */
+    align-items: center;    
+    justify-content: center; 
     min-height: 100vh;
 }
 
-/* 頂部兩行姓名樣式 */
+/* 姓名樣式 */
 .profile-name-en {
-    font-size: 28px;        /* 微調字型大小更顯秀氣 */
+    font-size: 28px;        
     letter-spacing: 2px;
     margin-bottom: 10px;
     font-weight: 300;
@@ -109,14 +198,14 @@ body {
 .profile-name-zh {
     font-size: 20px;
     letter-spacing: 6px;
-    margin-bottom: 35px;    /* 微調間距 */
+    margin-bottom: 40px;    
     font-weight: 400;
 }
 
-/* 個人照顯示容器（縮小成更精緻的質感比例） */
+/* 個人照顯示容器 */
 .profile-img-wrapper {
     width: 100%;
-    max-width: 260px;       /* ✨ 電腦版縮小為 260px，讓畫面整體更輕盈有質感 */
+    max-width: 260px;       /* 質感大小比例 */
     margin-bottom: 45px;
     display: flex;
     justify-content: center;
@@ -132,14 +221,14 @@ body {
 /* 社群按鈕容器 */
 .social-buttons {
     display: flex;
-    gap: 24px;              /* 稍微拉開圓圈之間的間隔 */
+    gap: 24px;              
 }
 
 /* 雙圓形按鈕樣式 */
 .circle-btn {
-    width: 40px;            /* 按鈕也等比例修細緻一點 */
+    width: 40px;            
     height: 40px;
-    background-color: #262626; /* 使用更有質感的暗灰底色 */
+    background-color: rgba(255, 255, 255, 0.2); /* 綠色背景配上半透明白底圈圈，極有質感 */
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -151,76 +240,79 @@ body {
 }
 
 .circle-btn:hover {
-    background-color: #444444; 
+    background-color: rgba(255, 255, 255, 0.4); 
     transform: scale(1.05);     
 }
 
-/* 📱 手機版排版修正 */
+/* 手機版適應 */
 @media (max-width: 768px) {
-    body {
-        flex-direction: column;
-    }
-
-    .sidebar {
-        position: relative;
-        width: 100%;
-        height: auto;
-        padding: 30px 20px;
-        border-right: none;
-        border-bottom: 1px solid #252525;
-    }
-
-    .sidebar h2 {
-        margin-bottom: 20px;
-    }
-
-    .main-content {
-        margin-left: 0;
-        width: 100%;
-        padding: 60px 20px;
-        min-height: calc(100vh - 200px); 
-    }
-
+    .top-navbar { padding: 25px 25px; }
+    .close-menu-btn { left: 25px; top: 25px; }
+    .close-search-btn { right: 25px; top: 25px; }
     .profile-name-en { font-size: 24px; }
     .profile-name-zh { font-size: 18px; }
-    .profile-img-wrapper { max-width: 180px; } /* ✨ 手機版同步縮小為 180px */
+    .profile-img-wrapper { max-width: 180px; } 
 }
 </style>
 </head>
 
 <body>
 
-<nav class="sidebar">
-    <h2>Pan Yu-Yang</h2>
-    <a href="about.html" class="menu-item">走過</a>
-    
-    <span class="menu-item" onclick="toggleArtMenu()">畫過</span>
-    <div class="submenu" id="art-submenu">
-        <a href="genealogy.html" class="submenu-item">族譜系列</a>
-        <a href="pseudo-classic.html" class="submenu-item">擬古系列</a>
+<!-- 頂部導覽列 -->
+<header class="top-navbar">
+    <!-- 左上角三條小橫杠 -->
+    <div class="menu-toggle-btn" onclick="openMenu()">
+        <i class="fas fa-bars"></i>
     </div>
-    
-    <a href="writing.html" class="menu-item">寫過</a>
+    <!-- 右上角搜尋符號 -->
+    <div class="search-toggle-btn" onclick="openSearch()">
+        <i class="fas fa-search"></i>
+    </div>
+</header>
+
+<!-- 彈出式全螢幕選單 -->
+<nav class="nav-overlay" id="navOverlay">
+    <div class="close-menu-btn" onclick="closeMenu()">
+        <i class="fas fa-times"></i> <!-- 變回打叉符號 -->
+    </div>
+    <div class="overlay-menu">
+        <a href="about.html" class="menu-item">走過</a>
+        
+        <span class="menu-item" onclick="toggleArtMenu(event)">畫過 ▼</span>
+        <div class="submenu" id="art-submenu">
+            <a href="genealogy.html" class="submenu-item">族譜系列</a>
+            <a href="pseudo-classic.html" class="submenu-item">擬古系列</a>
+        </div>
+        
+        <a href="writing.html" class="menu-item">寫過</a>
+    </div>
 </nav>
 
+<!-- 彈出式搜尋視窗 -->
+<div class="search-overlay" id="searchOverlay">
+    <div class="close-search-btn" onclick="closeSearch()">
+        <i class="fas fa-times"></i>
+    </div>
+    <div class="search-box">
+        <!-- 💡 搜尋輸入框，未來可串接搜尋功能 -->
+        <input type="text" class="search-input" placeholder="輸入關鍵字搜尋作品資訊..." onkeypress="handleSearch(event)">
+    </div>
+</div>
+
+<!-- 主要內容區 -->
 <main class="main-content">
 
-    <!-- 1️⃣ 兩行姓名 -->
     <div class="profile-name-en">Pan Yu Yang</div>
     <div class="profile-name-zh">潘羽鍚</div>
 
-    <!-- 2️⃣ 中央指定名稱的個人照路徑 -->
     <div class="profile-img-wrapper">
         <img src="個人照_彩色.jpg" alt="潘羽鍚 Pan Yu Yang">
     </div>
 
-    <!-- 3️⃣ 最底部的雙圓形按鈕（左邊 IG，右邊信箱） -->
     <div class="social-buttons">
-        <!-- IG 圓形按鈕 -->
         <a href="https://www.instagram.com/bennypan920717/" target="_blank" class="circle-btn" title="Instagram">
             <i class="fab fa-instagram"></i>
         </a>
-        <!-- 信箱 圓形按鈕 -->
         <a href="mailto:benny920717@gmail.com" class="circle-btn" title="Email">
             <i class="far fa-envelope"></i>
         </a>
@@ -229,10 +321,39 @@ body {
 </main>
 
 <script>
-// 控制「畫過」選單展開收合的 Script
-function toggleArtMenu() {
+// 控制全螢幕選單的開關
+function openMenu() {
+    document.getElementById('navOverlay').classList.add('open');
+}
+function closeMenu() {
+    document.getElementById('navOverlay').classList.remove('open');
+    document.getElementById('art-submenu').classList.remove('open'); // 關閉選單時順便收合子選單
+}
+
+// 控制畫過子選單的展開
+function toggleArtMenu(event) {
+    event.stopPropagation();
     var submenu = document.getElementById('art-submenu');
     submenu.classList.toggle('open');
+}
+
+// 控制搜尋視窗的開關
+function openSearch() {
+    document.getElementById('searchOverlay').classList.add('open');
+    // 自動讓輸入框取得焦點
+    setTimeout(() => {
+        document.querySelector('.search-input').focus();
+    }, 100);
+}
+function closeSearch() {
+    document.getElementById('searchOverlay').classList.remove('open');
+}
+
+// 模擬搜尋按下 Enter 的反應
+function handleSearch(event) {
+    if (event.key === 'Enter') {
+        alert('正在搜尋：' + event.target.value + ' ...（此處未來可擴充作品搜尋邏輯）');
+    }
 }
 </script>
 
