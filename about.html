@@ -6,7 +6,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>走過 - Pan Yu-Yang</title>
 
-<!-- 引入圖標庫 -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
@@ -14,14 +13,14 @@ body {
     font-family: Helvetica, Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: rgb(235, 122, 119); /* 🎨 精準更改為 R:235, G:122, B:119 */
-    color: #ffffff;            
+    background-color: #EBA697; /* 🎨 換成指定的甚三紅暖粉紅色調 */
+    color: #ffffff;            /* 🎨 內文採用清晰的白色 */
     min-height: 100vh;
     overflow-x: hidden;
 }
 
 /* ==========================================
-   頂部導覽列 
+   頂部導覽列 (位置絕對固定，不影響主內容)
    ========================================== */
 .top-navbar {
     position: fixed;
@@ -77,13 +76,14 @@ body {
     padding: 15px 20px; 
 }
 
-/* 🏠 改良版：左側切齊的「家」幾何符號樣式 */
+/* 🏠 最上方的「家」幾何符號樣式 */
 .home-icon-btn {
     display: block;
-    text-align: left;         /* 🎨 改為靠左對齊，與文字切齊 */
-    color: rgb(235, 122, 119); /* 呼應主題甚三紅 */
-    font-size: 18px;
-    padding: 10px 0;          /* 調整間距使其高度與文字欄目和諧 */
+    text-align: center;
+    color: #EBA697;       /* 甚三紅粉紅色 */
+    font-size: 20px;
+    padding: 8px 0 12px 0;
+    border-bottom: 1px solid rgba(235, 166, 151, 0.2); /* 淡淡的粉紅分界線 */
     text-decoration: none;
     transition: opacity 0.2s;
 }
@@ -92,7 +92,7 @@ body {
 .menu-item {
     display: block;
     text-decoration: none;
-    color: rgb(235, 122, 119);        
+    color: #EBA697;        /* 白底粉紅字 */
     font-size: 15px;       
     padding: 10px 0;
     cursor: pointer;
@@ -101,6 +101,7 @@ body {
 }
 .menu-item:hover { opacity: 0.7; }
 
+/* 目前身處的選單項目稍微加粗 */
 .menu-item.active {
     font-weight: bold;
 }
@@ -113,7 +114,7 @@ body {
     gap: 12px;
     padding-left: 10px;
     margin-left: 2px;
-    border-left: 1px solid rgba(235, 122, 119, 0.3); 
+    border-left: 1px solid rgba(235, 166, 151, 0.3); 
     transition: max-height 0.3s ease-in-out, margin-top 0.3s ease-in-out;
 }
 .submenu.open {
@@ -123,11 +124,11 @@ body {
 }
 .submenu-item {
     text-decoration: none;
-    color: rgba(235, 122, 119, 0.7); 
+    color: rgba(235, 166, 151, 0.7); 
     font-size: 13px;       
     letter-spacing: 2px;
 }
-.submenu-item:hover { color: rgb(235, 122, 119); } 
+.submenu-item:hover { color: #EBA697; } 
 
 /* ==========================================
    🔍 搜尋功能彈出視窗與結果顯示
@@ -205,7 +206,7 @@ body {
     font-size: 16px;
     font-weight: bold;
     margin-bottom: 5px;
-    color: rgb(235, 122, 119); 
+    color: #EBA697; /* 搜尋結果的標題呼應粉紅色 */
 }
 .result-desc {
     font-size: 13px;
@@ -226,7 +227,7 @@ body {
     padding: 140px 40px 80px 40px;
     box-sizing: border-box;
     max-width: 800px; 
-    margin: 0 auto; 
+    margin: 0 auto; /* 居中對齊 */
     position: relative;
     z-index: 10; 
 }
@@ -302,7 +303,6 @@ h1 {
 
 <body>
 
-<!-- 頂部導覽列 -->
 <header class="top-navbar">
     <div class="menu-toggle-btn" onclick="toggleMenu()">
         <i class="fas fa-bars"></i>
@@ -312,9 +312,7 @@ h1 {
     </div>
 </header>
 
-<!-- 📐 左上角浮空下拉側欄 -->
 <nav class="nav-panel" id="navPanel">
-    <!-- 🏠 靠左對齊的「家」符號 -->
     <a href="index.html" class="home-icon-btn" title="回首頁">
         <i class="fas fa-home"></i>
     </a>
@@ -329,7 +327,6 @@ h1 {
     <a href="writing.html" class="menu-item">寫過</a>
 </nav>
 
-<!-- 🔍 搜尋功能遮罩區 -->
 <div class="search-overlay" id="searchOverlay">
     <div class="close-search-btn" onclick="closeSearch()">
         <i class="fas fa-times"></i>
@@ -340,7 +337,6 @@ h1 {
     <div class="search-results" id="searchResults"></div>
 </div>
 
-<!-- 主要內容區 -->
 <main class="main-content">
 
     <h1>CV</h1>    
@@ -405,7 +401,7 @@ h1 {
             <li class="info-item"><span class="info-year">2025</span><span class="info-text">南漫節獨漫祭，西竹圍之丘文創園區浮生圖像所，臺南，臺灣。</span></li>
             <li class="info-item"><span class="info-year"></span><span class="info-text">高雄漾藝術博覽會，駁二藝術特區大勇區P3倉庫，高雄，台灣。</span></li>
             <li class="info-item"><span class="info-year"></span><span class="info-text">春之清華，竹師藝術空間，新竹，臺灣。</span></li>
-            <li class="info-item"><span class="info-year"></span><span class="info-text">臺南藝術印刷品市集，吳園公會堂，臺南，臺灣.</span></li>
+            <li class="info-item"><span class="info-year"></span><span class="info-text">臺南藝術印刷品市集，吳園公會堂，臺南，臺灣。</span></li>
             <li class="info-item"><span class="info-year"></span><span class="info-text">臺中藝術博覽會，日月千禧酒店，臺中，臺灣。</span></li>
             <li class="info-item"><span class="info-year"></span><span class="info-text">青春嶺聯展，科元藝術，臺中，臺灣。</span></li>
             <li class="info-item"><span class="info-year"></span><span class="info-text">MEWE島，竹師藝術空間、竹師藝術空間二館，新竹，臺灣。</span></li>
@@ -437,53 +433,27 @@ h1 {
 </main>
 
 <script>
+// ==========================================
+// 📦 網站搜尋資料庫（已與首頁引擎同步並支援直接跳轉）
+// ==========================================
 const websiteData = [
     { title: "關於我 (CV)", desc: "潘羽鍚的個人簡介、藝術理念與生命經歷。", url: "about.html" },
     { title: "族譜系列", desc: "當代水墨與藝術創作——探索家族、血緣符號與記憶重組的作品單元。", url: "genealogy.html" },
     { title: "擬古系列", desc: "傳統水墨美學的現代轉譯與模擬經典之筆墨實驗作品。", url: "pseudo-classic.html" },
-    { title: "文字創作 (寫過)", desc: "收錄潘羽鍚撰寫的藝術評論、散文、隨筆與文學創作。", url: "writing.html" }
+    { title: "文字創作 (寫過)", desc: "收錄潘羽鍚撰寫的藝術評論、散文、隨筆與文學創作。", url: "writing.html" },
+    // 在這裡你可以隨時追加具體作品：
+    { title: "七仙女圖", desc: "族譜系列作品。探討當代語境下的符號重組與水墨設色創作。", url: "genealogy.html" }
 ];
-
-// ⏳ 宣告一個用來管理 5 秒自動關閉的定時器變數
-let menuTimer = null;
 
 function toggleMenu() {
     var panel = document.getElementById('navPanel');
     panel.classList.toggle('open');
-    
-    // 如果打開了側欄，就啟動 5 秒倒數
-    if (panel.classList.contains('open')) {
-        startMenuTimer();
-    } else {
-        clearMenuTimer();
-    }
 }
 
-// ⏳ 啟動計時器：5 秒未操作自動關閉
-function startMenuTimer() {
-    clearMenuTimer(); // 確保不會重複疊加定時器
-    menuTimer = setTimeout(function() {
-        var panel = document.getElementById('navPanel');
-        if (panel.classList.contains('open')) {
-            panel.classList.remove('open');
-        }
-    }, 5000); // 5000 毫秒 = 5 秒
-}
-
-// 清除計時器
-function clearMenuTimer() {
-    if (menuTimer) {
-        clearTimeout(menuTimer);
-        menuTimer = null;
-    }
-}
-
-// 💡 如果使用者在選單中點擊了「畫過」展開子選單，重新計算 5 秒（避免選單剛開就縮回去）
 function toggleArtMenu(event) {
     event.stopPropagation(); 
     var submenu = document.getElementById('art-submenu');
     submenu.classList.toggle('open');
-    startMenuTimer(); 
 }
 
 function openSearch() {
