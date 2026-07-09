@@ -78,19 +78,22 @@ body {
 
 /* 🏠 最上方的「家」幾何符號樣式 */
 .home-icon-btn {
-    display: flex;            /* 🎨 修改：改用 flex 佈局 */
-    justify-content: flex-start; /* 🎨 修改：強制讓內容極致靠左 */
+    display: flex;            
+    justify-content: flex-start; 
     align-items: center;
     color: rgb(235, 122, 119); 
     font-size: 18px;
-    padding: 12px 0 6px 0;    /* 調整上下間距 */
+    padding: 12px 0 6px 0;    
     text-decoration: none;
     transition: opacity 0.2s;
     width: 100%;
-    border-bottom: none;      /* 🎨 確保沒有任何下劃線線條 */
+    border-bottom: none;      
+    
+    /* 💡 修正：拉大房子與下方選單項目的留白距離 */
+    margin-bottom: 15px;      
 }
 .home-icon-btn i {
-    text-align: left;         /* 確保 icon 本身不居中 */
+    text-align: left;         
     margin-left: 0;
 }
 .home-icon-btn:hover { opacity: 0.7; }
@@ -104,7 +107,7 @@ body {
     cursor: pointer;
     letter-spacing: 3px;
     border-bottom: none;   
-    text-align: left;         /* 確保靠左 */
+    text-align: left;         
 }
 .menu-item:hover { opacity: 0.7; }
 
@@ -340,7 +343,7 @@ h1 {
         <i class="fas fa-times"></i>
     </div>
     <div class="search-box">
-        <input text="text" class="search-input" id="searchInput" placeholder="輸入關鍵字搜尋作品資訊..." oninput="performSearch()">
+        <input type="text" class="search-input" id="searchInput" placeholder="輸入關鍵字搜尋作品資訊..." oninput="performSearch()">
     </div>
     <div class="search-results" id="searchResults"></div>
 </div>
@@ -416,7 +419,7 @@ h1 {
             <li class="info-item"><span class="info-year"></span><span class="info-text">大阪藝術書展，Seaside Studio CASO，大阪，日本。</span></li>
             <li class="info-item"><span class="info-year"></span><span class="info-text">藝術新聲，大墩藝廊，臺中，臺灣。</span></li>
             <li class="info-item"><span class="info-year"></span><span class="info-text">ME WE EW，Woolloomooloo Xhibit，臺北，臺灣。</span></li>
-            <li class="info-item"><span class="info-year"></span><span class="info-text">當代藝術中的生活與情境，清華大學澤空間，新竹，臺灣。</span></li>
+            <li class="info-item"><span class="info-year"></span><span class="info-text">當代藝術中的生活與情境，清華大學澤空間，新竹，臺灣.</span></li>
             <li class="info-item"><span class="info-year"></span><span class="info-text">臺北國際書展，世貿一館，臺北，臺灣。</span></li>
             <li class="info-item"><span class="info-year">2024</span><span class="info-text">臺中藝術書展，R04願景館，臺中，臺灣。</span></li>
             <li class="info-item"><span class="info-year"></span><span class="info-text">春之清華，竹師藝術空間，新竹，臺灣。</span></li>
@@ -487,7 +490,6 @@ function toggleArtMenu(event) {
     var submenu = document.getElementById('art-submenu');
     submenu.classList.toggle('open');
     
-    // 💡 展開子選單時重置 5 秒，避免滑動到一半縮回
     resetAutoCloseTimer();
 }
 
@@ -534,7 +536,6 @@ function performSearch() {
     }
 }
 
-// 監聽整個網頁的點擊事件，如果側欄開著，使用者點選其他地方，也能智慧提早收合
 document.addEventListener('click', function(event) {
     var panel = document.getElementById('navPanel');
     var toggleBtn = document.querySelector('.menu-toggle-btn');
