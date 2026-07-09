@@ -418,4 +418,48 @@ function performSearch() {
     // 比對資料庫中是否有包含輸入內容
     const filteredData = websiteData.filter(item => 
         item.title.toLowerCase().includes(query) || 
-        item.
+        item.desc.toLowerCase().includes(query)
+    );
+    
+    // 如果有找到對應項目，就渲染出可點擊的 <a> 連結
+    if (filteredData.length > 0) {
+        let htmlContent = "";
+        filteredData.forEach(item => {
+            htmlContent += `
+                <a href="${item.url}" class="result-item">
+                    <div class="result-title">${item.title}</div>
+                    <div class="result-desc">${item.desc}</div>
+                </a>
+            `;
+        });
+        resultsContainer.innerHTML = htmlContent;
+    } else {
+        // 找不到時的精緻提示
+        resultsContainer.innerHTML = `<div class="no-result">找不到與「${query}」相符的作品或資訊</div>`;
+    }
+}
+
+// ==========================================
+// 🖱️ 智慧監聽：點擊空白處關閉，或點擊側欄內重新計時
+// ==========================================
+
+// 🟢 點擊網頁任意空白處：直接關閉側欄並清除計時
+document.addEventListener('click', function(event) {
+    var panel = document.getElementById('navPanel');
+    var toggleBtn = document.querySelector('.menu-toggle-btn');
+    if (panel.classList.contains('open') && !panel.contains(event.target) && !toggleBtn.contains(event.target)) {
+        panel.classList.remove('open');
+        clearAutoCloseTimer();
+    }
+});
+
+// 🟢 點擊側欄內部任何地方：重新計算 5 秒，避免點到一半突然滑回消失
+document.getElementById('navPanel').addEventListener('click', function() {
+    if (this.classList.contains('open')) {
+        resetAutoCloseTimer();
+    }
+});
+</script>
+
+</body>
+</html>
