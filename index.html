@@ -50,22 +50,19 @@ body {
 .search-toggle-btn:hover { opacity: 0.7; }
 
 /* ==========================================
-   📐 修正版：浮空下拉式小側欄 panel（改為白底）
+   📐 浮空下拉式小側欄 panel（白底綠字）
    ========================================== */
 .nav-panel {
     position: fixed;
-    top: 70px;         /* 緊貼在漢堡鈕下方 */
-    left: 40px;        /* 完美對齊漢堡鈕 */
-    width: 150px;      /* 秀氣的窄版寬度 */
-    background-color: #ffffff; /* ✨ 改為純白底色 */
+    top: 70px;         
+    left: 40px;        
+    width: 150px;      
+    background-color: #ffffff; 
     z-index: 90;
     box-sizing: border-box;
-    
-    /* 配合白底，陰影調得更輕柔優雅 */
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); 
     border-radius: 6px;
     
-    /* 動態滑動的核心（預設隱藏） */
     max-height: 0;
     overflow: hidden;
     opacity: 0;
@@ -73,7 +70,6 @@ body {
     transition: max-height 0.35s ease-in-out, opacity 0.25s ease-in-out, padding 0.35s ease-in-out;
 }
 
-/* 當側欄加上 .open 樣式時優雅滑下 */
 .nav-panel.open {
     max-height: 400px; 
     opacity: 1;
@@ -83,16 +79,15 @@ body {
 .menu-item {
     display: block;
     text-decoration: none;
-    color: #86c166;        /* ✨ 改為與背景同款的草綠色字體 */
+    color: #86c166;        
     font-size: 15px;       
     padding: 10px 0;
     cursor: pointer;
     letter-spacing: 3px;
-    border-bottom: none;   /* ✨ 拿掉淡淡的底線 */
+    border-bottom: none;   
 }
 .menu-item:hover { opacity: 0.7; }
 
-/* 畫過底下的子選單（點擊畫過後順暢向下滑出） */
 .submenu {
     max-height: 0;
     overflow: hidden;
@@ -101,11 +96,9 @@ body {
     gap: 12px;
     padding-left: 10px;
     margin-left: 2px;
-    /* ✨ 將左側提示線也改成淡淡的綠色，更具整體感 */
     border-left: 1px solid rgba(134, 193, 102, 0.3); 
     transition: max-height 0.3s ease-in-out, margin-top 0.3s ease-in-out;
 }
-/* 當子選單被加上 .open 時展開 */
 .submenu.open {
     max-height: 100px;
     margin-top: 8px;
@@ -113,14 +106,14 @@ body {
 }
 .submenu-item {
     text-decoration: none;
-    color: rgba(134, 193, 102, 0.7); /* ✨ 子選單改為草綠色（帶透明度） */
+    color: rgba(134, 193, 102, 0.7); 
     font-size: 13px;       
     letter-spacing: 2px;
 }
-.submenu-item:hover { color: #86c166; } /* ✨ 滑過時變回深草綠色 */
+.submenu-item:hover { color: #86c166; } 
 
 /* ==========================================
-   🔍 搜尋功能彈出視窗
+   🔍 搜尋功能彈出視窗與結果顯示
    ========================================== */
 .search-overlay {
     position: fixed;
@@ -128,12 +121,14 @@ body {
     left: 0;
     width: 100%;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.85); 
+    background-color: rgba(0, 0, 0, 0.9); 
     z-index: 300;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start; /* 改為從頂部排列，方便留空間給結果 */
     align-items: center;
+    padding-top: 15vh;
+    box-sizing: border-box;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.3s ease;
@@ -165,6 +160,46 @@ body {
     font-size: 20px;
     outline: none;
     letter-spacing: 2px;
+    text-align: center;
+}
+
+/* 🎨 搜尋結果列表樣式 */
+.search-results {
+    width: 80%;
+    max-width: 500px;
+    margin-top: 30px;
+    max-height: 50vh;
+    overflow-y: auto;
+    text-align: left;
+}
+.result-item {
+    display: block;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #ffffff;
+    transition: background-color 0.2s;
+}
+.result-item:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+.result-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #86c166; /* 讓結果標題帶有你的招牌綠色 */
+}
+.result-desc {
+    font-size: 13px;
+    color: #cccccc;
+}
+.no-result {
+    text-align: center;
+    color: #aaaaaa;
+    font-size: 14px;
+    margin-top: 20px;
 }
 
 /* ==========================================
@@ -198,7 +233,7 @@ body {
 
 .profile-img-wrapper {
     width: 100%;
-    max-width: 200px;       /* 質感精緻小尺寸 */
+    max-width: 200px;       
     margin-bottom: 45px;
     display: flex;
     justify-content: center;
@@ -274,8 +309,9 @@ body {
         <i class="fas fa-times"></i>
     </div>
     <div class="search-box">
-        <input type="text" class="search-input" placeholder="輸入關鍵字搜尋作品資訊..." onkeypress="handleSearch(event)">
+        <input type="text" class="search-input" id="searchInput" placeholder="輸入關鍵字搜尋作品資訊..." oninput="performSearch()">
     </div>
+    <div class="search-results" id="searchResults"></div>
 </div>
 
 <main class="main-content">
@@ -297,6 +333,19 @@ body {
 </main>
 
 <script>
+// ==========================================
+// 📦 網站作品與頁面的「靜態資料庫」
+// 未来如果你增加了新作品或新網頁，可以在此處依照格式自行增減！
+// ==========================================
+const websiteData = [
+    { title: "關於我 (走過)", desc: "潘羽鍚的個人簡介與生命經歷。", url: "about.html" },
+    { title: "族譜系列", desc: "「畫過」單元中的當代藝術創作——族譜系列作品。", url: "genealogy.html" },
+    { title: "擬古系列", desc: "「畫過」單元中嘗試傳統美學轉譯的擬古系列創作。", url: "pseudo-classic.html" },
+    { title: "文字創作 (寫過)", desc: "收錄潘羽鍚撰寫過的文章、評論與文學隨筆。", url: "writing.html" },
+    // 💡 你可以在下方繼續擴充真實的作品，例如：
+    // { title: "族譜系列一號作品", desc: "探討血緣與符號重組的水墨設色原作。", url: "genealogy.html#work1" }
+];
+
 function toggleMenu() {
     var panel = document.getElementById('navPanel');
     panel.classList.toggle('open');
@@ -310,17 +359,51 @@ function toggleArtMenu(event) {
 
 function openSearch() {
     document.getElementById('searchOverlay').classList.add('open');
+    // 清空上一次的搜尋紀錄
+    document.getElementById('searchInput').value = "";
+    document.getElementById('searchResults').innerHTML = "";
     setTimeout(() => {
-        document.querySelector('.search-input').focus();
+        document.getElementById('searchInput').focus();
     }, 100);
 }
+
 function closeSearch() {
     document.getElementById('searchOverlay').classList.remove('open');
 }
 
-function handleSearch(event) {
-    if (event.key === 'Enter') {
-        alert('正在搜尋：' + event.target.value + ' ...');
+// ==========================================
+// 🔍 核心：搜尋比對與渲染邏輯
+// ==========================================
+function performSearch() {
+    const query = document.getElementById('searchInput').value.trim().toLowerCase();
+    const resultsContainer = document.getElementById('searchResults');
+    
+    // 如果輸入框是空的，不顯示任何結果
+    if (query === "") {
+        resultsContainer.innerHTML = "";
+        return;
+    }
+    
+    // 全文檢索比對標題 (title) 或描述 (desc)
+    const filteredData = websiteData.filter(item => 
+        item.title.toLowerCase().includes(query) || 
+        item.desc.toLowerCase().includes(query)
+    );
+    
+    // 渲染搜尋結果
+    if (filteredData.length > 0) {
+        let htmlContent = "";
+        filteredData.forEach(item => {
+            htmlContent += `
+                <a href="${item.url}" class="result-item">
+                    <div class="result-title">${item.title}</div>
+                    <div class="result-desc">${item.desc}</div>
+                </a>
+            `;
+        });
+        resultsContainer.innerHTML = htmlContent;
+    } else {
+        resultsContainer.innerHTML = `<div class="no-result">找不到與「${query}」相符的作品或資訊</div>`;
     }
 }
 </script>
