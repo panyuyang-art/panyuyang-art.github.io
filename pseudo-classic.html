@@ -10,45 +10,65 @@
 <style>
 body { font-family: Helvetica, Arial, sans-serif; margin: 0; padding: 0; background-color: #574C57; color: #ffffff; min-height: 100vh; overflow-x: hidden; }
 
-/* 導覽列與側欄保持不變 */
+/* 導覽列與側欄 */
 .top-navbar { position: fixed; top: 0; left: 0; width: 100%; padding: 30px 40px; box-sizing: border-box; display: flex; justify-content: space-between; align-items: center; z-index: 100; }
 .menu-toggle-btn, .search-toggle-btn { font-size: 24px; cursor: pointer; color: #ffffff; }
 
 .nav-panel { 
-    position: fixed; top: 70px; left: 40px; width: 150px; background-color: #ffffff; 
-    z-index: 90; box-shadow: 0 10px 30px rgba(0,0,0,0.08); border-radius: 6px; 
-    max-height: 0; overflow: hidden; opacity: 0; padding: 0 20px; transition: all 0.35s ease-in-out; 
+    position: fixed; top: 70px; left: 40px; width: 150px; 
+    background-color: #ffffff; z-index: 90; box-shadow: 0 10px 30px rgba(0,0,0,0.08); 
+    border-radius: 6px; max-height: 0; overflow: hidden; opacity: 0; 
+    padding: 0 20px; transition: all 0.35s ease-in-out; 
 }
 .nav-panel.open { max-height: 500px; opacity: 1; padding: 15px 20px; }
 
-.main-content { margin: 0 auto; padding: 120px 40px 60px 40px; max-width: 900px; }
-h1 { font-size: 24px; text-align: center; margin-bottom: 60px; letter-spacing: 2px; }
+.home-icon-btn {
+    display: flex; justify-content: flex-start; align-items: center;
+    color: #574C57; font-size: 18px; padding: 12px 0 6px 0; text-decoration: none;
+    width: 100%; margin-bottom: 15px; transition: opacity 0.2s;
+}
+.home-icon-btn:hover { opacity: 0.7; }
+
+.menu-item { display: block; text-decoration: none; color: #574C57; font-size: 15px; padding: 10px 0; cursor: pointer; letter-spacing: 3px; }
+
+.submenu { 
+    max-height: 0; overflow: hidden; display: flex; flex-direction: column; 
+    gap: 12px; padding-left: 10px; border-left: 1px solid rgba(87,76,87,0.3);
+    transition: max-height 0.4s ease-out, margin 0.4s ease-out;
+}
+.submenu.open { max-height: 100px; margin: 8px 0; }
+.submenu-item { text-decoration: none; color: rgba(87,76,87,0.7); font-size: 13px; letter-spacing: 2px; }
+.submenu-item.active { color: #574C57; font-weight: bold; pointer-events: none; }
+
+.search-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background-color: rgba(0,0,0,0.88); z-index: 300; display: flex; flex-direction: column; align-items: center; padding-top: 15vh; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+.search-overlay.open { opacity: 1; pointer-events: auto; }
+.search-input { width: 80%; max-width: 500px; background: transparent; border: none; border-bottom: 2px solid #ffffff; padding: 10px; color: #ffffff; font-size: 22px; text-align: center; outline: none; }
+
+.main-content { margin: 0 auto; padding: 120px 40px 60px 40px; max-width: 900px; width: 100%; box-sizing: border-box; }
+h1 { font-size: 24px; font-weight: normal; margin-bottom: 60px; letter-spacing: 2px; text-align: center; }
 
 .work-card { margin-bottom: 140px; }
 
-/* 關鍵修正：固定容器高度 */
-.work-img-wrapper { height: 650px; display: flex; justify-content: center; align-items: center; background-color: #574C57; }
+/* 圖片容器與固定間距設定 */
+.work-img-wrapper { width: 100%; display: flex; justify-content: center; align-items: center; background-color: #574C57; height: 650px; }
 .work-img-wrapper img { max-width: 100%; max-height: 100%; object-fit: contain; }
 
-/* 關鍵修正：將按鈕直接放在容器下，設定 10px 間距 */
-.circle-toggle-trigger { 
-    width: 44px; height: 44px; background-color: rgba(0,0,0,0.25); border-radius: 50%; 
-    display: flex; justify-content: center; align-items: center; cursor: pointer; 
-    margin: 10px auto 0 auto; /* 這裡明確定義了 10px 的上邊距 */
-}
+.trigger-container { display: flex; justify-content: center; margin-top: 10px; margin-bottom: 25px; }
+.circle-toggle-trigger { width: 44px; height: 44px; background-color: rgba(0,0,0,0.25); border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: all 0.2s; }
+.circle-toggle-trigger:hover { background-color: rgba(0,0,0,0.5); }
+.circle-toggle-trigger.open .arrow-icon { transform: rotate(180deg); }
 
 .toggle-content { max-height: 0; overflow: hidden; transition: all 0.45s ease-in-out; opacity: 0; }
-.toggle-content.open { max-height: 900px; opacity: 1; padding-top: 25px; }
-
-.work-meta { font-size: 15px; font-weight: bold; margin-bottom: 14px; }
+.toggle-content.open { max-height: 900px; opacity: 1; }
+.work-meta { font-size: 15px; font-weight: bold; margin-bottom: 14px; color: #ffffff; }
 .work-seal { font-size: 14px; line-height: 1.8; color: #e0f2f1; white-space: pre-line; margin-bottom: 25px; }
-.thumb-container { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 15px; }
-.thumb-img { width: 80px; height: 80px; object-fit: cover; cursor: pointer; border: 1px solid #3d363d; opacity: 0.5; margin: 5px; transition: all 0.2s; }
-.thumb-img.active { opacity: 1; border-color: #ffffff; }
 
+/* 手機版適應調整 */
 @media (max-width: 768px) {
-    .work-img-wrapper { height: 320px; }
-    .thumb-img { width: 60px; height: 60px; }
+    .top-navbar { padding: 25px 25px; }
+    .nav-panel { left: 25px; top: 65px; }
+    .main-content { padding: 100px 25px 40px 25px; }
+    .work-img-wrapper { height: 320px; } 
 }
 </style>
 </head>
@@ -60,7 +80,7 @@ h1 { font-size: 24px; text-align: center; margin-bottom: 60px; letter-spacing: 2
 </header>
 
 <nav class="nav-panel" id="navPanel">
-    <a href="index.html" class="home-icon-btn"><i class="fas fa-home"></i></a>
+    <a href="index.html" class="home-icon-btn" title="回首頁"><i class="fas fa-home"></i></a>
     <a href="about.html" class="menu-item">走過</a>
     <span class="menu-item" onclick="toggleArtMenu(event)">畫過</span>
     <div class="submenu" id="art-submenu">
@@ -70,36 +90,38 @@ h1 { font-size: 24px; text-align: center; margin-bottom: 60px; letter-spacing: 2
     <a href="writing.html" class="menu-item">寫過</a>
 </nav>
 
+<div class="search-overlay" id="searchOverlay">
+    <div style="position:absolute; top:30px; right:40px; font-size:26px; cursor:pointer;" onclick="closeSearch()"><i class="fas fa-times"></i></div>
+    <input type="text" class="search-input" placeholder="搜尋...">
+</div>
+
 <main class="main-content">
     <h1>擬古系列</h1>    
     <script>
         const works = [
-            { id: 1, title: "長尾山娘巴蕊圖", info: "2024｜原子筆、牛皮紙｜35 × 54 cm", seal: "印章文字：當頭上拂過鈷藍的殘影／伴隨拔髮般的刺痛／他嚇得縮起脖子、吐出髒字／直到他發現葉叢間有一條黑白分明的尾羽／才知道這是傳說中的台灣藍鵲空襲／之後提起這件事／他總會說／討厭啦／超級痛ㄉ／然後語氣一轉／可是能被國寶鳥巴頭／真是一種榮幸／希望明年再被巴一次" },
-            { id: 2, title: "牧書圖", info: "2024｜原子筆、牛皮紙｜20 × 40 cm", seal: "印章文字：沒有所謂的荒島書單／因為當你帶了一本書去荒島／那麼荒島就不是荒島了" },
-            { id: 3, title: "七仙女圖", info: "2024｜原子筆、牛皮紙｜35 × 54 cm", seal: "印章文字：我有一個姐姐、兩個表姐、四個堂姐／家人稱之為七仙女／她們從領紅包變成包紅包的人／在婚禮與喪禮短暫相聚" },
-            { id: 4, title: "七擒七縱圖", info: "2024｜原子筆、牛皮紙｜35 × 54 cm", seal: "印章文字：小時候讀七擒七縱的故事／發現要收服敵人太辛苦了／如果我遇到敵人／會有那麼多的才智與耐心來應對嗎" },
-            { id: 5, title: "在路上", info: "2024｜原子筆、牛皮紙｜20 × 40 cm", seal: "印章文字：往返書展的路上／我們的行李都裝著滿滿的書／錯錯覺閱讀的重量" },
-            { id: 6, title: "活兩次圖", info: "2025｜原子筆、牛皮紙｜20 × 40 cm", seal: "印章文字：當天外傳來一句對你的超譯／你也許就不再是自己形象的主人了（陰刻）可怕的是／你所不存在的時空中／會有另一個你在和陌生人打交道（陽刻）" },
-            { id: 7, title: "無鬼知曉的中元午後圖", info: "2025｜原子筆、牛皮紙｜35 × 54 cm", seal: "印章文字：去年中元節／老家沒有張羅普渡／異常安靜／因為親人隱隱相信阿祖的亡靈還沒離開／不宜干擾" },
-            { id: 8, title: "麵線失蹤圖", info: "2025｜原子筆、牛皮紙｜35 × 54 cm", seal: "印章文字：巷口那家麵線攤失蹤了／傳說老闆欠債跑路（陽刻）成為吃不到卻永遠好吃的記憶（陰刻）" },
-            { id: 9, title: "鴨頭走味圖", info: "2025｜原子筆、牛皮紙｜35 × 54 cm", seal: "印章文字：巷口那家東山鴨頭從小攤變小店／感覺以前的比較好吃（陽刻）不知是二代目退步了／還是自己嘴刁了（陰刻）" }
+            { title: "長尾山娘巴蕊圖", info: "2024｜原子筆、牛皮紙｜35 × 54 cm", seal: "印章文字：當頭上拂過鈷藍的殘影／伴隨拔髮般的刺痛／他嚇得縮起脖子、吐出髒字／直到他發現葉叢間有一條黑白分明的尾羽／才知道這是傳說中的台灣藍鵲空襲／之後提起這件事／他總會說／討厭啦／超級痛ㄉ／然後語氣一轉／可是能被國寶鳥巴頭／真是一種榮幸／希望明年再被巴一次" },
+            { title: "牧書圖", info: "2024｜原子筆、牛皮紙｜20 × 40 cm", seal: "印章文字：沒有所謂的荒島書單／因為當你帶了一本書去荒島／那麼荒島就不是荒島了" },
+            { title: "七仙女圖", info: "2024｜原子筆、牛皮紙｜35 × 54 cm", seal: "印章文字：我有一個姐姐、兩個表姐、四個堂姐／家人稱之為七仙女／她們從領紅包變成包紅包的人／在婚禮與喪禮短暫相聚" },
+            { title: "七擒七縱圖", info: "2024｜原子筆、牛皮紙｜35 × 54 cm", seal: "印章文字：小時候讀七擒七縱的故事／發現要收服敵人太辛苦了／如果我遇到敵人／會有那麼多的才智與耐心來應對嗎" },
+            { title: "在路上", info: "2024｜原子筆、牛皮紙｜20 × 40 cm", seal: "印章文字：往返書展的路上／我們的行李都裝著滿滿的書／錯錯覺閱讀的重量" },
+            { title: "活兩次圖", info: "2025｜原子筆、牛皮紙｜20 × 40 cm", seal: "印章文字：當天外傳來一句對你的超譯／你也許就不再是自己形象的主人了（陰刻）可怕的是／你所不存在的時空中／會有另一個你在和陌生人打交道（陽刻）" },
+            { title: "無鬼知曉的中元午後圖", info: "2025｜原子筆、牛皮紙｜35 × 54 cm", seal: "印章文字：去年中元節／老家沒有張羅普渡／異常安靜／因為親人隱隱相信阿祖的亡靈還沒離開／不宜干擾" },
+            { title: "麵線失蹤圖", info: "2025｜原子筆、牛皮紙｜35 × 54 cm", seal: "印章文字：巷口那家麵線攤失蹤了／傳說老闆欠債跑路（陽刻）成為吃不到卻永遠好吃的記憶（陰刻）" },
+            { title: "鴨頭走味圖", info: "2025｜原子筆、牛皮紙｜35 × 54 cm", seal: "印章文字：巷口那家東山鴨頭從小攤變小店／感覺以前的比較好吃（陽刻）不知是二代目退步了／還是自己嘴刁了（陰刻）" }
         ];
 
         works.forEach(work => {
             document.write(`
                 <div class="work-card">
-                    <div class="work-img-wrapper"><img id="main-img-${work.id}" src="${work.title}_全貌.jpg"></div>
-                    <div class="circle-toggle-trigger" onclick="toggleWorkContent(this)"><i class="fas fa-chevron-down"></i></div>
+                    <div class="work-img-wrapper">
+                        <img src="${work.title}_全貌.jpg" alt="${work.title}">
+                    </div>
+                    <div class="trigger-container">
+                        <div class="circle-toggle-trigger" onclick="toggleWorkContent(this)"><i class="fas fa-chevron-down arrow-icon"></i></div>
+                    </div>
                     <div class="toggle-content">
                         <div class="work-meta">${work.title}｜${work.info}</div>
                         <div class="work-seal">${work.seal}</div>
-                        <div class="thumb-container">
-                            <img class="thumb-img active" src="${work.title}_全貌.jpg" onclick="switchImage('main-img-${work.id}', this)">
-                            <img class="thumb-img" src="${work.title}_局部1.jpg" onclick="switchImage('main-img-${work.id}', this)">
-                            <img class="thumb-img" src="${work.title}_局部2.jpg" onclick="switchImage('main-img-${work.id}', this)">
-                            <img class="thumb-img" src="${work.title}_局部3.jpg" onclick="switchImage('main-img-${work.id}', this)">
-                            <img class="thumb-img" src="${work.title}_局部4.jpg" onclick="switchImage('main-img-${work.id}', this)">
-                        </div>
                     </div>
                 </div>
             `);
@@ -108,11 +130,24 @@ h1 { font-size: 24px; text-align: center; margin-bottom: 60px; letter-spacing: 2
 </main>
 
 <script>
-    function toggleMenu() { document.getElementById('navPanel').classList.toggle('open'); }
+    let menuTimer;
+    function toggleMenu() { 
+        const nav = document.getElementById('navPanel');
+        nav.classList.toggle('open'); 
+        clearTimeout(menuTimer);
+        if(nav.classList.contains('open')) {
+            menuTimer = setTimeout(() => nav.classList.remove('open'), 5000);
+        }
+    }
+    document.getElementById('navPanel').addEventListener('click', () => {
+        clearTimeout(menuTimer);
+        menuTimer = setTimeout(() => document.getElementById('navPanel').classList.remove('open'), 5000);
+    });
+
     function toggleArtMenu(e) { e.stopPropagation(); document.getElementById('art-submenu').classList.toggle('open'); }
-    function toggleWorkContent(t) { t.classList.toggle('open'); t.nextElementSibling.classList.toggle('open'); }
-    function switchImage(id, t) { document.getElementById(id).src = t.src; Array.from(t.parentNode.children).forEach(img => img.classList.remove('active')); t.classList.add('active'); }
-    function openSearch() { }
+    function openSearch() { document.getElementById('searchOverlay').classList.add('open'); }
+    function closeSearch() { document.getElementById('searchOverlay').classList.remove('open'); }
+    function toggleWorkContent(t) { t.classList.toggle('open'); t.parentElement.nextElementSibling.classList.toggle('open'); }
 </script>
 </body>
 </html>
