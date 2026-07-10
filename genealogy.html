@@ -138,13 +138,41 @@ h1 { font-size: 24px; text-align: center; margin-bottom: 60px; letter-spacing: 2
 </main>
 
 <script>
-    function toggleMenu() { document.getElementById('navPanel').classList.toggle('open'); }
-    function toggleArtMenu(e) { e.stopPropagation(); document.getElementById('art-submenu').classList.toggle('open'); }
-    function toggleWorkContent(t) { 
-    t.classList.toggle('open');  // 這行會同時幫圓形按鈕加上/移除 open，箭頭就會旋轉
-    t.nextElementSibling.classList.toggle('open'); 
+    let menuTimer; // 定義計時器變數
+
+    function toggleMenu() { 
+        const nav = document.getElementById('navPanel');
+        nav.classList.toggle('open'); 
+        
+        // 每次開合都先清除之前的計時器
+        clearTimeout(menuTimer);
+        
+        // 如果選單現在是開啟的，就設定 5 秒後自動關閉
+        if(nav.classList.contains('open')) {
+            menuTimer = setTimeout(() => {
+                nav.classList.remove('open');
+            }, 5000); // 5000 毫秒 = 5 秒
+        }
     }
-    function switchImage(id, t) { document.getElementById(id).src = t.src; Array.from(t.parentNode.children).forEach(img => img.classList.remove('active')); t.classList.add('active'); }
+
+    // 當點擊側欄內部的連結時，也要清除計時器（或是重新計時，看您需求）
+    document.getElementById('navPanel').addEventListener('click', () => {
+        clearTimeout(menuTimer);
+    });
+
+    function toggleArtMenu(e) { e.stopPropagation(); document.getElementById('art-submenu').classList.toggle('open'); }
+    
+    function toggleWorkContent(t) { 
+        t.classList.toggle('open'); 
+        t.nextElementSibling.classList.toggle('open'); 
+    }
+
+    function switchImage(id, t) { 
+        document.getElementById(id).src = t.src; 
+        Array.from(t.parentNode.children).forEach(img => img.classList.remove('active')); 
+        t.classList.add('active'); 
+    }
+
     function openSearch() { /* 搜尋功能 */ }
 </script>
 </body>
