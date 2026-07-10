@@ -49,17 +49,19 @@ h1 { font-size: 24px; font-weight: normal; margin-bottom: 60px; letter-spacing: 
 
 .work-card { margin-bottom: 140px; }
 
-/* 修正間距：容器底部與按鈕保持 10px */
+/* 圖片容器 */
 .work-img-wrapper { 
     width: 100%; display: flex; justify-content: center; align-items: center; 
     background-color: #574C57; height: 650px; 
-    margin-bottom: 10px; 
 }
 .work-img-wrapper img { max-width: 100%; max-height: 100%; object-fit: contain; }
 
-/* 移除 padding-top，使按鈕與容器距離固定為 10px */
-.trigger-container { display: flex; justify-content: center; margin-bottom: 25px; }
-.circle-toggle-trigger { width: 44px; height: 44px; background-color: rgba(0,0,0,0.25); border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: all 0.2s; }
+/* 圓形按鈕直接定位，透過 margin-top 保持與上方圖片 10px 距離 */
+.circle-toggle-trigger { 
+    width: 44px; height: 44px; background-color: rgba(0,0,0,0.25); border-radius: 50%; 
+    display: flex; justify-content: center; align-items: center; cursor: pointer; 
+    transition: all 0.2s; margin: 10px auto 25px auto;
+}
 .circle-toggle-trigger:hover { background-color: rgba(0,0,0,0.5); }
 .circle-toggle-trigger.open .arrow-icon { transform: rotate(180deg); }
 
@@ -120,9 +122,7 @@ h1 { font-size: 24px; font-weight: normal; margin-bottom: 60px; letter-spacing: 
                     <div class="work-img-wrapper">
                         <img src="${work.title}_全貌.jpg" alt="${work.title}">
                     </div>
-                    <div class="trigger-container">
-                        <div class="circle-toggle-trigger" onclick="toggleWorkContent(this)"><i class="fas fa-chevron-down arrow-icon"></i></div>
-                    </div>
+                    <div class="circle-toggle-trigger" onclick="toggleWorkContent(this)"><i class="fas fa-chevron-down arrow-icon"></i></div>
                     <div class="toggle-content">
                         <div class="work-meta">${work.title}｜${work.info}</div>
                         <div class="work-seal">${work.seal}</div>
@@ -151,7 +151,7 @@ h1 { font-size: 24px; font-weight: normal; margin-bottom: 60px; letter-spacing: 
     function toggleArtMenu(e) { e.stopPropagation(); document.getElementById('art-submenu').classList.toggle('open'); }
     function openSearch() { document.getElementById('searchOverlay').classList.add('open'); }
     function closeSearch() { document.getElementById('searchOverlay').classList.remove('open'); }
-    function toggleWorkContent(t) { t.classList.toggle('open'); t.parentElement.nextElementSibling.classList.toggle('open'); }
+    function toggleWorkContent(t) { t.classList.toggle('open'); t.nextElementSibling.classList.toggle('open'); }
 </script>
 </body>
 </html>
