@@ -46,7 +46,6 @@ body { font-family: Helvetica, Arial, sans-serif; margin: 0; padding: 0; backgro
 
 .main-content { margin: 0 auto; padding: 120px 40px 60px 40px; max-width: 900px; width: 100%; box-sizing: border-box; }
 
-/* 調整標題與第一張圖片的距離為 10px */
 h1 { 
     font-size: 24px; font-weight: normal; margin-bottom: 60px; 
     letter-spacing: 2px; text-align: center; 
@@ -54,7 +53,6 @@ h1 {
 
 .work-card { margin-top: 40px; margin-bottom: 140px; }
 
-/* 圖片容器：取消固定高度，讓圖片自適應 */
 .work-img-wrapper { 
     width: 100%; display: flex; justify-content: center; 
     background-color: #574C57; overflow: hidden;
@@ -63,7 +61,6 @@ h1 {
     width: 100%; height: auto; display: block; 
 }
 
-/* 圓形按鈕 */
 .circle-toggle-trigger { 
     width: 44px; height: 44px; background-color: rgba(0,0,0,0.25); border-radius: 50%; 
     display: flex; justify-content: center; align-items: center; cursor: pointer; 
@@ -95,10 +92,10 @@ h1 {
     <a href="index.html" class="home-icon-btn" title="回首頁"><i class="fas fa-home"></i></a>
     <a href="about.html" class="menu-item">走過</a>
     <span class="menu-item" onclick="toggleArtMenu(event)">畫過</span>
-    <div class="submenu" id="art-submenu">
+    <div class="submenu" id="art-submenu open" style="max-height: 140px;">
         <a href="genealogy.html" class="submenu-item">族譜系列</a>
-        <a href="pseudo-classic.html" class="submenu-item active">擬古系列</a>
-        <a href="still-life.html" class="submenu-item">靜物系列</a>
+        <a href="pseudo-classic.html" class="submenu-item">擬古系列</a>
+        <a href="still-life.html" class="submenu-item active">靜物系列</a>
     </div>
     <a href="writing.html" class="menu-item">寫過</a>
 </nav>
@@ -109,18 +106,11 @@ h1 {
 </div>
 
 <main class="main-content">
-    <h1>擬古系列</h1>    
+    <h1>靜物系列</h1>    
     <script>
         const works = [
-            { title: "長尾山娘巴蕊圖", info: "2024｜原子筆、牛皮紙｜35 × 54 cm", seal: "印章文字：當頭上拂過鈷藍的殘影／伴隨拔髮般的刺痛／他嚇得縮起脖子、吐出髒字／直到他發現葉叢間有一條黑白分明的尾羽／才知道這是傳說中的台灣藍鵲空襲／之後提起這件事／他總會說／討厭啦／超級痛ㄉ／然後語氣一轉／可是能被國寶鳥巴頭／真是一種榮幸／希望明年再被巴一次" },
-            { title: "牧書圖", info: "2024｜原子筆、牛皮紙｜20 × 40 cm", seal: "印章文字：沒有所謂的荒島書單／因為當你帶了一本書去荒島／那麼荒島就不是荒島了" },
-            { title: "七仙女圖", info: "2024｜原子筆、牛皮紙｜35 × 54 cm", seal: "印章文字：我有一個姐姐、兩個表姐、四個堂姐／家人稱之為七仙女／她們從領紅包變成包紅包的人／在婚禮與喪禮短暫相聚" },
-            { title: "七擒七縱圖", info: "2024｜原子筆、牛皮紙｜35 × 54 cm", seal: "印章文字：小時候讀七擒七縱的故事／發現要收服敵人太辛苦了／如果我遇到敵人／會有那麼多的才智與耐心來應對嗎" },
-            { title: "在路上", info: "2024｜原子筆、牛皮紙｜20 × 40 cm", seal: "印章文字：往返書展的路上／我們的行李都裝著滿滿的書／錯錯覺閱讀的重量" },
-            { title: "活兩次圖", info: "2025｜原子筆、牛皮紙｜20 × 40 cm", seal: "印章文字：當天外傳來一句對你的超譯／你也許就不再是自己形象的主人了（陰刻）可怕的是／你所不存在的時空中／會有另一個你在和陌生人打交道（陽刻）" },
-            { title: "無鬼知曉的中元午後圖", info: "2025｜原子筆、牛皮紙｜35 × 54 cm", seal: "印章文字：去年中元節／老家沒有張羅普渡／異常安靜／因為親人隱隱相信阿祖的亡靈還沒離開／不宜干擾" },
-            { title: "麵線失蹤圖", info: "2026｜原子筆、牛皮紙｜35 × 54 cm", seal: "印章文字：巷口那家麵線攤失蹤了／傳說老闆欠債跑路（陽刻）成為吃不到卻永遠好吃的記憶（陰刻）" },
-            { title: "鴨頭走味圖", info: "2026｜原子筆、牛皮紙｜35 × 54 cm", seal: "印章文字：巷口那家東山鴨頭從小攤變小店／感覺以前的比較好吃（陽刻）不知是二代目退步了／還是自己嘴刁了（陰刻）" }
+            // 請在這裡填入您的靜物系列作品資料與圖片名稱
+            { title: "範例靜物作品", info: "2026｜媒材｜尺寸", seal: "作品說明文字..." }
         ];
 
         works.forEach(work => {
