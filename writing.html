@@ -187,11 +187,20 @@ body {
 }
 
 /* 中央主要內容區 */
-.main-content { margin: 0 auto; padding: 120px 40px 60px 40px; max-width: 900px; width: 100%; box-sizing: border-box; }
+.main-content { 
+    margin: 0 auto; 
+    padding: 120px 40px 60px 40px; 
+    max-width: 900px; 
+    width: 100%; 
+    box-sizing: border-box; 
+    text-align: center;
+}
 
 h1 { 
-    font-size: 24px; font-weight: normal; margin-bottom: 30px; 
-    letter-spacing: 2px; text-align: center; 
+    font-size: 24px; 
+    font-weight: normal; 
+    margin-bottom: 20px; 
+    letter-spacing: 2px; 
 }
 
 /* 建立中的提示小字樣式 */
@@ -199,8 +208,6 @@ h1 {
     font-size: 14px;
     letter-spacing: 2px;
     color: rgba(255, 255, 255, 0.6);
-    text-align: center;
-    margin-bottom: 40px; 
 }
 
 @media (max-width: 768px) {
@@ -246,7 +253,7 @@ h1 {
 
 <script>
 const websiteData = [
-    { title: "簡介CV", desc: "學歷、出版、得獎、展覽紀錄", url: "about.html" },
+    { title: "簡介CV", desc: "學歷, 出版, 得獎, 展覽紀錄", url: "about.html" },
     { title: "族譜系列", desc: "環繞家人的生活故事的系列創作", url: "genealogy.html" },
     { title: "擬古系列", desc: "以印章作為敘事載體的系列創作", url: "pseudo-classic.html" },
     { title: "靜物系列", desc: "靜物系列創作", url: "still-life.html" },
