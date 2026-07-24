@@ -3,137 +3,389 @@
 
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>寫過 - Pan Yu-Yang</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+<title>靜物系列 - Pan Yu-Yang</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
-body {
-    font-family: Helvetica, Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: rgb(232, 182, 71); /* 🎨 您指定的新背景色 */
-    color: #ffffff;        
-    min-height: 100vh;
-    overflow-x: hidden;
+body { 
+    font-family: Helvetica, Arial, sans-serif; 
+    margin: 0; 
+    padding: 0; 
+    background-color: #574C57; 
+    color: #ffffff; 
+    min-height: 100vh; 
+    overflow-x: hidden; 
 }
 
 /* 頂部導覽列 */
-.top-navbar {
-    position: fixed; top: 0; left: 0; width: 100%; padding: 30px 40px; box-sizing: border-box;
-    display: flex; justify-content: space-between; align-items: center; z-index: 100;
+.top-navbar { 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    padding: 30px 40px; 
+    box-sizing: border-box; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    z-index: 100; 
 }
-.menu-toggle-btn, .search-toggle-btn { font-size: 24px; cursor: pointer; transition: opacity 0.2s; }
+.menu-toggle-btn, .search-toggle-btn { 
+    font-size: 24px; 
+    cursor: pointer; 
+    color: #ffffff; 
+    transition: opacity 0.2s;
+}
 .menu-toggle-btn:hover, .search-toggle-btn:hover { opacity: 0.7; }
 
-/* 側欄 (保持您原有的粉紅配色邏輯) */
-.nav-panel {
-    position: fixed; top: 70px; left: 40px; width: 150px; background-color: #ffffff; 
-    z-index: 90; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); border-radius: 6px; 
-    max-height: 0; overflow: hidden; opacity: 0; padding: 0 20px; 
-    transition: all 0.35s ease-in-out;
+/* 浮空下拉式小側欄 panel（白底紫字，對應 #574C57） */
+.nav-panel { 
+    position: fixed; 
+    top: 70px; 
+    left: 40px; 
+    width: 150px; 
+    background-color: #ffffff; 
+    z-index: 90; 
+    box-sizing: border-box;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08); 
+    border-radius: 6px; 
+    max-height: 0; 
+    overflow: hidden; 
+    opacity: 0; 
+    padding: 0 20px; 
+    transition: max-height 0.35s ease-in-out, opacity 0.25s ease-in-out, padding 0.35s ease-in-out; 
 }
-.nav-panel.open { max-height: 450px; opacity: 1; padding: 15px 20px; }
+.nav-panel.open { 
+    max-height: 400px; 
+    opacity: 1; 
+    padding: 15px 20px; 
+}
 
-/* 修改第 36-43 行左右的區塊 */
-
-/* 家的符號設定 */
-.home-icon-btn {
+.menu-item { 
     display: block; 
     text-decoration: none; 
-    color: rgb(232, 182, 71); 
-    font-size: 18px;    /* 👈 這裡是家符號的大小 */
-    padding: 10px 0; 
-    cursor: pointer;
-}
-
-/* 其他選單項目設定 */
-.menu-item {
-    display: block; 
-    text-decoration: none; 
-    color: rgb(232, 182, 71); 
-    font-size: 15px;    /* 👈 這裡是選單文字的大小 */
+    color: #574C57; 
+    font-size: 15px; 
     padding: 10px 0; 
     cursor: pointer; 
-    letter-spacing: 3px;
+    letter-spacing: 3px; 
+    border-bottom: none; 
+}
+.menu-item:hover { opacity: 0.7; }
+
+.submenu { 
+    max-height: 0; 
+    overflow: hidden; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 12px; 
+    padding-left: 10px; 
+    margin-left: 2px;
+    border-left: 1px solid rgba(87,76,87,0.3); 
+    transition: max-height 0.3s ease-in-out, margin-top 0.3s ease-in-out;
+}
+.submenu.open { 
+    max-height: 140px; 
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+.submenu-item { 
+    text-decoration: none; 
+    color: rgba(87,76,87,0.7); 
+    font-size: 13px; 
+    letter-spacing: 2px; 
+}
+.submenu-item:hover { color: #574C57; }
+.submenu-item.active { color: #574C57; font-weight: bold; pointer-events: none; }
+
+/* 搜尋功能視窗 */
+.search-overlay { 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100vh; 
+    background-color: rgba(0,0,0,0.88); 
+    z-index: 300; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: flex-start;
+    align-items: center; 
+    padding-top: 15vh; 
+    box-sizing: border-box;
+    opacity: 0; 
+    pointer-events: none; 
+    transition: opacity 0.3s ease; 
+}
+.search-overlay.open { opacity: 1; pointer-events: auto; }
+.close-search-btn {
+    position: absolute;
+    top: 30px;
+    right: 40px;
+    font-size: 26px;
+    cursor: pointer;
+    color: #fff;
+}
+.search-box {
+    width: 80%;
+    max-width: 500px;
+    text-align: center;
+}
+.search-input { 
+    width: 100%; 
+    background: transparent; 
+    border: none; 
+    border-bottom: 2px solid #ffffff; 
+    padding: 10px; 
+    color: #ffffff; 
+    font-size: 22px; 
+    text-align: center; 
+    outline: none; 
+    letter-spacing: 2px;
 }
 
-.submenu {
-    max-height: 0; overflow: hidden; display: flex; flex-direction: column; gap: 12px; 
-    padding-left: 10px; border-left: 1px solid rgba(232, 182, 71, 0.3); transition: max-height 0.3s;
+/* 搜尋結果清單樣式 */
+.search-results {
+    width: 80%;
+    max-width: 500px;
+    margin-top: 30px;
+    max-height: 50vh;
+    overflow-y: auto;
+    text-align: left;
 }
-.submenu.open { max-height: 100px; margin: 8px 0; }
-.submenu-item { text-decoration: none; color: rgba(232, 182, 71, 0.7); font-size: 13px; letter-spacing: 2px; }
+.result-item {
+    display: block;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 15px 20px;
+    margin-bottom: 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #ffffff;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+.result-item:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+.result-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #574C57;
+}
+.result-desc {
+    font-size: 13px;
+    color: #cccccc;
+    letter-spacing: 1px;
+}
+.no-result {
+    text-align: center;
+    color: #aaaaaa;
+    font-size: 14px;
+    margin-top: 20px;
+}
 
-/* 內容區 */
-.main-content { padding: 140px 40px 80px 40px; max-width: 800px; margin: 0 auto; }
-h1 { font-size: 32px; font-weight: 300; margin-bottom: 50px; letter-spacing: 4px; }
-.section-title { font-size: 18px; border-bottom: 1px solid rgba(255, 255, 255, 0.4); padding-bottom: 10px; margin: 40px 0 25px 0; letter-spacing: 2px; }
+/* 中央主要內容區 */
+.main-content { margin: 0 auto; padding: 120px 40px 60px 40px; max-width: 900px; width: 100%; box-sizing: border-box; }
 
-.info-item { display: flex; font-size: 14px; line-height: 1.8; margin-bottom: 15px; color: rgba(255, 255, 255, 0.9); }
-.info-year { width: 100px; flex-shrink: 0; font-weight: bold; }
-.info-text a { color: #ffffff; text-decoration: underline; opacity: 0.8; }
-.info-text a:hover { opacity: 1; }
+h1 { 
+    font-size: 24px; font-weight: normal; margin-bottom: 60px; 
+    letter-spacing: 2px; text-align: center; 
+}
+
+.work-card { margin-top: 40px; margin-bottom: 140px; }
+
+.work-img-wrapper { 
+    width: 100%; display: flex; justify-content: center; 
+    background-color: #574C57; overflow: hidden;
+}
+.work-img-wrapper img { 
+    width: 100%; height: auto; display: block; 
+}
+
+.circle-toggle-trigger { 
+    width: 44px; height: 44px; background-color: rgba(0,0,0,0.25); border-radius: 50%; 
+    display: flex; justify-content: center; align-items: center; cursor: pointer; 
+    transition: all 0.2s; margin: 15px auto 15px auto;
+}
+.circle-toggle-trigger:hover { background-color: rgba(0,0,0,0.5); }
+.circle-toggle-trigger.open .arrow-icon { transform: rotate(180deg); }
+
+.toggle-content { max-height: 0; overflow: hidden; transition: all 0.45s ease-in-out; opacity: 0; }
+.toggle-content.open { max-height: 900px; opacity: 1; }
+.work-meta { font-size: 15px; font-weight: bold; margin-bottom: 14px; color: #ffffff; text-align: left; }
+.work-seal { font-size: 14px; line-height: 1.8; color: #e0f2f1; white-space: pre-line; margin-bottom: 25px; text-align: left; }
 
 @media (max-width: 768px) {
-    .main-content { padding: 120px 25px 60px 25px; }
-    .info-item { flex-direction: column; }
+    .top-navbar { padding: 25px 25px; }
+    .nav-panel { left: 25px; top: 65px; } 
+    .close-search-btn { right: 25px; top: 25px; }
+    .main-content { padding: 100px 25px 40px 25px; }
 }
 </style>
 </head>
 
 <body>
-
 <header class="top-navbar">
     <div class="menu-toggle-btn" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
     <div class="search-toggle-btn" onclick="openSearch()"><i class="fas fa-search"></i></div>
 </header>
 
 <nav class="nav-panel" id="navPanel">
-    <a href="index.html" class="home-icon-btn"><i class="fas fa-home"></i></a>
     <a href="about.html" class="menu-item">走過</a>
+    
     <span class="menu-item" onclick="toggleArtMenu(event)">畫過</span>
     <div class="submenu" id="art-submenu">
         <a href="genealogy.html" class="submenu-item">族譜系列</a>
         <a href="pseudo-classic.html" class="submenu-item">擬古系列</a>
+        <a href="still-life.html" class="submenu-item active">靜物系列</a>
     </div>
-    <a href="writing.html" class="menu-item active">寫過</a>
+    
+    <a href="writing.html" class="menu-item">寫過</a>
 </nav>
 
+<div class="search-overlay" id="searchOverlay">
+    <div class="close-search-btn" onclick="closeSearch()"><i class="fas fa-times"></i></div>
+    <div class="search-box">
+        <input type="text" class="search-input" id="searchInput" placeholder="輸入關鍵字搜尋作品資訊..." oninput="performSearch()">
+    </div>
+    <div class="search-results" id="searchResults"></div>
+</div>
+
 <main class="main-content">
-    <h1>寫過</h1>
+    <h1>靜物系列</h1>    
+    <script>
+        const works = [
+            // 請在這裡填入您的靜物系列作品資料與圖片名稱
+            { title: "範例靜物作品", info: "2026｜媒材｜尺寸", seal: "作品說明文字..." }
+        ];
 
-    <section>
-        <div class="section-title">專欄隨筆</div>
-        <ul style="list-style: none; padding: 0;">
-            <li class="info-item"><span class="info-year">2026.07.</span><span class="info-text"><a href="https://www.fountain.org.tw/column/article/secret-base" target="_blank">〈秘密基地〉，新活水「上尾老師的眼鏡」專欄</a></span></li>
-            <li class="info-item"><span class="info-year">2026.05.</span><span class="info-text"><a href="https://www.fountain.org.tw/subject/life/the-corner" target="_blank">〈小沙彌〉，新活水「上尾老師的眼鏡」專欄</a></span></li>
-            <li class="info-item"><span class="info-year">2025.12.</span><span class="info-text"><a href="https://www.fountain.org.tw/column/article/clean-trash" target="_blank">〈乾淨的垃圾〉，新活水「上尾老師的眼鏡」專欄</a></span></li>
-            <li class="info-item"><span class="info-year">2025.09.</span><span class="info-text"><a href="https://www.fountain.org.tw/column/article/the-sunbathing-elder" target="_blank">〈曝日老人〉，新活水「上尾老師的眼鏡」專欄</a></span></li>
-        </ul>
-    </section>
-
-    <section>
-        <div class="section-title">藝術書寫</div>
-        <ul style="list-style: none; padding: 0;">
-            <li class="info-item"><span class="info-year">2025.05.</span><span class="info-text"><a href="https://nthulemonnews.com/xiang-wo-zhe-yang-de-yi-ge-da-xue-sheng-pan-yu-yang-ge-zhan-wen-kai-shui-ri-chang-zi-shu/" target="_blank">〈像我這樣的一個大學生：潘羽鍚個展「溫開水日常」自述〉，清檸新聞小組</a></span></li>
-            <li class="info-item"><span class="info-year">2025.03.</span><span class="info-text"><a href="https://nthulemonnews.com/p/e4c4924f-c49a-40ef-8b3d-b018754fcf53/" target="_blank">〈日常觸碰創作，創作觸碰日常——白雙全工作坊〉，清檸新聞小組</a></span></li>
-            <li class="info-item"><span class="info-year">2024.12.</span><span class="info-text"><a href="https://nthulemonnews.com/yue-liang-chuan-tou-wo-de-xin-xiao-zhu-fang-ge-zhan/" target="_blank">〈月亮穿透我的心——蕭筑方個展〉，清檸新聞小組</a></span></li>
-            <li class="info-item"><span class="info-year">2024.08.</span><span class="info-text"><a href="https://nthulemonnews.com/cong-shi-yu-tong-wang-hua-bu-de-lu-cheng-wu-yu-tang-lao-shi-ge-zhan-tu-jing/" target="_blank">〈從視域通往畫布的路程：吳宇棠老師個展《途景》〉，清檸新聞小組</a></span></li>
-            <li class="info-item"><span class="info-year">2024.04.</span><span class="info-text"><a href="https://nthulemonnews.com/nai-xin-zhong-fang-zi-tian-zhong-yang-zai-qing-da-de-jian-zhu/" target="_blank">〈耐心種房子：田中央在清大的建築〉，清檸新聞小組</a></span></li>
-            <li class="info-item"><span class="info-year">2023.11.</span><span class="info-text"><a href="https://nthulemonnews.com/cxie-hong-jun-jiao-shou-de-yi-shu-nei-shi-jing/" target="_blank">〈層層筆觸下的陰性空間：謝鴻均教授的藝術內視鏡〉，清檸新聞小組</a></span></li>
-            <li class="info-item"><span class="info-year">2023.09.</span><span class="info-text"><a href="https://nthulemonnews.com/luo-dan-de-chen-si-zhe/" target="_blank">〈與清大人一同燒腦的雕像——羅丹的「沉思者」〉，清檸新聞小組</a></span></li>
-            <li class="info-item"><span class="info-year">2023.06.</span><span class="info-text"><a href="https://nthulemonnews.com/qing-da-yi-shu-xue/" target="_blank">〈砸碎星期＿之後：清大藝術學院學士班第二屆畢業展〉，清檸新聞小組</a></span></li>
-            <li class="info-item"><span class="info-year">2023.04.</span><span class="info-text"><a href="https://nthulemonnews.com/li-ze-fan-xian-sheng-2/" target="_blank">〈美術園地的灌溉、風城歷史的見證——李澤藩先生〉，清檸新聞小組</a></span></li>
-        </ul>
-    </section>
+        works.forEach(work => {
+            document.write(`
+                <div class="work-card">
+                    <div class="work-img-wrapper">
+                        <img src="${work.title}_全貌.jpg" alt="${work.title}">
+                    </div>
+                    <div class="circle-toggle-trigger" onclick="toggleWorkContent(this)"><i class="fas fa-chevron-down arrow-icon"></i></div>
+                    <div class="toggle-content">
+                        <div class="work-meta">${work.title}｜${work.info}</div>
+                        <div class="work-seal">${work.seal}</div>
+                    </div>
+                </div>
+            `);
+        });
+    </script>
 </main>
 
 <script>
-    function toggleMenu() { document.getElementById('navPanel').classList.toggle('open'); }
-    function toggleArtMenu(e) { e.stopPropagation(); document.getElementById('art-submenu').classList.toggle('open'); }
-    function openSearch() { alert("搜尋功能設定請參考 index 頁面"); }
+const websiteData = [
+    { title: "簡介CV", desc: "學歷、出版、得獎、展覽紀錄", url: "about.html" },
+    { title: "族譜系列", desc: "環繞家人的生活故事的系列創作", url: "genealogy.html" },
+    { title: "擬古系列", desc: "以印章作為敘事載體的系列創作", url: "pseudo-classic.html" },
+    { title: "靜物系列", desc: "靜物系列創作", url: "still-life.html" },
+    { title: "文字創作", desc: "專欄隨筆與藝術書寫", url: "writing.html" }
+];
+
+let autoCloseTimer = null;
+
+function resetAutoCloseTimer() {
+    clearAutoCloseTimer(); 
+    autoCloseTimer = setTimeout(function() {
+        var panel = document.getElementById('navPanel');
+        if (panel.classList.contains('open')) {
+            panel.classList.remove('open');
+        }
+    }, 5000); 
+}
+
+function clearAutoCloseTimer() {
+    if (autoCloseTimer) {
+        clearTimeout(autoCloseTimer);
+        autoCloseTimer = null;
+    }
+}
+
+function toggleMenu() { 
+    var panel = document.getElementById('navPanel');
+    panel.classList.toggle('open'); 
+    
+    if (panel.classList.contains('open')) {
+        resetAutoCloseTimer();
+    } else {
+        clearAutoCloseTimer();
+    }
+}
+
+function toggleArtMenu(e) { 
+    e.stopPropagation(); 
+    var submenu = document.getElementById('art-submenu');
+    submenu.classList.toggle('open'); 
+    resetAutoCloseTimer();
+}
+
+function openSearch() { 
+    document.getElementById('searchOverlay').classList.add('open');
+    document.getElementById('searchInput').value = ""; 
+    document.getElementById('searchResults').innerHTML = ""; 
+    setTimeout(() => {
+        document.getElementById('searchInput').focus();
+    }, 100);
+}
+
+function closeSearch() { 
+    document.getElementById('searchOverlay').classList.remove('open'); 
+}
+
+function toggleWorkContent(t) { 
+    t.classList.toggle('open'); 
+    t.nextElementSibling.classList.toggle('open'); 
+}
+
+function performSearch() {
+    const query = document.getElementById('searchInput').value.trim().toLowerCase();
+    const resultsContainer = document.getElementById('searchResults');
+    
+    if (query === "") {
+        resultsContainer.innerHTML = "";
+        return;
+    }
+    
+    const filteredData = websiteData.filter(item => 
+        item.title.toLowerCase().includes(query) || 
+        item.desc.toLowerCase().includes(query)
+    );
+    
+    if (filteredData.length > 0) {
+        let htmlContent = "";
+        filteredData.forEach(item => {
+            htmlContent += `
+                <a href="${item.url}" class="result-item">
+                    <div class="result-title">${item.title}</div>
+                    <div class="result-desc">${item.desc}</div>
+                </a>
+            `;
+        });
+        resultsContainer.innerHTML = htmlContent;
+    } else {
+        resultsContainer.innerHTML = `<div class="no-result">找不到與「${query}」相符的作品或資訊</div>`;
+    }
+}
+
+document.addEventListener('click', function(event) {
+    var panel = document.getElementById('navPanel');
+    var toggleBtn = document.querySelector('.menu-toggle-btn');
+    if (panel.classList.contains('open') && !panel.contains(event.target) && !toggleBtn.contains(event.target)) {
+        panel.classList.remove('open');
+        clearAutoCloseTimer();
+    }
+});
+
+document.getElementById('navPanel').addEventListener('click', function() {
+    if (this.classList.contains('open')) {
+        resetAutoCloseTimer();
+    }
+});
 </script>
 </body>
 </html>
