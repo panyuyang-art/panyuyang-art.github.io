@@ -8,75 +8,212 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
-body { font-family: Helvetica, Arial, sans-serif; margin: 0; padding: 0; background-color: #574C57; color: #ffffff; min-height: 100vh; overflow-x: hidden; }
+body { 
+    font-family: Helvetica, Arial, sans-serif; 
+    margin: 0; 
+    padding: 0; 
+    background-color: #574C57; 
+    color: #ffffff; 
+    min-height: 100vh; 
+    overflow-x: hidden; 
+}
 
-/* 導覽列與側欄 */
-.top-navbar { position: fixed; top: 0; left: 0; width: 100%; padding: 30px 40px; box-sizing: border-box; display: flex; justify-content: space-between; align-items: center; z-index: 100; }
-.menu-toggle-btn, .search-toggle-btn { font-size: 24px; cursor: pointer; color: #ffffff; }
+/* 頂部導覽列 */
+.top-navbar { 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    padding: 30px 40px; 
+    box-sizing: border-box; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    z-index: 100; 
+}
+.menu-toggle-btn, .search-toggle-btn { 
+    font-size: 24px; 
+    cursor: pointer; 
+    color: #ffffff; 
+    transition: opacity 0.2s;
+}
+.menu-toggle-btn:hover, .search-toggle-btn:hover { opacity: 0.7; }
 
+/* 浮空下拉式小側欄 panel（白底紫字，對應 #574C57） */
 .nav-panel { 
-    position: fixed; top: 70px; left: 40px; width: 150px; 
-    background-color: #ffffff; z-index: 90; box-shadow: 0 10px 30px rgba(0,0,0,0.08); 
-    border-radius: 6px; max-height: 0; overflow: hidden; opacity: 0; 
-    padding: 0 20px; transition: all 0.35s ease-in-out; 
+    position: fixed; 
+    top: 70px; 
+    left: 40px; 
+    width: 150px; 
+    background-color: #ffffff; 
+    z-index: 90; 
+    box-sizing: border-box;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08); 
+    border-radius: 6px; 
+    max-height: 0; 
+    overflow: hidden; 
+    opacity: 0; 
+    padding: 0 20px; 
+    transition: max-height 0.35s ease-in-out, opacity 0.25s ease-in-out, padding 0.35s ease-in-out; 
 }
-.nav-panel.open { max-height: 500px; opacity: 1; padding: 15px 20px; }
-
-.home-icon-btn {
-    display: flex; justify-content: flex-start; align-items: center;
-    color: #574C57; font-size: 18px; padding: 12px 0 6px 0; text-decoration: none;
-    width: 100%; margin-bottom: 5px; transition: opacity 0.2s;
+.nav-panel.open { 
+    max-height: 400px; 
+    opacity: 1; 
+    padding: 15px 20px; 
 }
-.home-icon-btn:hover { opacity: 0.7; }
 
-.menu-item { display: block; text-decoration: none; color: #574C57; font-size: 15px; padding: 10px 0; cursor: pointer; letter-spacing: 3px; }
+.menu-item { 
+    display: block; 
+    text-decoration: none; 
+    color: #574C57; 
+    font-size: 15px; 
+    padding: 10px 0; 
+    cursor: pointer; 
+    letter-spacing: 3px; 
+    border-bottom: none; 
+}
+.menu-item:hover { opacity: 0.7; }
 
 .submenu { 
-    max-height: 0; overflow: hidden; display: flex; flex-direction: column; 
-    gap: 12px; padding-left: 10px; border-left: 1px solid rgba(87,76,87,0.3);
-    transition: max-height 0.4s ease-out, margin 0.4s ease-out;
+    max-height: 0; 
+    overflow: hidden; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 12px; 
+    padding-left: 10px; 
+    margin-left: 2px;
+    border-left: 1px solid rgba(87,76,87,0.3); 
+    transition: max-height 0.3s ease-in-out, margin-top 0.3s ease-in-out;
 }
-.submenu.open { max-height: 140px; margin: 8px 0; }
-.submenu-item { text-decoration: none; color: rgba(87,76,87,0.7); font-size: 13px; letter-spacing: 2px; }
+.submenu.open { 
+    max-height: 140px; 
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+.submenu-item { 
+    text-decoration: none; 
+    color: rgba(87,76,87,0.7); 
+    font-size: 13px; 
+    letter-spacing: 2px; 
+}
+.submenu-item:hover { color: #574C57; }
 .submenu-item.active { color: #574C57; font-weight: bold; pointer-events: none; }
 
-.search-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background-color: rgba(0,0,0,0.88); z-index: 300; display: flex; flex-direction: column; align-items: center; padding-top: 15vh; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+/* 搜尋功能視窗 */
+.search-overlay { 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100vh; 
+    background-color: rgba(0,0,0,0.88); 
+    z-index: 300; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: flex-start;
+    align-items: center; 
+    padding-top: 15vh; 
+    box-sizing: border-box;
+    opacity: 0; 
+    pointer-events: none; 
+    transition: opacity 0.3s ease; 
+}
 .search-overlay.open { opacity: 1; pointer-events: auto; }
-.search-input { width: 80%; max-width: 500px; background: transparent; border: none; border-bottom: 2px solid #ffffff; padding: 10px; color: #ffffff; font-size: 22px; text-align: center; outline: none; }
+.close-search-btn {
+    position: absolute;
+    top: 30px;
+    right: 40px;
+    font-size: 26px;
+    cursor: pointer;
+    color: #fff;
+}
+.search-box {
+    width: 80%;
+    max-width: 500px;
+    text-align: center;
+}
+.search-input { 
+    width: 100%; 
+    background: transparent; 
+    border: none; 
+    border-bottom: 2px solid #ffffff; 
+    padding: 10px; 
+    color: #ffffff; 
+    font-size: 22px; 
+    text-align: center; 
+    outline: none; 
+    letter-spacing: 2px;
+}
 
-.main-content { margin: 0 auto; padding: 120px 40px 60px 40px; max-width: 900px; width: 100%; box-sizing: border-box; }
+/* 搜尋結果清單樣式 */
+.search-results {
+    width: 80%;
+    max-width: 500px;
+    margin-top: 30px;
+    max-height: 50vh;
+    overflow-y: auto;
+    text-align: left;
+}
+.result-item {
+    display: block;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 15px 20px;
+    margin-bottom: 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #ffffff;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+.result-item:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+.result-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #574C57;
+}
+.result-desc {
+    font-size: 13px;
+    color: #cccccc;
+    letter-spacing: 1px;
+}
+.no-result {
+    text-align: center;
+    color: #aaaaaa;
+    font-size: 14px;
+    margin-top: 20px;
+}
+
+/* 中央主要內容區 */
+.main-content { 
+    margin: 0 auto; 
+    padding: 120px 40px 60px 40px; 
+    max-width: 900px; 
+    width: 100%; 
+    box-sizing: border-box; 
+    text-align: center;
+}
 
 h1 { 
-    font-size: 24px; font-weight: normal; margin-bottom: 60px; 
-    letter-spacing: 2px; text-align: center; 
+    font-size: 24px; 
+    font-weight: normal; 
+    margin-bottom: 20px; 
+    letter-spacing: 2px; 
 }
 
-.work-card { margin-top: 40px; margin-bottom: 140px; }
-
-.work-img-wrapper { 
-    width: 100%; display: flex; justify-content: center; 
-    background-color: #574C57; overflow: hidden;
+/* 建立中的提示小字樣式 */
+.building-notice {
+    font-size: 14px;
+    letter-spacing: 2px;
+    color: rgba(255, 255, 255, 0.6);
 }
-.work-img-wrapper img { 
-    width: 100%; height: auto; display: block; 
-}
-
-.circle-toggle-trigger { 
-    width: 44px; height: 44px; background-color: rgba(0,0,0,0.25); border-radius: 50%; 
-    display: flex; justify-content: center; align-items: center; cursor: pointer; 
-    transition: all 0.2s; margin: 15px auto 15px auto;
-}
-.circle-toggle-trigger:hover { background-color: rgba(0,0,0,0.5); }
-.circle-toggle-trigger.open .arrow-icon { transform: rotate(180deg); }
-
-.toggle-content { max-height: 0; overflow: hidden; transition: all 0.45s ease-in-out; opacity: 0; }
-.toggle-content.open { max-height: 900px; opacity: 1; }
-.work-meta { font-size: 15px; font-weight: bold; margin-bottom: 14px; color: #ffffff; text-align: left; }
-.work-seal { font-size: 14px; line-height: 1.8; color: #e0f2f1; white-space: pre-line; margin-bottom: 25px; text-align: left; }
 
 @media (max-width: 768px) {
     .top-navbar { padding: 25px 25px; }
-    .nav-panel { left: 25px; top: 65px; }
+    .nav-panel { left: 25px; top: 65px; } 
+    .close-search-btn { right: 25px; top: 25px; }
     .main-content { padding: 100px 25px 40px 25px; }
 }
 </style>
@@ -89,66 +226,134 @@ h1 {
 </header>
 
 <nav class="nav-panel" id="navPanel">
-    <a href="index.html" class="home-icon-btn" title="回首頁"><i class="fas fa-home"></i></a>
     <a href="about.html" class="menu-item">走過</a>
+    
     <span class="menu-item" onclick="toggleArtMenu(event)">畫過</span>
     <div class="submenu" id="art-submenu">
         <a href="genealogy.html" class="submenu-item">族譜系列</a>
         <a href="pseudo-classic.html" class="submenu-item">擬古系列</a>
         <a href="still-life.html" class="submenu-item active">靜物系列</a>
     </div>
+    
     <a href="writing.html" class="menu-item">寫過</a>
 </nav>
 
 <div class="search-overlay" id="searchOverlay">
-    <div style="position:absolute; top:30px; right:40px; font-size:26px; cursor:pointer;" onclick="closeSearch()"><i class="fas fa-times"></i></div>
-    <input type="text" class="search-input" placeholder="搜尋...">
+    <div class="close-search-btn" onclick="closeSearch()"><i class="fas fa-times"></i></div>
+    <div class="search-box">
+        <input type="text" class="search-input" id="searchInput" placeholder="輸入關鍵字搜尋作品資訊..." oninput="performSearch()">
+    </div>
+    <div class="search-results" id="searchResults"></div>
 </div>
 
 <main class="main-content">
-    <h1>靜物系列</h1>    
-    <script>
-        const works = [
-            // 請在這裡填入您的靜物系列作品資料與圖片名稱
-            { title: "範例靜物作品", info: "2026｜媒材｜尺寸", seal: "作品說明文字..." }
-        ];
-
-        works.forEach(work => {
-            document.write(`
-                <div class="work-card">
-                    <div class="work-img-wrapper">
-                        <img src="${work.title}_全貌.jpg" alt="${work.title}">
-                    </div>
-                    <div class="circle-toggle-trigger" onclick="toggleWorkContent(this)"><i class="fas fa-chevron-down arrow-icon"></i></div>
-                    <div class="toggle-content">
-                        <div class="work-meta">${work.title}｜${work.info}</div>
-                        <div class="work-seal">${work.seal}</div>
-                    </div>
-                </div>
-            `);
-        });
-    </script>
+    <h1>靜物系列</h1> 
+    <div class="building-notice">網頁尚在建立中，所以還看不到</div>
 </main>
 
 <script>
-    let menuTimer;
-    function toggleMenu() { 
-        const nav = document.getElementById('navPanel');
-        nav.classList.toggle('open'); 
-        clearTimeout(menuTimer);
-        if(nav.classList.contains('open')) {
-            menuTimer = setTimeout(() => nav.classList.remove('open'), 5000);
-        }
-    }
-    document.getElementById('navPanel').addEventListener('click', () => {
-        clearTimeout(menuTimer);
-        menuTimer = setTimeout(() => document.getElementById('navPanel').classList.remove('open'), 5000);
-    });
+const websiteData = [
+    { title: "簡介CV", desc: "學歷, 出版, 得獎, 展覽紀錄", url: "about.html" },
+    { title: "族譜系列", desc: "環繞家人的生活故事的系列創作", url: "genealogy.html" },
+    { title: "擬古系列", desc: "以印章作為敘事載體的系列創作", url: "pseudo-classic.html" },
+    { title: "靜物系列", desc: "靜物系列創作", url: "still-life.html" },
+    { title: "文字創作", desc: "專欄隨筆與藝術書寫", url: "writing.html" }
+];
 
-    function toggleArtMenu(e) { e.stopPropagation(); document.getElementById('art-submenu').classList.toggle('open'); }
-    function openSearch() { document.getElementById('searchOverlay').classList.add('open'); }
-    function closeSearch() { document.getElementById('searchOverlay').classList.remove('open'); }
-    function toggleWorkContent(t) { t.classList.toggle('open'); t.nextElementSibling.classList.toggle('open'); }
+let autoCloseTimer = null;
+
+function resetAutoCloseTimer() {
+    clearAutoCloseTimer(); 
+    autoCloseTimer = setTimeout(function() {
+        var panel = document.getElementById('navPanel');
+        if (panel.classList.contains('open')) {
+            panel.classList.remove('open');
+        }
+    }, 5000); 
+}
+
+function clearAutoCloseTimer() {
+    if (autoCloseTimer) {
+        clearTimeout(autoCloseTimer);
+        autoCloseTimer = null;
+    }
+}
+
+function toggleMenu() { 
+    var panel = document.getElementById('navPanel');
+    panel.classList.toggle('open'); 
+    
+    if (panel.classList.contains('open')) {
+        resetAutoCloseTimer();
+    } else {
+        clearAutoCloseTimer();
+    }
+}
+
+function toggleArtMenu(e) { 
+    e.stopPropagation(); 
+    var submenu = document.getElementById('art-submenu');
+    submenu.classList.toggle('open'); 
+    resetAutoCloseTimer();
+}
+
+function openSearch() { 
+    document.getElementById('searchOverlay').classList.add('open');
+    document.getElementById('searchInput').value = ""; 
+    document.getElementById('searchResults').innerHTML = ""; 
+    setTimeout(() => {
+        document.getElementById('searchInput').focus();
+    }, 100);
+}
+
+function closeSearch() { 
+    document.getElementById('searchOverlay').classList.remove('open'); 
+}
+
+function performSearch() {
+    const query = document.getElementById('searchInput').value.trim().toLowerCase();
+    const resultsContainer = document.getElementById('searchResults');
+    
+    if (query === "") {
+        resultsContainer.innerHTML = "";
+        return;
+    }
+    
+    const filteredData = websiteData.filter(item => 
+        item.title.toLowerCase().includes(query) || 
+        item.desc.toLowerCase().includes(query)
+    );
+    
+    if (filteredData.length > 0) {
+        let htmlContent = "";
+        filteredData.forEach(item => {
+            htmlContent += `
+                <a href="${item.url}" class="result-item">
+                    <div class="result-title">${item.title}</div>
+                    <div class="result-desc">${item.desc}</div>
+                </a>
+            `;
+        });
+        resultsContainer.innerHTML = htmlContent;
+    } else {
+        resultsContainer.innerHTML = `<div class="no-result">找不到與「${query}」相符的作品或資訊</div>`;
+    }
+}
+
+document.addEventListener('click', function(event) {
+    var panel = document.getElementById('navPanel');
+    var toggleBtn = document.querySelector('.menu-toggle-btn');
+    if (panel.classList.contains('open') && !panel.contains(event.target) && !toggleBtn.contains(event.target)) {
+        panel.classList.remove('open');
+        clearAutoCloseTimer();
+    }
+});
+
+document.getElementById('navPanel').addEventListener('click', function() {
+    if (this.classList.contains('open')) {
+        resetAutoCloseTimer();
+    }
+});
 </script>
 </body>
 </html>
